@@ -1,13 +1,16 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "../includes/libft.h"
-#include "../includes/pipex.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
+/*   Updated: 2024/05/20 16:51:33 by moajili          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int executor(char *line, char **envp);
-char *rl_shell(char *line_read);
-char **lexer(char *line);
+#include "../includes/minishell.h"
 
 int main(int argc, char **argv, char **envp)
 {
@@ -15,7 +18,6 @@ int main(int argc, char **argv, char **envp)
     { 
         char **lex; 
         (void)argc;
-        (void)envp;
         (void)argv;
         char *line = NULL;
         
@@ -86,9 +88,8 @@ char *rl_shell(char *line_read)
 
 char **lexer(char *line)
 {
-    int bufsize = 64;
     int position = 0;
-    char **tokens = malloc(bufsize * sizeof(char*));
+    char **tokens = malloc(MAX_TOKENS * sizeof(char*));
     char *token;
 
     if (!tokens) {
@@ -98,18 +99,13 @@ char **lexer(char *line)
 
     token = strtok(line, " ");
     while (token != NULL) {
+        if (position >= MAX_TOKENS - 1) {  
+            fprintf(stderr, "Too many tokens, increase MAX_TOKENS\n");
+            free(tokens);
+            exit(EXIT_FAILURE);
+        }
         tokens[position] = token;
         position++;
-
-        if (position >= bufsize) {
-            bufsize += 64;
-            tokens = realloc(tokens, bufsize * sizeof(char*));
-            if (!tokens) {
-                fprintf(stderr, "Allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-        }
-
         token = strtok(NULL, " ");
     }
     tokens[position] = NULL;
