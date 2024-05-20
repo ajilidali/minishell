@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:24:30 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 16:35:09 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:04:34 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_list
 }					t_list;
 
 char				*ft_itoa(int n);
-char	*ft_strtok(char *str, char sepa);
+char *ft_strtok(char *str, const char *delim);
 void				ft_freef(const char *format, ...);
 void				*ft_memset(void *pointer, int value, size_t count);
 void				*ft_memmove(void *dest, const void *source, size_t size);

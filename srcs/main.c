@@ -6,27 +6,35 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 16:51:33 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:58:13 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+Token *lex(const char *input);
+
+
 int main(int argc, char **argv, char **envp)
 {
     if (getpid() != 0)
     { 
-        char **lex; 
         (void)argc;
         (void)argv;
         char *line = NULL;
+        Token *tokens;
         
         while ((line = rl_shell(line)))
         {
             printf("You entered: %s\n", line);
-            lex = lexer(line);
-            for (int i = 0; lex[i]; i++)
-                printf("lex[%d] = %s\n", i, lex[i]);
+            
+            tokens = lex(line);
+
+            for (int i = 0; tokens[i].type; i++)
+            {
+                printf("Token Type: %d, Value: %s\n", (int)tokens[i].type != -1, tokens[i].value);
+            }
+
             executor(line, envp);
         }
     }
@@ -86,28 +94,43 @@ char *rl_shell(char *line_read)
     return line_read;
 }
 
-char **lexer(char *line)
-{
-    int position = 0;
-    char **tokens = malloc(MAX_TOKENS * sizeof(char*));
-    char *token;
 
-    if (!tokens) {
-        fprintf(stderr, "Allocation error\n");
+
+Token *lex(const char *input)
+{
+    Token *tokens = (Token *)malloc(sizeof(Token) * MAX_TOKEN_COUNT);
+    if (tokens == NULL)
+    {
+        perror("Memory allocation failed");
         exit(EXIT_FAILURE);
     }
 
-    token = strtok(line, " ");
-    while (token != NULL) {
-        if (position >= MAX_TOKENS - 1) {  
-            fprintf(stderr, "Too many tokens, increase MAX_TOKENS\n");
-            free(tokens);
-            exit(EXIT_FAILURE);
-        }
-        tokens[position] = token;
-        position++;
-        token = strtok(NULL, " ");
+    int token_count = 0;
+    char *token_start = strtok((char *)input, " "); 
+
+    while (token_start != NULL && token_count < MAX_TOKEN_COUNT - 1)
+    {
+        TokenType type;
+
+        if (isdigit(*token_start))
+            type = TOKEN_NBR;
+        else if (strcmp(token_start, "|") == 0)
+            type = TOKEN_PIPE;
+        else 
+            type = TOKEN_CMD;
+        
+        strncpy(tokens[token_count].value, token_start, MAX_TOKEN_LENGTH - 1);
+        tokens[token_count].value[MAX_TOKEN_LENGTH - 1] = '\0';
+        tokens[token_count].type = type;
+
+        token_start = strtok(NULL, " ");
+        token_count++;
     }
-    tokens[position] = NULL;
+
+    tokens[token_count].type = TOKEN_TERMINATOR;
+    tokens[token_count].value[0] = '\0';
+
     return tokens;
 }
+
+

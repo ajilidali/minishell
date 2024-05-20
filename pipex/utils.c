@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/04 10:26:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 15:02:51 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:32:23 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*find_path(char *cmd, char **envp)
 
 void	error(int err)
 {
-	perror("Error");
+	perror("c");
 	exit(err);
 }
 
