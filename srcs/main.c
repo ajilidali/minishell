@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/22 17:18:00 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/22 22:41:53 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,17 @@ int main(int argc, char **argv, char **envp)
             //Begin lexer
             g_ms.lexer = lexer_init(g_ms.line);
             g_ms.token = lexer_next_token(&g_ms.lexer);
-            while (g_ms.token.type != TOKEN_EOF) {
+            g_ms.parser = parser_init(g_ms.line);
+            g_ms.ast = parse_pipeline(&g_ms.parser);
+            
+            if (g_ms.ast)
+            {
+                execute_ast(g_ms.ast);
+                free_ast(g_ms.ast);
+            }
+            
+            
+           /* while (g_ms.token.type != TOKEN_EOF) {
                 printf("Token: Type = %d, Value = '%s'\n", g_ms.token.type, g_ms.token.value);
                 if (g_ms.token.value != NULL)
                     free(g_ms.token.value);
@@ -39,11 +49,7 @@ int main(int argc, char **argv, char **envp)
 
             //Alias Test
             if (strcmp(g_ms.line, "") != 0)
-                is_local_fct(g_ms.line);
-
-            //Execute
-           /* if (strcmp(line, "") != 0)
-                executor(line, envp);*/
+                is_local_fct(g_ms.line);*/
         }
     }
     return 0;
@@ -60,7 +66,7 @@ void    print_envp(char **envp)
 }
 
 
-int executor(char *line, char **envp)
+/*int executor(char *line, char **envp)
 {
     pid_t pid;
     int status;
@@ -87,7 +93,7 @@ int executor(char *line, char **envp)
             printf("Child process did not terminate normally\n");
     }
     return EXIT_SUCCESS;
-}
+}*/
 
 char *rl_shell(char *line_read)
 {
