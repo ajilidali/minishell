@@ -22,11 +22,9 @@ void print_aliases(Alias *aliases)
     }
 }
 
-void is_local_fct(char* str)
+void is_local_fct(void)
 {
-    if (!str)
-        return;
-    if (strcmp(str, "alias") == 0)
+    if (strncmp(g_ms.line, "alias",5) == 0)
         ft_alias();
 }
 
@@ -44,6 +42,12 @@ Alias *ft_init_vars(void)
     aliases[0].value = "valgrind --leak-check=full";
     return aliases;
 }
+
+void ft_new_alias(void)
+{
+    
+}
+
 
 void ft_init_ms(void)
 {
