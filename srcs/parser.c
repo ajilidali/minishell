@@ -19,7 +19,7 @@ Parser parser_init(const char *input) {
     return parser;
 }
 
-// Prochain Token
+// Next  Token
 void parser_advance(Parser *parser)
 {
     if (parser->current_token.value)
@@ -27,7 +27,7 @@ void parser_advance(Parser *parser)
     parser->current_token = lexer_next_token(&parser->lexer);
 }
 
-// Parse la commande
+// Parse the command
 ASTNode *parse_command(Parser *parser)
 {
     ASTNode *node;
@@ -56,7 +56,7 @@ ASTNode *parse_command(Parser *parser)
     return node;
 }
 
-// Parsing du pipe
+// Pipe parsing
 ASTNode *parse_pipeline(Parser *parser)
 {
     ASTNode *left;
@@ -82,12 +82,12 @@ ASTNode *parse_pipeline(Parser *parser)
         return;
     if (node->type == AST_COMMAND)
     {
-        for (char **arg = node->args; *arg; arg++) 
+        for (char **arg = node->args; *arg; arg++)
         {
             free(*arg);
         }
         free(node->args);
-    } 
+    }
     else if (node->type == AST_PIPELINE)
     {
         free_ast(node->left);
@@ -119,7 +119,7 @@ void free_ast(ASTNode *node)
 
 
 
-// Execution du AST
+// AST Execution
 void execute_ast(ASTNode *node)
 {
     int pipefd[2];
@@ -136,8 +136,8 @@ void execute_ast(ASTNode *node)
         }
         else
             wait(NULL);
-    } 
-    else if (node->type == AST_PIPELINE) 
+    }
+    else if (node->type == AST_PIPELINE)
     {
         pipe(pipefd);
         ft_fork_left(node->left,pipefd);
@@ -149,9 +149,10 @@ void execute_ast(ASTNode *node)
     }
 }
 
+//Pipe --> Right
 void ft_fork_right(ASTNode *node, int pipefd[2])
 {
-    if (fork() == 0) 
+    if (fork() == 0)
     {
         dup2(pipefd[0], STDIN_FILENO);
         close(pipefd[0]);
@@ -160,6 +161,8 @@ void ft_fork_right(ASTNode *node, int pipefd[2])
         exit(0);
     }
 }
+
+//Pipe --> Left
 void ft_fork_left(ASTNode *node, int pipefd[2])
 {
     if (fork() == 0)
