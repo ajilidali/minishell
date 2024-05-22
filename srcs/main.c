@@ -12,37 +12,38 @@
 
 #include "../includes/minishell.h"
 
+MS g_ms;
+
 int main(int argc, char **argv, char **envp)
 {
     if (getpid() != 0)
-    { 
+    {
         (void)argc;
         (void)argv;
         (void)envp;
-        char *line = NULL;
-        Lexer lexer;
-        Token token;
-        
-        
-        while ((line = rl_shell(line)))
+        ft_init_ms();
+
+        while ((g_ms.line = rl_shell(g_ms.line)))
         {
-            printf("You entered: %s\n", line);
-            lexer = lexer_init(line);
+            printf("You entered: %s\n", g_ms.line);
 
-
-
-            token = lexer_next_token(&lexer);
-            while (token.type != TOKEN_EOF) {
-                printf("Token: Type = %d, Value = '%s'\n", token.type, token.value);
-
-                if (token.value != NULL) {
-                    free(token.value);
-                }
-                
-                token = lexer_next_token(&lexer);
+            //Begin lexer
+            g_ms.lexer = lexer_init(g_ms.line);
+            g_ms.token = lexer_next_token(&g_ms.lexer);
+            while (g_ms.token.type != TOKEN_EOF) {
+                printf("Token: Type = %d, Value = '%s'\n", g_ms.token.type, g_ms.token.value);
+                if (g_ms.token.value != NULL)
+                    free(g_ms.token.value);
+                g_ms.token = lexer_next_token(&g_ms.lexer);
             }
-            //if (strcmp(line, "") != 0)
-             //   executor(line, envp);
+
+            //Alias Test
+            if (strcmp(g_ms.line, "") != 0)
+                is_local_fct(g_ms.line);
+
+            //Execute
+           /* if (strcmp(line, "") != 0)
+                executor(line, envp);*/
         }
     }
     return 0;
@@ -56,7 +57,7 @@ void    print_envp(char **envp)
         printf("envp[%d]: %s\n", i, envp[i]);
         i++;
     }
-} 
+}
 
 
 int executor(char *line, char **envp)
@@ -105,7 +106,7 @@ char *rl_shell(char *line_read)
     {
         rl_clear_history();
         free(line_read);
-        exit(0); 
+        exit(0);
     }
     if (line_read && *line_read)
         add_history(line_read);

@@ -52,7 +52,7 @@ Token lexer_word(Lexer *lexer)
     size_t start;
     size_t length;
     char *value;
-    
+
     start = lexer->pos;
     while (!is_whitespace(lexer_peek(lexer)) && !is_operator(lexer_peek(lexer)) && !is_quote(lexer_peek(lexer)) && lexer_peek(lexer) != '\0')
         lexer_advance(lexer);
@@ -73,7 +73,7 @@ Token lexer_string(Lexer *lexer)
     size_t start;
     size_t length;
     char *value;
-    
+
     quote_type = lexer_peek(lexer);
     lexer_advance(lexer);
     start = lexer->pos;
@@ -113,7 +113,7 @@ Lexer lexer_init(const char *input)
 Token lexer_next_token(Lexer *lexer)
 {
     char current;
-    
+
     lexer_skip_whitespace(lexer);
     current = lexer_peek(lexer);
     if (current == '\0')
@@ -125,7 +125,7 @@ Token lexer_next_token(Lexer *lexer)
     }
     if (is_operator(current))
         return (lexer_operator(lexer));
-    if (is_quote(current)) 
+    if (is_quote(current))
         return (lexer_string(lexer));
     return (lexer_word(lexer));
 }

@@ -19,7 +19,7 @@ OBJS	= ${SRCS:.c=.o}
 MAIN 	= srcs/main.c
 
 all: ${NAME}
-#-fsanitize=address 
+#-fsanitize=address
 ${NAME}: ${OBJS}
 					@make re -C ./libft
 					@$(CC) ${OBJS} -Llibft -lft -lreadline -o ${NAME} ${CFLAGS} -g3

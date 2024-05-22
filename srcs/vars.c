@@ -12,22 +12,46 @@
 
 #include "../includes/minishell.h"
 
-Alias *init_aliases(Alias **aliases)
-{
-    *aliases = (Alias *)malloc(sizeof(Alias) * 1);
-    if (!*aliases)
-        return (0);
-    (*aliases)[0].cmd = NULL;
-    (*aliases)[0].value = NULL;
-    return (*aliases);
-}
-
-void    print_aliases(Alias *aliases)
+void print_aliases(Alias *aliases)
 {
     int i = 0;
     while (aliases[i].cmd)
     {
-        printf("%s='%s'\n", i, aliases[i].cmd, aliases[i].value);
+        printf("%s='%s'\n", aliases[i].cmd, aliases[i].value);
         i++;
     }
+}
+
+void is_local_fct(char* str)
+{
+    if (!str)
+        return;
+    if (strcmp(str, "alias") == 0)
+        ft_alias();
+}
+
+void ft_alias(void)
+{
+    print_aliases(g_ms.aliases);
+}
+
+Alias *ft_init_vars(void)
+{
+    Alias *aliases = (Alias *)malloc(sizeof(Alias) * 1);
+    if (!aliases)
+        return NULL;
+    aliases[0].cmd = "vg";
+    aliases[0].value = "valgrind --leak-check=full";
+    return aliases;
+}
+
+void ft_init_ms(void)
+{
+    g_ms.aliases = ft_init_vars();
+    g_ms.lexer.input = NULL;
+    g_ms.lexer.pos = 0;
+    g_ms.lexer.length = 0;
+    g_ms.token.type = TOKEN_EOF;
+    g_ms.token.value = NULL;
+    g_ms.line = NULL;
 }
