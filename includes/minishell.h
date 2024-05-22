@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 17:46:54 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:27:15 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,48 @@
 #include "../includes/libft.h"
 #include "../includes/pipex.h"
 
-#define MAX_TOKEN_LENGTH 1024
-#define MAX_TOKEN_COUNT 128
-
 typedef enum {
-    TOKEN_NBR,
-    TOKEN_CMD,
-    TOKEN_PIPE,
-    TOKEN_TERMINATOR
+    TOKEN_WORD,
+    TOKEN_STRING,
+    TOKEN_OPERATOR,
+    TOKEN_EOF
 } TokenType;
 
 typedef struct {
     TokenType type;
-    char value[MAX_TOKEN_LENGTH];
+    char *value;
 } Token;
 
+typedef struct {
+    const char *input;
+    size_t pos;
+    size_t length;
+} Lexer;
+
+
+//Is functions
+int is_quote(char c);
+int is_whitespace(char c);
+int is_operator(char c);
+
+//Token assigning functions
+Token lexer_operator(Lexer *lexer);
+Token lexer_word(Lexer *lexer);
+Token lexer_string(Lexer *lexer);
+//Token lexer_args(Lexer *lexer);
+
+//Lexer functions
+Token lexer_next_token(Lexer *lexer);
+Lexer lexer_init(const char *input);
+void lexer_skip_whitespace(Lexer *lexer);
+void lexer_advance(Lexer *lexer);
+char lexer_peek(Lexer *lexer);
+
+//Main functions
 int executor(char *line, char **envp);
 char *rl_shell(char *line_read);
+
+//other functions
+void print_envp(char **envp);
 
 #endif 

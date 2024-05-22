@@ -6,14 +6,11 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 17:58:13 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/22 15:18:28 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-Token *lex(const char *input);
-
 
 int main(int argc, char **argv, char **envp)
 {
@@ -21,25 +18,46 @@ int main(int argc, char **argv, char **envp)
     { 
         (void)argc;
         (void)argv;
+        (void)envp;
         char *line = NULL;
-        Token *tokens;
+        Lexer lexer;
+        Token token;
+        
         
         while ((line = rl_shell(line)))
         {
             printf("You entered: %s\n", line);
-            
-            tokens = lex(line);
+            lexer = lexer_init(line);
 
-            for (int i = 0; tokens[i].type; i++)
-            {
-                printf("Token Type: %d, Value: %s\n", (int)tokens[i].type != -1, tokens[i].value);
+
+
+            token = lexer_next_token(&lexer);
+            while (token.type != TOKEN_EOF) {
+                printf("Token: Type = %d, Value = '%s'\n", token.type, token.value);
+
+                if (token.value != NULL) {
+                    free(token.value);
+                }
+                
+                token = lexer_next_token(&lexer);
             }
-
-            executor(line, envp);
+            //if (strcmp(line, "") != 0)
+             //   executor(line, envp);
         }
     }
     return 0;
 }
+
+void    print_envp(char **envp)
+{
+    int i = 0;
+    while (envp[i])
+    {
+        printf("envp[%d]: %s\n", i, envp[i]);
+        i++;
+    }
+} 
+
 
 int executor(char *line, char **envp)
 {
@@ -93,44 +111,3 @@ char *rl_shell(char *line_read)
         add_history(line_read);
     return line_read;
 }
-
-
-
-Token *lex(const char *input)
-{
-    Token *tokens = (Token *)malloc(sizeof(Token) * MAX_TOKEN_COUNT);
-    if (tokens == NULL)
-    {
-        perror("Memory allocation failed");
-        exit(EXIT_FAILURE);
-    }
-
-    int token_count = 0;
-    char *token_start = strtok((char *)input, " "); 
-
-    while (token_start != NULL && token_count < MAX_TOKEN_COUNT - 1)
-    {
-        TokenType type;
-
-        if (isdigit(*token_start))
-            type = TOKEN_NBR;
-        else if (strcmp(token_start, "|") == 0)
-            type = TOKEN_PIPE;
-        else 
-            type = TOKEN_CMD;
-        
-        strncpy(tokens[token_count].value, token_start, MAX_TOKEN_LENGTH - 1);
-        tokens[token_count].value[MAX_TOKEN_LENGTH - 1] = '\0';
-        tokens[token_count].type = type;
-
-        token_start = strtok(NULL, " ");
-        token_count++;
-    }
-
-    tokens[token_count].type = TOKEN_TERMINATOR;
-    tokens[token_count].value[0] = '\0';
-
-    return tokens;
-}
-
-

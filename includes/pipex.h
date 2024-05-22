@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/02 09:58:35 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 15:00:20 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:22:20 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 void	error(int err);
 char	*find_path(char *cmd, char **envp);
 int		get_next_line(char **line);
-int	execute(char *argv, char **envp);
+int     execute(char *argv, char **envp);
 char	*check_local_cmd(char *cmd);
 
 /* Bonus functions */
