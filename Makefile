@@ -6,7 +6,7 @@
 #    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/05/22 15:11:47 by moajili          ###   ########.fr        #
+#    Updated: 2024/05/22 17:18:10 by moajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME	= minishell
 CC 		= gcc
 CFLAGS 	= -Wall -Wextra -Werror -g3
 
-SRCS	= pipex/pipex_bonus.c pipex/utils.c pipex/utils_bonus.c srcs/main.c srcs/lexer.c
+SRCS	= pipex/pipex_bonus.c pipex/utils.c pipex/utils_bonus.c srcs/main.c srcs/lexer.c srcs/vars.c
 OBJS	= ${SRCS:.c=.o}
 MAIN 	= srcs/main.c
 

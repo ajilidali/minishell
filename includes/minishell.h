@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/22 15:27:15 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:52:16 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,22 @@
 #include "../includes/libft.h"
 #include "../includes/pipex.h"
 
+//Alias Structs
+
+typedef struct {
+    char *cmd;
+    char *value;
+} Alias;
+
+
+//Lexer Structs
+
 typedef enum {
     TOKEN_WORD,
     TOKEN_STRING,
     TOKEN_OPERATOR,
+    //TOKEN_ARGS,
+    //TOKEN_${},
     TOKEN_EOF
 } TokenType;
 
@@ -49,6 +61,7 @@ Token lexer_operator(Lexer *lexer);
 Token lexer_word(Lexer *lexer);
 Token lexer_string(Lexer *lexer);
 //Token lexer_args(Lexer *lexer);
+//Token lexer_${} (Lexer *lexer);
 
 //Lexer functions
 Token lexer_next_token(Lexer *lexer);
