@@ -19,26 +19,32 @@ Parser parser_init(const char *input) {
     return parser;
 }
 
-// Advance to the Next Token
-void parser_advance(Parser *parser) {
-    if (parser->current_token.value) {
+// Prochain Token
+void parser_advance(Parser *parser)
+{
+    if (parser->current_token.value)
         free(parser->current_token.value);
-    }
     parser->current_token = lexer_next_token(&parser->lexer);
 }
 
-// Parse a Command
-ASTNode *parse_command(Parser *parser) {
-    ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+// Parse la commande
+ASTNode *parse_command(Parser *parser)
+{
+    ASTNode *node;
+    size_t capacity;
+    size_t count;
+
+    node = (ASTNode *)malloc(sizeof(ASTNode));
     node->type = AST_COMMAND;
     node->left = node->right = NULL;
-
-    size_t capacity = 10;
-    size_t count = 0;
+    capacity = 10;
+    count = 0;
     node->args = (char **)malloc(capacity * sizeof(char *));
 
-    while (parser->current_token.type == TOKEN_WORD) {
-        if (count >= capacity) {
+    while (parser->current_token.type == TOKEN_WORD)
+    {
+        if (count >= capacity)
+        {
             capacity *= 2;
             free(node->args);
             node->args = (char **)malloc(capacity * sizeof(char *));
@@ -46,33 +52,62 @@ ASTNode *parse_command(Parser *parser) {
         node->args[count++] = strdup(parser->current_token.value);
         parser_advance(parser);
     }
-
     node->args[count] = NULL;
     return node;
 }
 
 // Parsing du pipe
-ASTNode *parse_pipeline(Parser *parser) {
-    ASTNode *left = parse_command(parser);
+ASTNode *parse_pipeline(Parser *parser)
+{
+    ASTNode *left;
+    ASTNode *node;
 
-    while (parser->current_token.type == TOKEN_OPERATOR && strcmp(parser->current_token.value, "|") == 0) {
-        ASTNode *node = (ASTNode *)malloc(sizeof(ASTNode));
+    left = parse_command(parser);
+    while (parser->current_token.type == TOKEN_OPERATOR && strcmp(parser->current_token.value, "|") == 0)
+    {
+        node = (ASTNode *)malloc(sizeof(ASTNode));
         node->type = AST_PIPELINE;
         node->left = left;
         parser_advance(parser);
         node->right = parse_command(parser);
         left = node;
     }
-
     return left;
 }
 
 // Free AST
-void free_ast(ASTNode *node) {
-    if (!node) return;
-    if (node->type == AST_COMMAND) {
-        for (char **arg = node->args; *arg; arg++) {
+/*void free_ast(ASTNode *node)
+{
+    if (!node)
+        return;
+    if (node->type == AST_COMMAND)
+    {
+        for (char **arg = node->args; *arg; arg++) 
+        {
             free(*arg);
+        }
+        free(node->args);
+    } 
+    else if (node->type == AST_PIPELINE)
+    {
+        free_ast(node->left);
+        free_ast(node->right);
+    }
+    free(node);
+}*/
+void free_ast(ASTNode *node)
+{
+    char **arg;
+
+    if (!node)
+        return;
+    if (node->type == AST_COMMAND)
+    {
+        arg = node->args;
+        while (*arg)
+        {
+            free(*arg);
+            arg++;
         }
         free(node->args);
     } else if (node->type == AST_PIPELINE) {
@@ -81,6 +116,8 @@ void free_ast(ASTNode *node) {
     }
     free(node);
 }
+
+
 
 // Execution du AST
 void execute_ast(ASTNode *node)
