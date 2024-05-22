@@ -43,12 +43,6 @@ Alias *ft_init_vars(void)
     return aliases;
 }
 
-void ft_new_alias(void)
-{
-    
-}
-
-
 void ft_init_ms(void)
 {
     g_ms.aliases = ft_init_vars();
