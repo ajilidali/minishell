@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 14:53:14 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:24:36 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ typedef struct {
     Token current_token;
 } Parser;
 
+// Built-in Structs
+typedef struct {
+    char *name;
+    int (*fct)(void);
+    struct BuiltIn *next;
+} BuiltIn;
 
 // Minishell Structs
 typedef struct {
@@ -74,6 +80,7 @@ typedef struct {
     Token token;
     Parser parser;
     ASTNode *ast;
+    BuiltIn *builtins;
     char **envp;
     char *line;
 } MS;
@@ -83,10 +90,11 @@ extern MS g_ms;
 
 // Built-in functions
 int is_local_fct(void);
+
+/*ALIAS*/
 int print_aliases(Alias *aliases);
 Alias *ft_init_vars(void);
 int ft_alias(void);
-void ft_init_ms(char **envp);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can
 // run fcts from structs
@@ -121,6 +129,7 @@ void ft_fork_right(ASTNode *node, int pipefd[2]);
 // Main functions
 int executor(char *line, char **envp);
 char *rl_shell(char *line_read);
+void ft_init_ms(char **envp);
 
 // Other functions
 void print_envp(char **envp);

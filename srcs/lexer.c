@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 17:00:43 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 18:07:36 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ Token lexer_string(Lexer *lexer)
     char *value;
 
     quote_type = lexer_peek(lexer);
+    printf("quote_type: %c\n", quote_type);
     lexer_advance(lexer);
     start = lexer->pos;
     while (lexer_peek(lexer) != quote_type && lexer_peek(lexer) != '\0')
@@ -85,11 +86,12 @@ Token lexer_string(Lexer *lexer)
     value[length] = '\0';
     lexer_advance(lexer);
     Token token;
-    token.type = TOKEN_STRING;
-    //token.type = TOKEN_WORD;
+   // token.type = TOKEN_STRING;
+    token.type = TOKEN_WORD;
     token.value = value;
     return (token);
 }
+
 
 Token lexer_operator(Lexer *lexer)
 {
