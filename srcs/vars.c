@@ -6,13 +6,13 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 13:17:38 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 14:54:30 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void print_aliases(Alias *aliases)
+int print_aliases(Alias *aliases)
 {
     int i = 0;
     while (aliases[i].cmd)
@@ -20,17 +20,21 @@ void print_aliases(Alias *aliases)
         printf("%s='%s'\n", aliases[i].cmd, aliases[i].value);
         i++;
     }
+    return (0);
 }
 
-void is_local_fct(void)
+int is_local_fct(void)
 {
+    size_t exit_status = 1;
     if (strncmp(g_ms.line, "alias",5) == 0)
-        ft_alias();
+        exit_status = ft_alias();
+    return exit_status;
 }
 
-void ft_alias(void)
+int ft_alias(void)
 {
     print_aliases(g_ms.aliases);
+    return (0);
 }
 
 Alias *ft_init_vars(void)

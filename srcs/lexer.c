@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 14:38:46 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 17:00:43 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ Token lexer_word(Lexer *lexer)
         lexer_advance(lexer);
     length = lexer->pos - start;
     value = (char *)malloc(length + 1);
-    strncpy(value, lexer->input + start, length);
+    ft_strncpy(value, lexer->input + start, length);
     value[length] = '\0';
 
     Token token;
@@ -81,12 +81,12 @@ Token lexer_string(Lexer *lexer)
         lexer_advance(lexer);
     length = lexer->pos - start;
     value = (char *)malloc(length + 1);
-    strncpy(value, lexer->input + start, length);
+    ft_strncpy(value, lexer->input + start, length);
     value[length] = '\0';
     lexer_advance(lexer);
     Token token;
     token.type = TOKEN_STRING;
-   // token.type = TOKEN_WORD;
+    //token.type = TOKEN_WORD;
     token.value = value;
     return (token);
 }
@@ -98,7 +98,7 @@ Token lexer_operator(Lexer *lexer)
 
     Token token;
     token.type = TOKEN_OPERATOR;
-    token.value = strdup(value);
+    token.value = ft_strdup(value);
     return (token);
 }
 
@@ -107,7 +107,7 @@ Lexer lexer_init(const char *input)
     Lexer lexer;
     lexer.input = input;
     lexer.pos = 0;
-    lexer.length = strlen(input);
+    lexer.length = ft_strlen(input);
     return (lexer);
 }
 

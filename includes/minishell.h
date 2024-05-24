@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 13:25:01 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 14:53:14 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,10 +82,10 @@ typedef struct {
 extern MS g_ms;
 
 // Built-in functions
-void is_local_fct(void);
-void print_aliases(Alias *aliases);
+int is_local_fct(void);
+int print_aliases(Alias *aliases);
 Alias *ft_init_vars(void);
-void ft_alias(void);
+int ft_alias(void);
 void ft_init_ms(char **envp);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can

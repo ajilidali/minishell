@@ -114,10 +114,12 @@ void execute_ast(ASTNode *node)
     {
         if (fork() == 0)
         {
-            printf("Executing %s\n", node->args[0]);
-            execute(node, g_ms.envp);
-            perror("execve");
-            exit(1);
+         //   printf("Executing %s\n", node->args[0]);
+            if (execute(node, g_ms.envp) != 0)
+            {
+                perror("execve");
+                exit(1);
+            }
         }
         else
             wait(NULL);

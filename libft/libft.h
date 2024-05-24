@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:24:30 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 17:04:54 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:57:13 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int					ft_strlen(const char *c);
 int					ft_isprint(int c);
 int					ft_isdigit(int c);
 char				*ft_strdup(const char *s1);
+int					ft_strcmp(char *s1, char *s2);
+char	*ft_strncpy(char *dest, const char *src, unsigned int n);
 int					ft_isascii(int c);
 void				*ft_calloc(size_t count, size_t size);
 int					ft_isalpha(int c);

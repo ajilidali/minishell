@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 14:40:38 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 14:51:12 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,10 @@ int	execute(ASTNode *node, char **envp)
 	char	*path;
 
 	path = NULL;
-	path = find_path(node->args[0], envp);
+	if (is_local_fct() == 0)
+		return (EXIT_SUCCESS);
+	if (!path)
+		path = find_path(node->args[0], envp);
    // printf("path : %s\n", path);
 	if (!path)
 		path = check_local_cmd(node->args[0]);

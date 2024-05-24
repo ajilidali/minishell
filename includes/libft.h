@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:24:30 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/20 17:04:34 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:57:17 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@ void				*ft_memcpy(void *dest, const void *src, size_t n);
 int					ft_memcmp(const void *pointer1, const void *pointer2,
 						size_t size);
 void				ft_bzero(void *s, size_t n);
+char	*ft_strncpy( char *dest, const char *src, unsigned int n);
 void				*ft_memchr(const void *memoryBlock, int searchedChar,
 						size_t size);
 char				*ft_ustrjoin(char *s1, char *s2);
+int					ft_strcmp(char *s1, char *s2);
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 int					ft_strlen(const char *c);

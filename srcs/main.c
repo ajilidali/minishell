@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 13:37:03 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 16:48:54 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int main(int argc, char **argv, char **envp)
 
             //Begin lexer
             g_ms.lexer = lexer_init(g_ms.line);
-            g_ms.token = lexer_next_token(&g_ms.lexer);
+           // g_ms.token = lexer_next_token(&g_ms.lexer);
             g_ms.parser = parser_init(g_ms.line);
             g_ms.ast = parse_pipeline(&g_ms.parser);
             
@@ -39,16 +39,12 @@ int main(int argc, char **argv, char **envp)
             }
             
             
-            while (g_ms.token.type != TOKEN_EOF) {
+           /* while (g_ms.token.type != TOKEN_EOF) {
                 printf("Token: Type = %d, Value = '%s'\n", g_ms.token.type, g_ms.token.value);
                 if (g_ms.token.value != NULL)
                     free(g_ms.token.value);
                 g_ms.token = lexer_next_token(&g_ms.lexer);
-            }
-
-            //Alias Test
-            if (strcmp(g_ms.line, "") != 0)
-                is_local_fct();
+            }*/
         }
     }
     return 0;
@@ -107,7 +103,7 @@ char *rl_shell(char *line_read)
         rl_clear_history();
         exit(0);
     }
-    if (strcmp(line_read, "exit") == 0)
+    if (ft_strcmp(line_read, "exit") == 0)
     {
         rl_clear_history();
         free(line_read);
