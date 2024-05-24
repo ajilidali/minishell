@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/22 17:35:51 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 13:17:38 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ Alias *ft_init_vars(void)
     return aliases;
 }
 
-void ft_init_ms(void)
+void ft_init_ms(char **envp)
 {
+    size_t envp_size;
+
     g_ms.aliases = ft_init_vars();
     g_ms.lexer.input = NULL;
     g_ms.lexer.pos = 0;
@@ -52,4 +54,17 @@ void ft_init_ms(void)
     g_ms.token.type = TOKEN_EOF;
     g_ms.token.value = NULL;
     g_ms.line = NULL;
+
+    while (envp[envp_size])
+        envp_size++;
+    g_ms.envp = (char **)malloc(sizeof(char *) * (envp_size + 1));
+    if (!g_ms.envp)
+        return ;
+    envp_size = 0;
+    while (envp[envp_size])
+    {
+        g_ms.envp[envp_size] = strdup(envp[envp_size]);
+        envp_size++;
+    }
 }
+

@@ -12,7 +12,8 @@
 
 #include "../includes/minishell.h"
 
-Parser parser_init(const char *input) {
+Parser parser_init(const char *input)
+{
     Parser parser;
     parser.lexer = lexer_init(input);
     parser.current_token = lexer_next_token(&parser.lexer);
@@ -110,7 +111,9 @@ void free_ast(ASTNode *node)
             arg++;
         }
         free(node->args);
-    } else if (node->type == AST_PIPELINE) {
+    }
+    else if (node->type == AST_PIPELINE)
+    {
         free_ast(node->left);
         free_ast(node->right);
     }
@@ -130,7 +133,8 @@ void execute_ast(ASTNode *node)
     {
         if (fork() == 0)
         {
-            execvp(node->args[0], node->args);
+            printf("Executing %s\n", node->args[0]);
+            execute(node, g_ms.envp);
             perror("execve");
             exit(1);
         }

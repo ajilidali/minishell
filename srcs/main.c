@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/22 22:41:53 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/05/24 13:37:03 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ int main(int argc, char **argv, char **envp)
     {
         (void)argc;
         (void)argv;
-        (void)envp;
-        ft_init_ms();
+        ft_init_ms(envp);
 
         while ((g_ms.line = rl_shell(g_ms.line)))
         {
-            printf("You entered: %s\n", g_ms.line);
+           // printf("You entered: %s\n", g_ms.line);
 
             //Begin lexer
             g_ms.lexer = lexer_init(g_ms.line);
@@ -40,7 +39,7 @@ int main(int argc, char **argv, char **envp)
             }
             
             
-           /* while (g_ms.token.type != TOKEN_EOF) {
+            while (g_ms.token.type != TOKEN_EOF) {
                 printf("Token: Type = %d, Value = '%s'\n", g_ms.token.type, g_ms.token.value);
                 if (g_ms.token.value != NULL)
                     free(g_ms.token.value);
@@ -49,7 +48,7 @@ int main(int argc, char **argv, char **envp)
 
             //Alias Test
             if (strcmp(g_ms.line, "") != 0)
-                is_local_fct(g_ms.line);*/
+                is_local_fct();
         }
     }
     return 0;

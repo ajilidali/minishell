@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/22 22:37:42 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/05/24 13:25:01 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 #include <stdlib.h>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include <sys/wait.h>
+#include <errno.h>
 #include "../includes/libft.h"
-#include "../includes/pipex.h"
+//#include "../includes/pipex.h"
 
 //Alias Structs
 typedef struct {
@@ -54,8 +56,8 @@ typedef enum {
 typedef struct ASTNode {
     ASTNodeType type;
     char **args;           // For command nodes
-    struct ASTNode *left;  // For pipeline nodes
-    struct ASTNode *right; // For pipeline nodes
+    struct ASTNode *left;  // For pipe nodes
+    struct ASTNode *right; // For pipe nodes
 } ASTNode;
 
 // Parser Structs
@@ -65,13 +67,14 @@ typedef struct {
 } Parser;
 
 
-//Minishell Structs
+// Minishell Structs
 typedef struct {
     Alias *aliases;
     Lexer lexer;
     Token token;
     Parser parser;
     ASTNode *ast;
+    char **envp;
     char *line;
 } MS;
 
@@ -83,10 +86,10 @@ void is_local_fct(void);
 void print_aliases(Alias *aliases);
 Alias *ft_init_vars(void);
 void ft_alias(void);
-void ft_init_ms(void);
+void ft_init_ms(char **envp);
 
-//idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can
-//run fcts from structs
+// Idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can
+// run fcts from structs
 
 // Is functions
 int is_quote(char c);
@@ -121,5 +124,10 @@ char *rl_shell(char *line_read);
 
 // Other functions
 void print_envp(char **envp);
+
+// Pipex functions
+int	execute(ASTNode *node, char **envp);
+char	*find_path(char *cmd, char **envp);
+
 
 #endif // MINISHELL_H
