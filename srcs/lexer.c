@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/22 15:27:59 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/24 14:38:46 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ Token lexer_string(Lexer *lexer)
     lexer_advance(lexer);
     Token token;
     token.type = TOKEN_STRING;
+   // token.type = TOKEN_WORD;
     token.value = value;
     return (token);
 }

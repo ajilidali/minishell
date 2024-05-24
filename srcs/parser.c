@@ -77,25 +77,6 @@ ASTNode *parse_pipeline(Parser *parser)
 }
 
 // Free AST
-/*void free_ast(ASTNode *node)
-{
-    if (!node)
-        return;
-    if (node->type == AST_COMMAND)
-    {
-        for (char **arg = node->args; *arg; arg++)
-        {
-            free(*arg);
-        }
-        free(node->args);
-    }
-    else if (node->type == AST_PIPELINE)
-    {
-        free_ast(node->left);
-        free_ast(node->right);
-    }
-    free(node);
-}*/
 void free_ast(ASTNode *node)
 {
     char **arg;
