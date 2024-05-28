@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 14:51:12 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/28 14:27:10 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,16 @@ int	execute(ASTNode *node, char **envp)
 	char	*path;
 
 	path = NULL;
-	if (is_local_fct() == 0)
+	//printf("node->args[0] : %s\n", node->args[0]);
+	if (is_local_fct(node) == 0)
 		return (EXIT_SUCCESS);
 	if (!path)
 		path = find_path(node->args[0], envp);
-   // printf("path : %s\n", path);
 	if (!path)
 		path = check_local_cmd(node->args[0]);
 	if (!path)
 	{
-		ft_freef("%s,%p", node->args[0], path);
+		ft_freef("%p", path);
 		return (EXIT_FAILURE);
 	}
 	//fprintf(stderr, "\033[33;1m%s\033[m\n", path);

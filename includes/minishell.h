@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 18:24:36 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/28 15:50:45 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,7 @@ typedef struct {
 } Parser;
 
 // Built-in Structs
-typedef struct {
-    char *name;
-    int (*fct)(void);
-    struct BuiltIn *next;
-} BuiltIn;
+//typedef int	(*t_builtin)(MS *,  *);
 
 // Minishell Structs
 typedef struct {
@@ -80,7 +76,7 @@ typedef struct {
     Token token;
     Parser parser;
     ASTNode *ast;
-    BuiltIn *builtins;
+    size_t alias_count;
     char **envp;
     char *line;
 } MS;
@@ -89,12 +85,13 @@ typedef struct {
 extern MS g_ms;
 
 // Built-in functions
-int is_local_fct(void);
+int	is_local_fct(ASTNode *node);
 
 /*ALIAS*/
 int print_aliases(Alias *aliases);
-Alias *ft_init_vars(void);
-int ft_alias(void);
+Alias *ft_init_alias(void);
+int ft_alias(char **argv);
+int alias_finder(char *cmd);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can
 // run fcts from structs
@@ -133,6 +130,9 @@ void ft_init_ms(char **envp);
 
 // Other functions
 void print_envp(char **envp);
+void process_arguments(int argc, char *argv[]);
+void trim_whitespace(char *str);
+
 
 // Pipex functions
 int	execute(ASTNode *node, char **envp);

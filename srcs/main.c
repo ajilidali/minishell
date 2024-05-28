@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 18:08:48 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/28 15:38:45 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
+
 void	print_envp(char **envp)
 {
 	int	i;
@@ -58,34 +59,6 @@ void	print_envp(char **envp)
 	}
 }
 
-/*int executor(char *line, char **envp)
-{
-	pid_t	pid;
-	int		status;
-
-	pid = fork();
-	if (pid == -1)
-		return (perror("fork"),EXIT_FAILURE);
-	if (pid == 0)
-	{
-		fprintf(stderr, "\033[36;1mProcess child: %d\033[m\n", getpid());
-		if (execute(line, envp) == -1)
-		{
-			perror("execute");
-			exit(EXIT_FAILURE);
-		}
-		exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			printf("Child exited with status %d\n", WEXITSTATUS(status));
-		else
-			printf("Child process did not terminate normally\n");
-	}
-	return (EXIT_SUCCESS);
-}*/
 char	*rl_shell(char *line_read)
 {
 	if (line_read)
