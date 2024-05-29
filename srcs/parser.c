@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/22 17:35:51 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/29 17:01:47 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,13 @@ void	execute_ast(ASTNode *node)
 		return ;
 	if (node->type == AST_COMMAND)
 	{
+		if (is_local_fct(node) == 0)
+			return ;
 		if (fork() == 0)
 		{
-			//   printf("Executing %s\n", node->args[0]);
 			if (execute(node, g_ms.envp) != 0)
 			{
-				perror("execve");
+				printf("DEDSEC: %s: command not found\n", node->args[0]);
 				exit(1);
 			}
 		}

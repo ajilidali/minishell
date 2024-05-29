@@ -6,7 +6,7 @@
 #    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/05/28 15:51:10 by moajili          ###   ########.fr        #
+#    Updated: 2024/05/29 15:52:15 by moajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 					@make re -C ./libft
-					@$(CC) ${OBJS} -Llibft -lft -lreadline -o ${NAME} ${CFLAGS} -g3 -fsanitize=address
+					@$(CC) ${OBJS} -Llibft -lft -lreadline -o ${NAME} ${CFLAGS} -g3 
 					@echo "Done!"
 
 clean:

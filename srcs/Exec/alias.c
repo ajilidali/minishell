@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/29 14:45:01 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/29 17:06:20 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void assign_alias(char *alias, char *cmd)
         g_ms.aliases[replace].value = strdup(cmd);
         return;
     }
+    printf("alias : %s\n",alias);
     g_ms.aliases[g_ms.alias_count].cmd = strdup(alias);
     g_ms.aliases[g_ms.alias_count].value = strdup(cmd);
     g_ms.alias_count++;
@@ -43,10 +44,8 @@ void process_arguments(int argc, char *argv[])
             trim_whitespace(left_part);
             trim_whitespace(right_part);
             if (*right_part != '\0' && *left_part != '\0')
-            {
                 assign_alias(left_part,right_part);
-                printf("left part : %s\n",left_part);
-            }
+            //printf("alias: %s not found\n",);
             free(left_part);
             free(right_part);
         } 
@@ -71,8 +70,12 @@ int ft_alias(char **argv)
 {
     int argc = 0;
 
+    
     while (argv[argc])
+    {
         argc++;
+        printf("argv : %s\n",argv[argc]);
+    }
     if (argc == 1)
         return print_aliases(g_ms.aliases);
     process_arguments(argc, argv);

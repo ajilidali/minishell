@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/28 15:50:45 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/29 16:55:21 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ typedef struct {
     Lexer lexer;
     Token current_token;
 } Parser;
-
-// Built-in Structs
-//typedef int	(*t_builtin)(MS *,  *);
 
 // Minishell Structs
 typedef struct {

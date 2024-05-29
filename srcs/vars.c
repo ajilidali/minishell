@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/28 16:01:22 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/29 16:55:27 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int is_local_fct(ASTNode *node)
     exit_status = 1;
     if (strncmp(node->args[0], "alias", 5) == 0)
         exit_status = ft_alias(node->args);
+    printf("exit_status : %zu\n", exit_status);
     return exit_status;
 }
 
