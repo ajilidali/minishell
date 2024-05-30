@@ -6,29 +6,37 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/30 20:18:17 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/05/30 22:05:56 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int quote_counter(const char *str, char quote)
+{
+    int count;
+    int len;
+
+    count = 0;
+    len = strlen(str) - 1;
+    while (len >= 0)
+        if (str[len--] == quote)
+            count++;
+    return count;
+}
+
 char* quote_closer(char quote)
 {
     char *closer;
-    int len;
     int count;
+
     count = 0;
-
     closer = readline("quote > ");
-    len = ft_strlen(closer) - 1;
-    while (len >= 0)
-        if (closer[len--] == quote)
-            count++;
-
+    count = quote_counter(closer,quote);
     if ((count % 2) != 1)
     {
         char* recursive_result = quote_closer(quote);
-        size_t total_len = ft_strlen(closer) + ft_strlen(recursive_result) + 1;
+        size_t total_len = strlen(closer) + strlen(recursive_result) + 1;
         char* result = malloc(total_len);
         strcpy(result, closer);
         strcat(result, recursive_result);
@@ -49,6 +57,7 @@ char *quote_master(char quote)
     }
     else if (quote == '\'')
     {
+        printf("%s\n", qc);
         qc = ft_replace(qc,"\'\'","\\n");
         qc = ft_replace(qc,"\'","\\n");
     }
