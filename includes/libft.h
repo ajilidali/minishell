@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 11:24:30 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 16:57:17 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/30 20:10:26 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+char *ft_strcpy(char *dest, const char *src);
 char				*ft_itoa(int n);
-char *ft_strtok(char *str, const char *delim);
+char	*ft_replace(char *in, const char *replacee, const char *replaced);
 void				ft_freef(const char *format, ...);
 void				*ft_memset(void *pointer, int value, size_t count);
 void				*ft_memmove(void *dest, const void *source, size_t size);

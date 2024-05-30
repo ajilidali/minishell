@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/29 16:55:21 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/30 20:23:01 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 #include <sys/wait.h>
 #include <errno.h>
 #include "../includes/libft.h"
-//#include "../includes/pipex.h"
 
 //Alias Structs
 typedef struct {
@@ -135,5 +134,6 @@ void trim_whitespace(char *str);
 int	execute(ASTNode *node, char **envp);
 char	*find_path(char *cmd, char **envp);
 
+char *quote_master(char quote);
 
 #endif // MINISHELL_H

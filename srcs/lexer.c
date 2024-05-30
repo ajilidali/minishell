@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/24 18:07:36 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/30 20:22:01 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,14 @@ Token lexer_string(Lexer *lexer)
     size_t start;
     size_t length;
     char *value;
-
     quote_type = lexer_peek(lexer);
+
+
     printf("quote_type: %c\n", quote_type);
+    char * qc = quote_master(quote_type);
+    printf("qc :  %s\n", qc);
+
+
     lexer_advance(lexer);
     start = lexer->pos;
     while (lexer_peek(lexer) != quote_type && lexer_peek(lexer) != '\0')
@@ -88,7 +93,7 @@ Token lexer_string(Lexer *lexer)
     Token token;
    // token.type = TOKEN_STRING;
     token.type = TOKEN_WORD;
-    token.value = value;
+    token.value = ft_strjoin(value, qc);
     return (token);
 }
 
