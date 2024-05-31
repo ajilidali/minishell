@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/29 16:55:27 by moajili          ###   ########.fr       */
+/*   Updated: 2024/05/31 13:51:11 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ int print_aliases(Alias *aliases)
 
 	i = 0;
     if (!aliases)
-	{
         return -1;
-	}
     while (i <= g_ms.alias_count)
     {
         printf("alias %s='%s'\n", aliases[i].cmd, aliases[i].value);
@@ -36,7 +34,7 @@ int is_local_fct(ASTNode *node)
     if (!node->args[0])
         return 0;
     exit_status = 1;
-    if (strncmp(node->args[0], "alias", 5) == 0)
+    if (strcmp(node->args[0], "alias") == 0)
         exit_status = ft_alias(node->args);
     printf("exit_status : %zu\n", exit_status);
     return exit_status;

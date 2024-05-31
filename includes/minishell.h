@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/30 20:23:01 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/05/31 13:37:09 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,5 +135,6 @@ int	execute(ASTNode *node, char **envp);
 char	*find_path(char *cmd, char **envp);
 
 char *quote_master(char quote);
+int quote_counter(const char *str, char quote);
 
 #endif // MINISHELL_H
