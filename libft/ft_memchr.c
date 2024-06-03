@@ -6,11 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 14:47:08 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 /*
  * Scans the initial 'n' bytes of the memory

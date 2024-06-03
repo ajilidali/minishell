@@ -6,20 +6,20 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 17:54:47 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:22:25 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include <sys/wait.h>
-#include <errno.h>
-#include "../includes/libft.h"
+# include <stdio.h>
+# include <stdlib.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <sys/wait.h>
+# include <errno.h>
+# include "../libft/libft.h"
 
 # define FREE_GB 1
 
@@ -39,8 +39,8 @@ typedef struct s_env
 
 //Alias Structs
 typedef struct {
-	char *cmd;
-	char *value;
+	char	*cmd;
+	char	*value;
 } Alias;
 
 //Lexer Structs
@@ -52,14 +52,14 @@ typedef enum {
 } TokenType;
 
 typedef struct {
-	TokenType type;
-	char *value;
+	TokenType	type;
+	char		*value;
 } Token;
 
 typedef struct {
-	const char *input;
-	size_t pos;
-	size_t length;
+	const char	*input;
+	size_t		pos;
+	size_t		length;
 } Lexer;
 
 //Abstract Syntax Tree Structs
@@ -69,100 +69,100 @@ typedef enum {
 } ASTNodeType;
 
 typedef struct ASTNode {
-	ASTNodeType type;
-	char **args;           // For command nodes
-	struct ASTNode *left;  // For pipe nodes
-	struct ASTNode *right; // For pipe nodes
+	ASTNodeType		type;
+	char			**args;           // For command nodes
+	struct ASTNode	*left;  // For pipe nodes
+	struct ASTNode	*right; // For pipe nodes
 } ASTNode;
 
 // Parser Structs
 typedef struct {
-	Lexer lexer;
-	Token current_token;
+	Lexer	lexer;
+	Token	current_token;
 } Parser;
 
 // Minishell Structs
 typedef struct {
-	Alias *aliases;
-	Lexer lexer;
-	Token token;
-	Parser parser;
-	ASTNode *ast;
-	size_t alias_count;
-	char **envp;
-	char *line;
+	Alias	*aliases;
+	Lexer	lexer;
+	Token	token;
+	Parser	parser;
+	ASTNode	*ast;
+	size_t	alias_count;
+	char	**envp;
+	char	*line;
 } MS;
 
 // Extern global variable
 extern MS g_ms;
 
 // Built-in functions
-int		is_local_fct(ASTNode *node);
-int		run_echo(char **command);
-int		run_cd(char **command);
-int		run_export(char **command, t_env **env);
-int		run_unset(char **command, t_env **env);
-int		run_pwd(void);
-int		run_env(t_env *env);
+int			is_local_fct(ASTNode *node);
+int			run_echo(char **command);
+int			run_cd(char **command);
+int			run_export(char **command, t_env **env);
+int			run_unset(char **command, t_env **env);
+int			run_pwd(void);
+int			run_env(t_env *env);
 
 // Env functions
-void	free_env(t_env *env);
-char	**get_tabenv(t_env *env);
-t_env	*copy_env(char **envp);
-t_env	*new_node(char *name_value);
+void		free_env(t_env *env);
+char		**get_tabenv(t_env *env);
+t_env		*copy_env(char **envp);
+t_env		*new_node(char *name_value);
 
 /*ALIAS*/
-int print_aliases(Alias *aliases);
-Alias *ft_init_alias(void);
-int ft_alias(char **argv);
-int alias_finder(char *cmd);
+int			print_aliases(Alias *aliases);
+Alias		*ft_init_alias(void);
+int			ft_alias(char **argv);
+int			alias_finder(char *cmd);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can
 // run fcts from structs
 
 // Is functions
-int is_quote(char c);
-int is_whitespace(char c);
-int is_operator(char c);
+int			is_quote(char c);
+int			is_whitespace(char c);
+int			is_operator(char c);
 
 // Token assigning functions
-Token lexer_operator(Lexer *lexer);
-Token lexer_word(Lexer *lexer);
-Token lexer_string(Lexer *lexer);
+Token		lexer_operator(Lexer *lexer);
+Token		lexer_word(Lexer *lexer);
+Token		lexer_string(Lexer *lexer);
 
 // Lexer functions
-Token lexer_next_token(Lexer *lexer);
-Lexer lexer_init(const char *input);
-void lexer_skip_whitespace(Lexer *lexer);
-void lexer_advance(Lexer *lexer);
-char lexer_peek(Lexer *lexer);
+Token		lexer_next_token(Lexer *lexer);
+Lexer		lexer_init(const char *input);
+void		lexer_skip_whitespace(Lexer *lexer);
+void		lexer_advance(Lexer *lexer);
+char		lexer_peek(Lexer *lexer);
 
 // AST & Parser functions
-Parser parser_init(const char *input);
-void parser_advance(Parser *parser);
-ASTNode *parse_command(Parser *parser);
-ASTNode *parse_pipeline(Parser *parser);
-void free_ast(ASTNode *node);
-void execute_ast(ASTNode *node);
-void ft_fork_left(ASTNode *node, int pipefd[2]);
-void ft_fork_right(ASTNode *node, int pipefd[2]);
+Parser		parser_init(const char *input);
+void		parser_advance(Parser *parser);
+ASTNode		*parse_command(Parser *parser);
+ASTNode		*parse_pipeline(Parser *parser);
+void		free_ast(ASTNode *node);
+void		execute_ast(ASTNode *node);
+void		ft_fork_left(ASTNode *node, int pipefd[2]);
+void		ft_fork_right(ASTNode *node, int pipefd[2]);
 
 // Main functions
-int executor(char *line, char **envp);
-char *rl_shell(char *line_read);
-void ft_init_ms(char **envp);
+int			executor(char *line, char **envp);
+char		*rl_shell(char *line_read);
+void		ft_init_ms(char **envp);
 
 // Other functions
-void print_envp(char **envp);
-void process_arguments(int argc, char *argv[]);
-void trim_whitespace(char *str);
-void	freetab(char **str);
+void		print_envp(char **envp);
+void		process_arguments(int argc, char *argv[]);
+void		trim_whitespace(char *str);
+void		freetab(char **str);
 
 // Pipex functions
-int	execute(ASTNode *node, char **envp);
-char	*find_path(char *cmd, char **envp);
+int			execute(ASTNode *node, char **envp);
+char		*find_path(char *cmd, char **envp);
 
-char *quote_master(char quote);
-int quote_counter(const char *str, char quote);
+char		*quote_master(char quote);
+int			quote_counter(const char *str, char quote);
 
 #endif // MINISHELL_H

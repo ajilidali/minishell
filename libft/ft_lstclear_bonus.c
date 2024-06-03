@@ -6,11 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 02:32:58 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "libft.h"
 
 /*
  * Deletes and frees the given element and
