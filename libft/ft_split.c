@@ -3,88 +3,91 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/26 09:37:21 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/13 13:25:56 by moajili          ###   ########.fr       */
+/*   Created: 2023/11/01 15:49:25 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include <stdio.h>
+#include "../includes/libft.h"
+#include <stdlib.h>
 
-static int	jecompte(char const *s, char c)
+static int	countstr(char const *s, char c)
 {
-	int	compte;
 	int	i;
+	int	nbstr;
 
-	compte = 0;
 	i = 0;
+	nbstr = 0;
 	while (s[i])
 	{
 		while (s[i] == c)
 			i++;
-		if (s[i] != c && s[i])
-			compte++;
-		while (s[i] != c && s[i])
+		if (s[i] != c && s[i] != '\0')
+			nbstr++;
+		while (s[i] != c && s[i] != '\0')
 			i++;
 	}
-	return (compte);
+	return (nbstr);
 }
 
-static char	*init_str(char const *s, char c)
-{
-	int		i;
-	char	*point;
-
-	i = 0;
-	while (s[i] && s[i] != c)
-		i++;
-	point = (char *)malloc(sizeof(char) * (i + 1));
-	if (!point)
-		return (NULL);
-	ft_memcpy(point, s, i);
-	point[i] = '\0';
-	return (point);
-}
-
-static void	freetab(char **point)
+static void	freetab(char **str)
 {
 	int	i;
 
 	i = 0;
-	while (point[i])
-	{
-		free(point[i]);
-		i++;
-	}
-	free(point);
+	while (str[i])
+		free(str[i++]);
+	free(str);
+	str = NULL;
 }
 
+static char	**sub(const char *s, char c, char **str, int len)
+{
+	size_t	i;
+	size_t	sub_start;
+	int		y;
+
+	i = 0;
+	sub_start = 0;
+	y = 0;
+	while (y < len)
+	{
+		while (s[i] == c && s[i])
+			i++;
+		sub_start = i;
+		while (s[i] != c && s[i])
+			i++;
+		str[y++] = ft_substr(s, sub_start, i - sub_start);
+		if (!str[y - 1])
+			return (freetab(str), NULL);
+	}
+	return (str);
+}
+
+/*
+ * Allocates (with malloc(3)) and returns an array
+ * of strings obtained by splitting 's' using
+ * the character 'c' as a delimiter.
+ * The array must be ended by a NULL pointer.
+ * @param s The string to be split.
+ * @param c The delimiter character.
+ * @return The array of new strings
+ * resulting from the split. NULL if the allocation fails.
+ */
 char	**ft_split(char const *s, char c)
 {
-	char	**point;
-	int		i;
-	int		j;
+	char	**str;
+	int		len;
 
-	point = (char **)malloc(sizeof(char *) * (jecompte(s, c) + 1));
-	if (!s || !point)
+	if (!s)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (i < jecompte(s, c))
-	{
-		while (s[j] == c)
-			j++;
-		point[i] = init_str(s + j, c);
-		if (!point[i])
-		{
-			freetab(point);
-			return (NULL);
-		}
-		j += ft_strlen(point[i]);
-		i++;
-	}
-	point[i] = NULL;
-	return (point);
+	len = countstr(s, c);
+	str = ft_calloc(len + 1, sizeof(char *));
+	if (!str)
+		return (NULL);
+	if (!sub(s, c, str, len))
+		return (NULL);
+	return (str);
 }

@@ -3,33 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 02:46:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/30 22:38:53 by sakaido          ###   ########.fr       */
+/*   Created: 2023/10/21 14:56:17 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-int	ft_strncmp(const char *s1, const char *s2, int n)
+/*
+ * Compares at most the first 'n' bytes of string 's1' and string 's2'.
+ * @param s1 The first string to be compared.
+ * @param s2 The second string to be compared.
+ * @param n The maximum number of characters to be compared.
+ * @return If return value < 0 then it indicates 's1' is less than 's2'.
+ * If return value > 0 then it indicates 's2' is less than 's1'.
+ * If return value = 0 then it indicates 's1' is equal to 's2'.
+ */
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	unsigned int	i;
-	unsigned char	c1;
-	unsigned char	c2;
+	size_t	i;
 
 	i = 0;
-	if (n == 0)
-		return (0);
-	while (s1[i] && s2[i] && i < (size_t)(n - 1))
-	{
-		c1 = (unsigned char)s1[i];
-		c2 = (unsigned char)s2[i];
-		if (c1 != c2)
-			return (c1 - c2);
+	while ((i < n && s1[i] && s2[i]) && s1[i] == s2[i])
 		i++;
-	}
-	c1 = (unsigned char)s1[i];
-	c2 = (unsigned char)s2[i];
-	return (c1 - c2);
+	if (i == n)
+		return (0);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }

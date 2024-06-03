@@ -3,55 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 12:21:04 by moajili           #+#    #+#             */
-/*   Updated: 2023/10/31 13:40:59 by moajili          ###   ########.fr       */
+/*   Created: 2023/11/03 14:56:11 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-static int	ft_taille(long int n)
+static int	countdigit(long int n)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	if (n < 0)
 	{
-		n = -n;
 		i++;
+		n = n * -1;
 	}
-	if (!n)
-		return (1);
-	while (n > 0)
+	while (n > 9)
 	{
-		n /= 10;
+		n = n / 10;
 		i++;
 	}
+	i++;
 	return (i);
 }
 
+static void	recustr(long int n, char *str, int count)
+{
+	if (count != -1)
+	{
+		if (n <= 9 && n >= 0)
+			str[count] = '0' + n;
+		else
+		{
+			recustr(n % 10, str, count--);
+			recustr(n / 10, str, count--);
+		}
+	}
+}
+
+/*
+ * Converts an integer into a string.
+ * @param n The integer to convert.
+ * @return A new string representing the integer.
+ * If the function fails, it returns NULL.
+ */
 char	*ft_itoa(int n)
 {
-	int			size;
-	long int	aux;
-	char		*nbr;
+	char		*str;
+	int			i;
+	int			count;
+	long int	num;
 
-	aux = n;
-	size = ft_taille(aux);
-	nbr = (char *)malloc((size + 1) * sizeof(char));
-	if (!(nbr))
+	i = 0;
+	num = n;
+	count = countdigit(num);
+	str = ft_calloc(count + 1, sizeof(char));
+	if (!str)
 		return (NULL);
-	nbr[--size + 1] = '\0';
-	if (aux < 0)
-		aux = -aux;
-	while (size >= 0)
+	if (num < 0)
 	{
-		nbr[size--] = (aux % 10) + '0';
-		aux = aux / 10;
+		str[i] = '-';
+		num = num * -1;
 	}
-	if (nbr[0] == '0' && nbr[1])
-		nbr[0] = '-';
-	return (nbr);
+	recustr(num, str, count - 1);
+	return (str);
 }

@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstnew.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 16:03:11 by moajili           #+#    #+#             */
-/*   Updated: 2023/11/02 15:53:33 by moajili          ###   ########.fr       */
+/*   Created: 2023/11/04 00:57:44 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
+/*
+ * Allocates (with malloc(3)) and returns a new element.
+ * The variable 'content' is initialized with
+ * the value of the parameter 'content'.
+ * The variable 'next' is initialized to NULL.
+ * @param content The content to create the new element with.
+ * @return The new element. NULL if the allocation fails.
+ */
 t_list	*ft_lstnew(void *content)
 {
-	t_list	*lst;
+	t_list	*tab;
 
-	lst = (t_list *)ft_calloc(1, sizeof(t_list));
-	if (!lst)
+	tab = ft_calloc(1, sizeof(t_list));
+	if (!tab)
 		return (NULL);
-	lst[0].next = NULL;
-	lst[0].content = content;
-	return (lst);
+	tab->content = content;
+	tab->next = NULL;
+	return (tab);
 }

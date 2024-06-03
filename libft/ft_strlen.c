@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 22:39:41 by moajili           #+#    #+#             */
-/*   Updated: 2024/01/24 13:28:28 by moajili          ###   ########.fr       */
+/*   Created: 2023/10/17 14:10:06 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *str)
+#include "../includes/libft.h"
+
+/*
+ * Computes the length of the string 's'.
+ * @param s The string whose length is to be computed.
+ * @return The length of the string 's'.
+ */
+size_t	ft_strlen(const char *s)
 {
-	int i;
+	size_t	i;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
+	while (s[i])
 		i++;
 	return (i);
 }

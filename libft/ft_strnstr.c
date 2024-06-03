@@ -3,32 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 02:46:23 by moajili           #+#    #+#             */
-/*   Updated: 2023/10/31 13:43:11 by moajili          ###   ########.fr       */
+/*   Created: 2023/10/24 10:53:06 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-char	*ft_strnstr(const char *big, const char *lit, size_t len)
+/*
+ * Locates the first occurrence of
+ * the null-terminated string 'little' in the string 'big',
+ * where not more than 'len' characters are searched.
+ * Characters that appear after a `\0' character are not searched.
+ * If 'little' is an empty string, 'big' is returned;
+ * if 'little' occurs nowhere in 'big',
+ * NULL is returned;
+ * otherwise a pointer to the first character
+ * of the first occurrence of 'little' is returned.
+ * @param big The string to be scanned.
+ * @param little The string to be searched within 'big'.
+ * @param len The maximum number of characters to be searched in 'big'.
+ * @return A pointer to the first occurrence of 'little' in 'big',
+ * or NULL if 'little' is not found in the first 'len' characters of 'big'.
+ */
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
 	size_t	i;
-	size_t	j;
+	size_t	little_len;
 
 	i = 0;
-	j = 0;
-	if (*lit == '\0')
+	little_len = ft_strlen(little);
+	if ((!big || !little) && len == 0)
+		return (NULL);
+	if (!little_len)
 		return ((char *)big);
-	while (big[i] != '\0' && i < len)
+	while (big[i] && len >= i + little_len)
 	{
-		j = 0;
-		while (lit[j] == big[i + j] && i + j < len)
+		if (big[i] == little[0])
 		{
-			if (lit[j + 1] == '\0')
-				return ((char *)(big + i));
-			j++;
+			if (ft_strncmp(big + i, little, little_len) == 0)
+				return ((char *)big + i);
 		}
 		i++;
 	}

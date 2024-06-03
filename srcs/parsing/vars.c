@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/31 13:51:11 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/03 14:56:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int print_aliases(Alias *aliases)
 {
@@ -43,7 +43,7 @@ int is_local_fct(ASTNode *node)
 void ft_init_ms(char **envp)
 {
     size_t envp_size;
-	
+
 	envp_size = 0;
     g_ms.aliases = ft_init_alias();
     g_ms.lexer.input = NULL;

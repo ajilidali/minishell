@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/28 15:49:52 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/28 15:49:57 by moajili          ###   ########.fr       */
+/*   Created: 2024/05/24 15:55:12 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 14:54:12 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void trim_whitespace(char *str)
+int	run_env(t_env *env)
 {
-    char *end;
-
-    while (*str == ' ') str++;
-    end = str + strlen(str) - 1;
-    while (end > str && *end == ' ')
-        end--;
-    *(end + 1) = '\0';
+	while (env)
+	{
+		ft_putendl_fd(env->name_value, STDOUT_FILENO);
+		env = env->next;
+	}
+	return (1);
 }

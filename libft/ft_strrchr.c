@@ -3,24 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 02:46:21 by moajili           #+#    #+#             */
-/*   Updated: 2023/10/30 13:09:42 by moajili          ###   ########.fr       */
+/*   Created: 2023/10/20 14:27:02 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/libft.h"
 
-char	*ft_strrchr(const char st[], int searchedChar)
+/*
+ * Locates the last occurrence of 'c' (converted to a char)
+ * in the string pointed to by 's'.
+ * The terminating null character is considered to be part
+ * of the string; therefore if 'c' is `\0', the functions
+ * locate the terminating `\0'.
+ * @param s The string to be scanned.
+ * @param c The character to be searched within 's'.
+ * @return A pointer to the located character,
+ * or NULL if the character does not appear in the string.
+ */
+char	*ft_strrchr(const char *s, int c)
 {
-	int	i;
+	int				i;
+	unsigned char	chr;
 
-	i = ft_strlen(st);
+	i = 0;
+	chr = (unsigned char)c;
+	while (s[i])
+	{
+		i++;
+	}
 	while (i >= 0)
 	{
-		if (st[i] == (char)searchedChar)
-			return ((char *)(st + i));
+		if (s[i] == chr)
+			return ((char *)&s[i]);
 		i--;
 	}
 	return (NULL);

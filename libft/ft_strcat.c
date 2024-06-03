@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/17 14:54:15 by hclaude           #+#    #+#             */
+/*   Created: 2024/02/02 22:01:17 by moajili           #+#    #+#             */
 /*   Updated: 2024/06/03 17:45:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -13,25 +13,29 @@
 #include "../includes/libft.h"
 
 /*
- * Fills the first 'n' bytes of the memory
- * area pointed to by 's' with the constant byte 'c'.
- * @param s The memory area to fill.
- * @param c The constant byte.
- * @param n The number of bytes to fill.
- * @return A pointer to the memory area 's'.
+ * Appends the string pointed to by 's2'
+ * to the end of the string pointed to by 's1'.
+ * The terminating null character in 's1'
+ * is overwritten by the first character of 's2',
+ * and a null-character is included
+ *  at the end of the new string formed
+ * by the concatenation of both in 's1'.
+ * @param s1 The string to be appended on.
+ * @param s2 The string to append to 's1'.
+ * @return A pointer to the resulting string 's1'.
  */
-void	*ft_memset(void *s, int c, size_t n)
+char	*ft_strcat(char *s1, const char *s2)
 {
-	int		i;
-	char	*target;
+	unsigned int	i;
+	unsigned int	y;
 
-	target = s;
-	i = 0;
-	while (n != 0)
+	i = ft_strlen(s1);
+	y = 0;
+	while (s2[y])
 	{
-		target[i] = c;
-		n--;
-		i++;
+		s1[i + y] = s2[y];
+		y++;
 	}
-	return (target);
+	s1[i + y] = '\0';
+	return (s1);
 }
