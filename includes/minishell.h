@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/31 13:37:09 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/03 14:06:50 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct {
 typedef enum {
     TOKEN_WORD,
     TOKEN_STRING,
+    TOKEN_PIPE,
     TOKEN_OPERATOR,
     TOKEN_EOF
 } TokenType;
@@ -54,9 +55,9 @@ typedef enum {
 
 typedef struct ASTNode {
     ASTNodeType type;
-    char **args;           // For command nodes
-    struct ASTNode *left;  // For pipe nodes
-    struct ASTNode *right; // For pipe nodes
+    char **args;           // Argv
+    struct ASTNode *left;  // pipe 
+    struct ASTNode *right; // pipe 
 } ASTNode;
 
 // Parser Structs

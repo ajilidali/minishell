@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/31 13:47:12 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/03 14:08:04 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@ int	is_whitespace(char c)
 	return (c == ' ' || c == '\t' || c == '\n');
 }
 
+int is_pipe(char c)
+{
+	return (c == '|');
+}
+
 int	is_operator(char c)
 {
-	return (c == '|' || c == '&' || c == ';' || c == '<' || c == '>');
+	return (c == '&' || c == ';' || c == '<' || c == '>');
 }
 
 int	is_quote(char c)
@@ -67,35 +72,6 @@ Token	lexer_word(Lexer *lexer)
 	return (token);
 }
 
-/*Token	lexer_string(Lexer *lexer)
-{
-	char	quote_type;
-	size_t	start;
-	size_t	length;
-	char	*value;
-	char	*qc;
-	Token	token;
-
-	quote_type = lexer_peek(lexer);
-	if (quote_counter(lexer->input, quote_type) % 2 != 0)
-		qc = quote_master(quote_type);
-	else
-		qc = ft_strdup("");
-	lexer_advance(lexer);
-	start = lexer->pos;
-	while (lexer_peek(lexer) != quote_type && lexer_peek(lexer) != '\0')
-		lexer_advance(lexer);
-	length = lexer->pos - start;
-	value = (char *)malloc(length + 1);
-	ft_strncpy(value, lexer->input + start, length);
-	value[length] = '\0';
-	lexer_advance(lexer);
-	// token.type = TOKEN_STRING;
-	token.type = TOKEN_WORD;
-	token.value = ft_strjoin(value, qc);
-	return (token);
-}*/
-
 Token lexer_string(Lexer *lexer)
 {
 	char quote_type;
@@ -135,6 +111,17 @@ Token	lexer_operator(Lexer *lexer)
 	return (token);
 }
 
+Token	lexer_pipe(Lexer *lexer)
+{
+	char	value[2] = {lexer_peek(lexer), '\0'};
+	Token	token;
+
+	lexer_advance(lexer);
+	token.type = TOKEN_PIPE;
+	token.value = ft_strdup(value);
+	return (token);
+}
+
 Lexer	lexer_init(const char *input)
 {
 	Lexer	lexer;
@@ -158,6 +145,8 @@ Token	lexer_next_token(Lexer *lexer)
 		token.value = NULL;
 		return (token);
 	}
+	if (is_pipe(current))
+		return (lexer_pipe(lexer));
 	if (is_operator(current))
 		return (lexer_operator(lexer));
 	if (is_quote(current))
