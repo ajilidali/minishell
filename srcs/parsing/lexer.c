@@ -6,13 +6,18 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 08:36:57 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 09:37:24 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <ctype.h>
 #include <string.h>
+
+int is_pipe(char c)
+{
+	return (c == '|');
+}
 
 int	is_whitespace(char c)
 {
@@ -144,6 +149,16 @@ Lexer	lexer_init(const char *input)
 	lexer.length = ft_strlen(input);
 	return (lexer);
 }
+Token	lexer_pipe(Lexer *lexer)
+{
+	char	value[2] = {lexer_peek(lexer), '\0'};
+	Token	token;
+
+	lexer_advance(lexer);
+	token.type = TOKEN_PIPE;
+	token.value = ft_strdup(value);
+	return (token);
+}
 
 Token	lexer_next_token(Lexer *lexer)
 {
@@ -158,9 +173,11 @@ Token	lexer_next_token(Lexer *lexer)
 		token.value = NULL;
 		return (token);
 	}
-	if (is_operator(current))
+	if (is_pipe(current))
+		return (lexer_pipe(lexer));
+	else if (is_operator(current))
 		return (lexer_operator(lexer));
-	if (is_quote(current))
+	else if (is_quote(current))
 		return (lexer_string(lexer));
 	return (lexer_word(lexer));
 }

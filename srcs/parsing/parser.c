@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 08:37:25 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 09:36:28 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ ASTNode	*parse_pipeline(Parser *parser)
 	ASTNode	*node;
 
 	left = parse_command(parser);
-	while (parser->current_token.type == TOKEN_OPERATOR
+	while (parser->current_token.type == TOKEN_PIPE
 		&& strcmp(parser->current_token.value, "|") == 0)
 	{
 		node = (ASTNode *)malloc(sizeof(ASTNode));
