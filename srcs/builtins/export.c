@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 17:01:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 08:59:40 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	print_env(t_env *env)
 		ft_putendl_fd(env->name_value, STDOUT_FILENO);
 		env = env->next;
 	}
-	return (1);
+	return (0);
 }
 
 int	run_export(char **command, t_env **env)
@@ -61,7 +61,7 @@ int	run_export(char **command, t_env **env)
 	if (!command[1])
 		return (print_env(*env));
 	if (!verify_export(command[1]))
-		return (0);
+		return (1);
 	while (tmp->next)
 		tmp = tmp->next;
 	node = find_variable(command[1], *env);
@@ -69,11 +69,11 @@ int	run_export(char **command, t_env **env)
 	{
 		tmp->next = new_node(command[1]);
 		if (!tmp->next)
-			return (0);
-		return (1);
+			return (1);
+		return (0);
 	}
 	node->name_value = ft_strdup(command[1]);
 	if (!node->name_value)
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }

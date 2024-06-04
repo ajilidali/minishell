@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:02:06 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 17:01:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 09:23:17 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,12 @@ static int	find_variable(char *variable, t_env **env)
 		if (!ft_strncmp(variable, current->name_value, i))
 		{
 			previous->next = current->next;
-			return (free(current->name_value), free(current), 1);
+			return (free(current->name_value), free(current), 0);
 		}
 		previous = current;
 		current = current->next;
 	}
-	return (1);
+	return (0);
 }
 
 int	run_unset(char **command, t_env **env)

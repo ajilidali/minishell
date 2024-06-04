@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 14:43:47 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:26:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,20 @@ int is_local_fct(MS *mini) //here
     if (strcmp(mini->ast->args[0], "alias") == 0)
         exit_status = run_alias(mini);
     if (strcmp(mini->ast->args[0], "cd") == 0)
-        exit_status = run_cd(mini->ast->args);
+        exit_status = run_cd(mini->ast->args, mini->envp);
     if (strcmp(mini->ast->args[0], "env") == 0)
         exit_status = run_env(mini->envp);
     if (strcmp(mini->ast->args[0], "export") == 0)
         exit_status = run_export(mini->ast->args, &mini->envp);
     if (strcmp(mini->ast->args[0], "echo") == 0)
-        exit_status = run_echo(mini->ast->args);   
+        exit_status = run_echo(mini->ast->args);
     if (strcmp(mini->ast->args[0], "pwd") == 0)
         exit_status = run_pwd();
     if (strcmp(mini->ast->args[0], "unset") == 0)
         exit_status = run_unset(mini->ast->args, &mini->envp);
    // if (strcmp(node->args[0], "unset") == 0)
     //    exit_status = run_unset(node->args, &g_ms.env);
-    
+
     printf("\nexit_status : %zu\n", exit_status);
     return exit_status;
 }

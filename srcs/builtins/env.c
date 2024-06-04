@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:55:12 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 14:54:12 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 08:57:15 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,5 @@ int	run_env(t_env *env)
 		ft_putendl_fd(env->name_value, STDOUT_FILENO);
 		env = env->next;
 	}
-	return (1);
+	return (0);
 }
