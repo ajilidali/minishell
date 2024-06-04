@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 18:22:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 08:46:06 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ typedef struct {
 
 //Lexer Structs
 typedef enum {
-	TOKEN_WORD,
-	TOKEN_STRING,
-	TOKEN_OPERATOR,
-	TOKEN_EOF
+    TOKEN_WORD,
+    TOKEN_STRING,
+    TOKEN_PIPE,
+    TOKEN_OPERATOR,
+    TOKEN_EOF
 } TokenType;
 
 typedef struct {
@@ -83,14 +84,14 @@ typedef struct {
 
 // Minishell Structs
 typedef struct {
-	Alias	*aliases;
-	Lexer	lexer;
-	Token	token;
-	Parser	parser;
-	ASTNode	*ast;
-	size_t	alias_count;
-	char	**envp;
-	char	*line;
+    Alias	*aliases;
+    Lexer	lexer;
+    Token	token;
+    Parser	parser;
+    ASTNode	*ast;
+    size_t	alias_count;
+    t_env	*envp;
+    char	*line;
 } MS;
 
 // Extern global variable

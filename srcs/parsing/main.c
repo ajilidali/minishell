@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 14:56:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 08:48:51 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,14 @@ void	print_envp(char **envp)
 
 char	*rl_shell(char *line_read)
 {
+	char *dir;
 	if (line_read)
 	{
 		free(line_read);
 		line_read = NULL;
-	}
-	line_read = readline("DEDSEC > ");
+	}	
+	dir = ft_strjoin("\033[0;32mDEDSEC ❋ ", ft_strjoin(getcwd(NULL, 0), "$ > \033[0m"));
+	line_read = readline(dir);
 	if (line_read == NULL)
 	{
 		rl_clear_history();

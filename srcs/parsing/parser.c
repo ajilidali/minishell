@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 14:56:13 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 08:37:25 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	execute_ast(ASTNode *node)
 			return ;
 		if (fork() == 0)
 		{
-			if (execute(node, g_ms.envp) != 0)
+			if (execute(node, get_tabenv(g_ms.envp)) != 0)
 			{
 				printf("DEDSEC: %s: command not found\n", node->args[0]);
 				exit(1);

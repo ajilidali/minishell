@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 18:00:34 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 08:41:02 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*find_path(char *cmd, char **envp)
 			return (freetab(paths), free(part_path), path);
 		//ft_freef("%p %p", part_path, path);
 	}
-   // fprintf(stderr, "\033[33;1m  cmd : %s\033[m\n", cmd);
+    // fprintf(stderr, "\033[33;1m  cmd : %s\033[m\n", cmd);
 	return (freetab(paths), NULL);
 }
 

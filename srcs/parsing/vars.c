@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 14:56:23 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 08:22:26 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,23 @@ int is_local_fct(ASTNode *node)
     exit_status = 1;
     if (strcmp(node->args[0], "alias") == 0)
         exit_status = ft_alias(node->args);
+    if (strcmp(node->args[0], "cd") == 0)
+        exit_status = run_cd(node->args);
+    if (strcmp(node->args[0], "export") == 0)
+        exit_status = run_export(node->args, &g_ms.envp);
+   // if (strcmp(node->args[0], "unset") == 0)
+    //    exit_status = run_unset(node->args, &g_ms.env);
+    
     printf("exit_status : %zu\n", exit_status);
     return exit_status;
 }
 
+
 void ft_init_ms(char **envp)
 {
-    size_t envp_size;
-
-	envp_size = 0;
+    /*size_t envp_size;
+	
+	envp_size = 0;*/
     g_ms.aliases = ft_init_alias();
     g_ms.lexer.input = NULL;
     g_ms.lexer.pos = 0;
@@ -53,7 +61,8 @@ void ft_init_ms(char **envp)
     g_ms.token.type = TOKEN_EOF;
     g_ms.token.value = NULL;
     g_ms.line = NULL;
-    while (envp[envp_size])
+    g_ms.envp = copy_env(envp);
+   /* while (envp[envp_size])
         envp_size++;
     g_ms.envp = (char **)malloc(sizeof(char *) * (envp_size + 1));
     if (!g_ms.envp)
@@ -64,5 +73,5 @@ void ft_init_ms(char **envp)
         g_ms.envp[envp_size] = strdup(envp[envp_size]);
         envp_size++;
     }
-    g_ms.envp[envp_size] = NULL;
+    g_ms.envp[envp_size] = NULL;*/
 }
