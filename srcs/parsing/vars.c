@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 09:08:48 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 09:19:29 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,12 @@ int is_local_fct(ASTNode *node)
         exit_status = run_env(g_ms.envp);
     if (strcmp(node->args[0], "export") == 0)
         exit_status = run_export(node->args, &g_ms.envp);
+    if (strcmp(node->args[0], "echo") == 0)
+        exit_status = run_echo(node->args);   
+    if (strcmp(node->args[0], "pwd") == 0)
+        exit_status = run_pwd();
+    if (strcmp(node->args[0], "unset") == 0)
+        exit_status = run_unset(node->args, &g_ms.envp);
    // if (strcmp(node->args[0], "unset") == 0)
     //    exit_status = run_unset(node->args, &g_ms.env);
     
