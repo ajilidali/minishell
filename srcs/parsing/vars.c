@@ -6,26 +6,13 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 08:22:26 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 09:08:48 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int print_aliases(Alias *aliases)
-{
-    size_t i;
 
-	i = 0;
-    if (!aliases)
-        return -1;
-    while (i <= g_ms.alias_count)
-    {
-        printf("alias %s='%s'\n", aliases[i].cmd, aliases[i].value);
-        i++;
-    }
-    return 0;
-}
 
 int is_local_fct(ASTNode *node)
 {
@@ -35,9 +22,11 @@ int is_local_fct(ASTNode *node)
         return 0;
     exit_status = 1;
     if (strcmp(node->args[0], "alias") == 0)
-        exit_status = ft_alias(node->args);
+        exit_status = run_alias(node->args);
     if (strcmp(node->args[0], "cd") == 0)
         exit_status = run_cd(node->args);
+    if (strcmp(node->args[0], "env") == 0)
+        exit_status = run_env(g_ms.envp);
     if (strcmp(node->args[0], "export") == 0)
         exit_status = run_export(node->args, &g_ms.envp);
    // if (strcmp(node->args[0], "unset") == 0)
@@ -47,6 +36,23 @@ int is_local_fct(ASTNode *node)
     return exit_status;
 }
 
+Alias* ft_init_alias(void)
+{
+    size_t i = 0;
+    Alias *aliases = (Alias *)malloc(sizeof(Alias) * 1024);
+    if (!aliases)
+    {
+        fprintf(stderr, "Memory allocation error\n");
+        exit(EXIT_FAILURE);
+    }
+    while (i < 1024)
+    {
+        aliases[i].cmd = NULL;
+        aliases[i].value = NULL;
+        i++;
+    }
+    return (aliases);
+}
 
 void ft_init_ms(char **envp)
 {

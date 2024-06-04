@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 08:46:06 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 09:08:58 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,18 +105,13 @@ int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
+int			run_alias(char **argv);
 
 // Env functions
 void		free_env(t_env *env);
 char		**get_tabenv(t_env *env);
 t_env		*copy_env(char **envp);
 t_env		*new_node(char *name_value);
-
-/*ALIAS*/
-int			print_aliases(Alias *aliases);
-Alias		*ft_init_alias(void);
-int			ft_alias(char **argv);
-int			alias_finder(char *cmd);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can
 // run fcts from structs

@@ -6,11 +6,24 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/29 17:06:20 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 09:08:51 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int alias_finder(char *cmd)
+{
+    size_t i = 0;
+
+    while (i < g_ms.alias_count)
+    {
+        if (strcmp(g_ms.aliases[i].cmd, cmd) == 0)
+            return i;
+        i++;
+    }
+    return -1;
+}
 
 void assign_alias(char *alias, char *cmd)
 {
@@ -53,20 +66,22 @@ void process_arguments(int argc, char *argv[])
     }
 }
 
-int alias_finder(char *cmd)
+int print_aliases(Alias *aliases)
 {
-    size_t i = 0;
+    size_t i;
 
-    while (i < g_ms.alias_count)
+	i = 0;
+    if (!aliases)
+        return -1;
+    while (i <= g_ms.alias_count)
     {
-        if (strcmp(g_ms.aliases[i].cmd, cmd) == 0)
-            return i;
+        printf("alias %s='%s'\n", aliases[i].cmd, aliases[i].value);
         i++;
     }
-    return -1;
+    return 0;
 }
 
-int ft_alias(char **argv)
+int run_alias(char **argv)
 {
     int argc = 0;
 
@@ -82,20 +97,3 @@ int ft_alias(char **argv)
     return 0;
 }
 
-Alias* ft_init_alias(void)
-{
-    size_t i = 0;
-    Alias *aliases = (Alias *)malloc(sizeof(Alias) * 1024);
-    if (!aliases)
-    {
-        fprintf(stderr, "Memory allocation error\n");
-        exit(EXIT_FAILURE);
-    }
-    while (i < 1024)
-    {
-        aliases[i].cmd = NULL;
-        aliases[i].value = NULL;
-        i++;
-    }
-    return (aliases);
-}
