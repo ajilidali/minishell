@@ -3,25 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 02:46:40 by moajili           #+#    #+#             */
-/*   Updated: 2023/11/23 13:03:47 by moajili          ###   ########.fr       */
+/*   Created: 2023/10/18 12:28:12 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+/*
+ * Copies 'n' bytes from memory area 'src' to memory area 'dst'.
+ * If 'src' and 'dst' overlap, behavior is undefined.
+ * Applications in which 'src' and 'dst'
+ * might overlap should use memmove(3) instead.
+ * @param dst The memory area to copy to.
+ * @param src The memory area to copy from.
+ * @param n The number of bytes to copy.
+ * @return A pointer to 'dst'.
+ */
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	char		*destination;
-	const char	*source;
+	char	*dest;
+	size_t	i;
 
-	if (dest == NULL && src == NULL)
+	dest = dst;
+	i = 0;
+	if (src == NULL && dst == NULL)
 		return (dest);
-	destination = (char *)dest;
-	source = (const char *)src;
-	while (n--)
-		*destination++ = *source++;
+	while (i < n)
+	{
+		dest[i] = *(char *)src;
+		src++;
+		i++;
+	}
 	return (dest);
 }

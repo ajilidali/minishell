@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 12:00:54 by hclaude           #+#    #+#             */
+/*   Created: 2024/04/08 14:51:38 by hclaude           #+#    #+#             */
 /*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -15,26 +15,24 @@
 static int	ispace(char c)
 {
 	if ((c >= 9 && c <= 13) || c == 32)
-	{
 		return (1);
-	}
 	return (0);
 }
 
 /*
- * Converts a string to an integer.
+ * Converts a string to a long integer.
  * @param nptr The string to convert.
- * @return The integer representation of the string.
+ * @return The long integer representation of the string.
  * If the string starts with '-', the result is negative.
  * If the string starts with '+', the result is positive.
  * If the string starts with neither, the result is positive.
  * If the string contains non-digit characters, they are ignored.
  */
-int	ft_atoi(const char *nptr)
+long	ft_atol(const char *nptr)
 {
-	int	i;
-	int	negative;
-	int	result;
+	long	i;
+	long	result;
+	int		negative;
 
 	result = 0;
 	negative = 1;

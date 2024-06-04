@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/29 15:56:12 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:00:34 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*find_path(char *cmd, char **envp)
 {
@@ -35,14 +35,14 @@ char	*find_path(char *cmd, char **envp)
 		part_path = ft_strjoin(paths[i++], "/");
 		path = ft_strjoin(part_path, cmd);
 		if (!part_path || !path)
-			return (ft_freef("%s %p", paths, part_path), NULL);
+			return (freetab(paths), free(part_path), NULL);
 		//fprintf(stderr, "\033[33;1m  path : %s\033[m\n", path);
 		if (access(path, F_OK) == 0)
-			return (ft_freef("%s %p", paths, part_path), path);
+			return (freetab(paths), free(part_path), path);
 		//ft_freef("%p %p", part_path, path);
 	}
    // fprintf(stderr, "\033[33;1m  cmd : %s\033[m\n", cmd);
-	return (ft_freef("%s", paths), NULL);
+	return (freetab(paths), NULL);
 }
 
 void	error(int err)
@@ -92,14 +92,15 @@ int	execute(ASTNode *node, char **envp)
 		path = check_local_cmd(node->args[0]);
 	if (!path)
 	{
-		ft_freef("%p", path);
+		free(path);
 		return (EXIT_FAILURE);
 	}
 	//fprintf(stderr, "\033[33;1m%s\033[m\n", path);
 	//fprintf(stderr, "\033[33;1m%s\033[m\n", cmd[0]);
 	if (execve(path, node->args, envp) == -1)
 	{
-		ft_freef("%s,%p", node->args[0], path);
+		free(path);
+		free(node->args[0]);
 		return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);

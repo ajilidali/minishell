@@ -1,26 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lstadd_back_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 15:19:46 by moajili           #+#    #+#             */
-/*   Updated: 2023/11/02 15:58:37 by moajili          ###   ########.fr       */
+/*   Created: 2023/11/04 01:56:11 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+ * Adds the element 'new' at the end of the list.
+ * @param lst The address of a pointer to the first link of a list.
+ * @param new The address of a pointer to the element to be added to the list.
+ * If 'lst' or 'new' is NULL, the function does nothing.
+ * If '*lst' is NULL, the 'new' element becomes the first of the list.
+ */
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*last;
 
-	if (!(*lst))
-		*lst = new;
-	else
+	if (!lst || !new)
+		return ;
+	if (!*lst)
 	{
-		last = ft_lstlast(*lst);
-		last->next = new;
+		*lst = new;
+		return ;
 	}
+	last = *lst;
+	while (last->next)
+	{
+		last = last->next;
+	}
+	last->next = new;
 }

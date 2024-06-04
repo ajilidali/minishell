@@ -1,33 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/31 18:23:11 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
+/*   Created: 2024/05/22 13:47:06 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/04 13:37:12 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../includes/minishell.h"
 
-/*
- * Outputs the string 's' to the given file descriptor.
- * @param s The string to output.
- * @param fd The file descriptor on which to write.
- * If 's' is NULL, the function does nothing.
- */
-void	ft_putstr_fd(char *s, int fd)
+int	run_pwd(void)
 {
-	size_t	i;
+	char	*path;
 
-	i = 0;
-	if (!s)
-		return ;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	path = getcwd(NULL, 0);
+	if (!path)
+		return (0);
+	ft_putstr_fd(path, STDOUT_FILENO);
+	free(path);
+	return (1);
 }

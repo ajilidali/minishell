@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 14:10:10 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:36:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 Parser	parser_init(const char *input)
 {
@@ -65,7 +64,7 @@ ASTNode	*parse_pipeline(Parser *parser)
 	ASTNode	*node;
 
 	left = parse_command(parser);
-	while (parser->current_token.type == TOKEN_PIPE
+	while (parser->current_token.type == TOKEN_OPERATOR
 		&& strcmp(parser->current_token.value, "|") == 0)
 	{
 		node = (ASTNode *)malloc(sizeof(ASTNode));
@@ -117,7 +116,10 @@ void	execute_ast(ASTNode *node)
 		if (fork() == 0)
 		{
 			if (execute(node, g_ms.envp) != 0)
-				return (printf("DEDSEC: %s: command not found\n", node->args[0]),exit(1));
+			{
+				printf("DEDSEC: %s: command not found\n", node->args[0]);
+				exit(1);
+			}
 		}
 		else
 			wait(NULL);

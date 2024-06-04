@@ -3,55 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/24 12:00:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/04/17 12:34:42 by moajili          ###   ########.fr       */
+/*   Created: 2023/10/25 15:17:49 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <errno.h>
 
-char	*ft_strjoin(char *s1, char *s2)
+/*
+ * Allocates (with malloc(3)) and
+ * returns a new string, which
+ * is the result of the concatenation of 's1' and 's2'.
+ * @param s1 The prefix string.
+ * @param s2 The suffix string.
+ * @return The new string. NULL if the allocation fails.
+ */
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	len1;
-	size_t	len2;
-	char	*ret;
+	size_t	i;
+	char	*str;
+	int		y;
 
-	if (s1 == NULL || s2 == NULL)
-	{
-		errno = ENOMEM;
+	i = 0;
+	y = 0;
+	if (!s1 || !s2)
 		return (NULL);
-	}
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	ret = (char *)malloc((len1 + len2 + 1) * sizeof(char));
-	if (ret == NULL)
-	{
-		errno = ENOMEM;
+	str = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!str)
 		return (NULL);
-	}
-	ft_memset(ret, 0, (len1 + len2 + 1) * sizeof(char));
-	ft_memcpy(ret, s1, len1);
-	ft_memcpy(ret + len1, s2, len2 + 1);
-	return (ret);
-}
-
-char	*ft_ustrjoin(char *s1, char *s2)
-{
-	size_t len1;
-	size_t len2;
-	char *ret;
-
-	len1 = ft_strlen(s1);
-	len2 = ft_strlen(s2);
-	ret = (char *)malloc((len1 + len2 + 1) * sizeof(char));
-	if (ret == NULL)
-		return (NULL);
-	ft_memset(ret, 0, (len1 + len2 + 1) * sizeof(char));
-	ft_memcpy(ret, s1, len1);
-	ft_memcpy(ret + len1, s2, len2 + 1);
-	free(s1);
-	return (ret);
+	while (s1[i])
+		str[y++] = s1[i++];
+	i = 0;
+	while (s2[i])
+		str[y++] = s2[i++];
+	str[y] = '\0';
+	return (str);
 }

@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/21 02:46:11 by moajili           #+#    #+#             */
-/*   Updated: 2023/11/03 14:33:37 by moajili          ###   ########.fr       */
+/*   Created: 2023/10/17 15:34:07 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+/*
+ * Sets the first 'n' bytes of the block of memory pointed by 's' to zero.
+ * @param s Pointer to the block of memory to fill.
+ * @param n Number of bytes to be set to zero.
+ */
 void	ft_bzero(void *s, size_t n)
 {
-	size_t	i;
-	char	*txt;
+	char	*target;
 
-	txt = (char *)s;
-	i = 0;
-	while (i < n)
-	{
-		txt[i] = '\0';
-		i++;
-	}
+	target = s;
+	while (n--)
+		*target++ = '\0';
 }
