@@ -3,47 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 14:56:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:40:06 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-MS		g_ms;
 
 int	main(int argc, char **argv, char **envp)
 {
-	if (getpid() != 0)
-	{
-		(void)argc;
-		(void)argv;
-		ft_init_ms(envp);
-		while ((g_ms.line = rl_shell(g_ms.line)))
-		{
-			// printf("You entered: %s\n", g_ms.line);
-			// Begin lexer
-			g_ms.lexer = lexer_init(g_ms.line);
-			// g_ms.token = lexer_next_token(&g_ms.lexer);
-			g_ms.parser = parser_init(g_ms.line);
-			g_ms.ast = parse_pipeline(&g_ms.parser);
-			if (g_ms.ast)
-			{
-				execute_ast(g_ms.ast);
-				free_ast(g_ms.ast);
-			}
-			/* while (g_ms.token.type != TOKEN_EOF) {
-					printf("Token: Type = %d, Value = '%s'\n", g_ms.token.type,
-						g_ms.token.value);
-					if (g_ms.token.value != NULL)
-						free(g_ms.token.value);
-					g_ms.token = lexer_next_token(&g_ms.lexer);
-				}*/
-		}
-	}
-	return (0);
+    MS	*mini;
+
+	mini = NULL;
+	mini = ft_init_ms(mini, envp); // Initialize mini
+    if (getpid() != 0)
+    {
+        (void)argc;
+        (void)argv;
+        while ((mini->line = rl_shell(mini->line)))
+        {
+            mini->lexer = lexer_init(mini->line);
+            mini->parser = parser_init(mini->line);
+            mini->ast = parse_pipeline(&mini->parser);
+            if (mini->ast)
+            {
+                execute_ast(mini);
+                free_ast(mini->ast);
+            }
+        }
+    }
+    return (0);
 }
 
 
@@ -61,12 +53,14 @@ void	print_envp(char **envp)
 
 char	*rl_shell(char *line_read)
 {
+	char *dir;
 	if (line_read)
 	{
 		free(line_read);
 		line_read = NULL;
-	}
-	line_read = readline("DEDSEC > ");
+	}	
+	dir = ft_strjoin("\033[0;32mDEDSEC ❋ ", ft_strjoin(getcwd(NULL, 0), "$ > \033[0m"));
+	line_read = readline(dir);
 	if (line_read == NULL)
 	{
 		rl_clear_history();

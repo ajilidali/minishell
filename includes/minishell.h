@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 14:35:44 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:11:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ typedef struct {
 
 //Lexer Structs
 typedef enum {
-	TOKEN_WORD,
-	TOKEN_STRING,
-	TOKEN_OPERATOR,
-	TOKEN_EOF
+    TOKEN_WORD,
+    TOKEN_STRING,
+    TOKEN_PIPE,
+    TOKEN_OPERATOR,
+    TOKEN_EOF
 } TokenType;
 
 typedef struct {
@@ -83,39 +84,34 @@ typedef struct {
 
 // Minishell Structs
 typedef struct {
-	Alias	*aliases;
-	Lexer	lexer;
-	Token	token;
-	Parser	parser;
-	ASTNode	*ast;
-	size_t	alias_count;
-	char	**envp;
-	char	*line;
+    Alias	*aliases;
+    Lexer	lexer;
+    Token	token;
+    Parser	parser;
+    ASTNode	*ast;
+    size_t	alias_count;
+    t_env	*envp;
+    char	*line;
 } MS;
 
 // Extern global variable
-extern MS g_ms;
+//extern MS g_ms;
 
 // Built-in functions
-int			is_local_fct(ASTNode *node);
+int			is_local_fct(MS *mini);
 int			run_echo(char **command);
 int			run_cd(char **command, t_env *env);
 int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
+int			run_alias(MS *mini);
 
 // Env functions
 void		free_env(t_env *env);
 char		**get_tabenv(t_env *env);
 t_env		*copy_env(char **envp);
 t_env		*new_node(char *name_value);
-
-/*ALIAS*/
-int			print_aliases(Alias *aliases);
-Alias		*ft_init_alias(void);
-int			ft_alias(char **argv);
-int			alias_finder(char *cmd);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while, have to make sure can
 // run fcts from structs
@@ -143,18 +139,18 @@ void		parser_advance(Parser *parser);
 ASTNode		*parse_command(Parser *parser);
 ASTNode		*parse_pipeline(Parser *parser);
 void		free_ast(ASTNode *node);
-void		execute_ast(ASTNode *node);
-void		ft_fork_left(ASTNode *node, int pipefd[2]);
-void		ft_fork_right(ASTNode *node, int pipefd[2]);
+void		execute_ast(MS *mini);
+void		ft_fork_right(MS *mini, int pipefd[2]);
+void		ft_fork_left(MS *mini, int pipefd[2]);
 
 // Main functions
 int			executor(char *line, char **envp);
 char		*rl_shell(char *line_read);
-void		ft_init_ms(char **envp);
+MS			*ft_init_ms(MS *mini, char **envp);
 
 // Other functions
 void		print_envp(char **envp);
-void		process_arguments(int argc, char *argv[]);
+//void		process_arguments(int argc, char *argv[]);
 void		trim_whitespace(char *str);
 void		freetab(char **str);
 
