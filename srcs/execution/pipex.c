@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 18:00:34 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:58:18 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,5 +103,5 @@ int	execute(ASTNode *node, char **envp)
 		free(node->args[0]);
 		return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

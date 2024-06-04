@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/04 14:13:47 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:56:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	change_pwd(char *old_path, t_env *env)
 		}
 		env = env->next;
 	}
+	free(old_path);
+	free(new_path);
 }
 
 int	run_cd(char **command, t_env *env)
