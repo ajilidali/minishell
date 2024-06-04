@@ -6,7 +6,7 @@
 #    By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/06/03 18:06:56 by hclaude          ###   ########.fr        #
+#    Updated: 2024/06/04 13:16:00 by hclaude          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ MAIN 	= srcs/main.c
 all: ${NAME}
 
 ${NAME}: ${OBJS}
-	make -C ./libft
+	@make -s -C ./libft
 	@$(CC) ${OBJS} -Llibft -lft -lreadline -o ${NAME} ${CFLAGS} -g3
 	@echo "\033[32mminishell compiled\033[0m"
 

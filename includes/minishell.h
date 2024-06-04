@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/03 18:22:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:14:54 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ extern MS g_ms;
 // Built-in functions
 int			is_local_fct(ASTNode *node);
 int			run_echo(char **command);
-int			run_cd(char **command);
+int			run_cd(char **command, t_env *env);
 int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
