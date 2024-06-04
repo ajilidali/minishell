@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+         #
+#    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/22 13:55:06 by moajili           #+#    #+#              #
-#    Updated: 2024/06/03 18:05:18 by hclaude          ###   ########.fr        #
+#    Updated: 2024/06/04 08:13:20 by moajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = @cc
+CC = @gcc
 CFLAGS = -Wall -Werror -Wextra
 AR=ar
 ARFLAGS = rcs
