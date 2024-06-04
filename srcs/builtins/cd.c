@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/04 08:43:09 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:46:33 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ int     run_cd(char **command)
 
         if (!command[1])
         {
-        printf("tg\n");
                 home = getenv("HOME");
                 if (!home)
             return (printf("cd: HOME not set\n"),1);

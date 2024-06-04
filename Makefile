@@ -6,13 +6,13 @@
 #    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/06/04 08:53:34 by moajili          ###   ########.fr        #
+#    Updated: 2024/06/04 13:00:23 by moajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 CC 		= @gcc
-CFLAGS 	= -Wall -Wextra -Werror -g3
+CFLAGS 	= -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/vars.c srcs/parsing/parser.c srcs/builtins/alias.c srcs/parsing/utils.c srcs/parsing/quotes.c \
 srcs/builtins/echo.c srcs/builtins/cd.c srcs/builtins/pwd.c srcs/builtins/export.c srcs/builtins/unset.c srcs/builtins/env.c \
