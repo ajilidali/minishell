@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 08:36:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 09:30:33 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,22 @@ int is_local_fct(MS *mini) //here
 	if (!mini->ast->args[0])
 		return (0);
 	exit_status = 1;
-	if (strcmp(mini->ast->args[0], "alias") == 0)
+	if (ft_strcmp(mini->ast->args[0], "alias") == 0)
 		exit_status = run_alias(mini);
-	if (strcmp(mini->ast->args[0], "cd") == 0)
+	if (ft_strcmp(mini->ast->args[0], "cd") == 0)
 		exit_status = run_cd(mini->ast->args, mini->envp);
-	if (strcmp(mini->ast->args[0], "env") == 0)
+	if (ft_strcmp(mini->ast->args[0], "env") == 0)
 		exit_status = run_env(mini->envp);
-	if (strcmp(mini->ast->args[0], "export") == 0)
+	if (ft_strcmp(mini->ast->args[0], "export") == 0)
 		exit_status = run_export(mini->ast->args, &mini->envp);
-	if (strcmp(mini->ast->args[0], "echo") == 0)
+	if (ft_strcmp(mini->ast->args[0], "echo") == 0)
 		exit_status = run_echo(mini->ast->args);
-	if (strcmp(mini->ast->args[0], "pwd") == 0)
+	if (ft_strcmp(mini->ast->args[0], "pwd") == 0)
 		exit_status = run_pwd();
-	if (strcmp(mini->ast->args[0], "unset") == 0)
+	if (ft_strcmp(mini->ast->args[0], "unset") == 0)
 		exit_status = run_unset(mini->ast->args, &mini->envp);
+	if (ft_strcmp(mini->ast->args[0], "exit") == 0)
+		run_exit(mini->ast->args);
 	return (exit_status);
 }
 
@@ -42,7 +44,7 @@ Alias* ft_init_alias(void)
 	Alias *aliases = (Alias *)malloc(sizeof(Alias) * 1024);
 	if (!aliases)
 	{
-		fprintf(stderr, "Memory allocation error\n");
+		ft_putendl_fd("Memory allocation error", STDERR_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	while (i < 1024)

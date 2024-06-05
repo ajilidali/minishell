@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 08:34:40 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 09:18:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
 int			run_alias(MS *mini);
+void		run_exit(char **command);
 
 // Env functions
 void		free_env(t_env *env);

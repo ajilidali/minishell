@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 08:35:37 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 09:28:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	main(int argc, char **argv, char **envp)
 	return (0);
 }
 
-
 void	print_envp(char **envp)
 {
 	int	i;
@@ -66,12 +65,15 @@ char	*rl_shell(char *line_read)
 		rl_clear_history();
 		exit(0);
 	}
-	if (ft_strcmp(line_read, "exit") == 0)
-	{
-		rl_clear_history();
-		free(line_read);
-		exit(0);
-	}
+	// LA FONCTION EXIT EST FAITE MAIS
+	// TROUVER UN MOYEN DE FREE line_read
+
+	//if (ft_strcmp(line_read, "exit") == 0)
+	//{
+	//	rl_clear_history();
+	//	free(line_read);
+	//	exit(127);
+	//}
 	if (line_read && *line_read)
 		add_history(line_read);
 	return (line_read);
