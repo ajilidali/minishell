@@ -24,7 +24,7 @@ int is_local_fct(MS *mini, ASTNode *node) //here
     if (strcmp(node->args[0], "alias") == 0)
         exit_status = run_alias(mini, node);
     if (strcmp(node->args[0], "cd") == 0)
-        exit_status = run_cd(node->args);
+        exit_status = run_cd(node->args, mini->envp);
     if (strcmp(node->args[0], "env") == 0)
         exit_status = run_env(mini->envp);
     if (strcmp(node->args[0], "export") == 0)
@@ -35,7 +35,7 @@ int is_local_fct(MS *mini, ASTNode *node) //here
         exit_status = run_pwd();
     if (strcmp(node->args[0], "unset") == 0)
         exit_status = run_unset(node->args, &mini->envp);
-    if (ft_strcmp(ndoe->args[0], "exit") == 0)
+    if (ft_strcmp(node->args[0], "exit") == 0)
 		    run_exit(node->args);
     
     printf("\nexit_status : %zu\n", exit_status);
