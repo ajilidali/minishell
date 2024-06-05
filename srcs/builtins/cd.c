@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/04 16:10:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 08:30:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,21 +84,18 @@ int	run_cd(char **command, t_env *env)
 	{
 		home = getenv("HOME");
 		if (!home)
-		{
-			printf("cd: HOME not set\n");
-			return (0);
-		}
+			return (ft_putendl_fd("cd: HOME not set", 2), 1);
 		if (chdir(home) == -1)
 		{
 			printf("cd: %s: %s\n", command[1], strerror(errno));
-			return (0);
+			return (1);
 		}
-		return (change_pwd(old_pwd, env), 1);
+		return (change_pwd(old_pwd, env), 0);
 	}
 	if (chdir(command[1]) == -1)
 	{
 		printf("cd: %s: %s\n", command[1], strerror(errno));
-		return (0);
+		return (1);
 	}
-	return (change_pwd(old_pwd, env), 1);
+	return (change_pwd(old_pwd, env), 0);
 }

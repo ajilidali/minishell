@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 16:12:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 07:50:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int	execute(ASTNode *node, char **envp)
 	if (!path)
 	{
 		free(path);
+		freetab(envp);
 		return (EXIT_FAILURE);
 	}
 	//fprintf(stderr, "\033[33;1m%s\033[m\n", path);
@@ -103,5 +104,5 @@ int	execute(ASTNode *node, char **envp)
 		free(node->args[0]);
 		return (EXIT_FAILURE);
 	}
-	return (EXIT_FAILURE);
+	return (freetab(envp), EXIT_FAILURE);
 }

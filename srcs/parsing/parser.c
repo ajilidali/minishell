@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 16:12:23 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 08:35:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,9 @@ void	execute_ast(MS *mini)
 		{
 			if (execute(mini->ast, get_tabenv(mini->envp)) != 0)
 			{
-				printf("DEDSEC: %s: command not found\n", mini->ast->args[0]);
+				ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
+				ft_putstr_fd(mini->ast->args[0], STDERR_FILENO);
+				ft_putstr_fd(": command not found\n", STDERR_FILENO);
 				exit(1);
 			}
 		}
