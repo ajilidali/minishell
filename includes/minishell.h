@@ -98,14 +98,14 @@ typedef struct {
 //extern MS g_ms;
 
 // Built-in functions
-int			is_local_fct(MS *mini);
+int is_local_fct(MS *mini, ASTNode *node);
 int			run_echo(char **command);
 int			run_cd(char **command, t_env *env);
 int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
-int			run_alias(MS *mini);
+int			run_alias(MS *mini, ASTNode *node);
 void		run_exit(char **command);
 
 // Env functions
@@ -140,9 +140,9 @@ void		parser_advance(Parser *parser);
 ASTNode		*parse_command(Parser *parser);
 ASTNode		*parse_pipeline(Parser *parser);
 void		free_ast(ASTNode *node);
-void		execute_ast(MS *mini);
-void		ft_fork_right(MS *mini, int pipefd[2]);
-void		ft_fork_left(MS *mini, int pipefd[2]);
+void		execute_ast(ASTNode *node, MS *mini);
+void		ft_fork_right(ASTNode *node, MS *mini,int pipefd[2]);
+void		ft_fork_left(ASTNode *node, MS *mini,int pipefd[2]);
 
 // Main functions
 int			executor(char *line, char **envp);

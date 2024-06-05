@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 10:30:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:55:15 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*find_path(char *cmd, char **envp)
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
-	//fprintf(stderr, "\033[33;1m  envp : %s\033[m\n", envp[i]);
+	fprintf(stderr, "\033[33;1m  envp : %s\033[m\n", envp[i]);
 	if (!envp[i])
 		return (/*fprintf(stderr, "\033[33;1m ENV is NULL, quitting...\033[m\n"),*/
 			NULL);
@@ -36,12 +36,12 @@ char	*find_path(char *cmd, char **envp)
 		path = ft_strjoin(part_path, cmd);
 		if (!part_path || !path)
 			return (freetab(paths), free(part_path), NULL);
-		//fprintf(stderr, "\033[33;1m  path : %s\033[m\n", path);
+		fprintf(stderr, "\033[33;1m  path : %s\033[m\n", path);
 		if (access(path, F_OK) == 0)
 			return (freetab(paths), free(part_path), path);
 		//ft_freef("%p %p", part_path, path);
 	}
-    // fprintf(stderr, "\033[33;1m  cmd : %s\033[m\n", cmd);
+     fprintf(stderr, "\033[33;1m  cmd : %s\033[m\n", cmd);
 	return (freetab(paths), NULL);
 }
 
@@ -57,6 +57,7 @@ char	*check_local_cmd(char *cmd)
 	int		sub;
 	char	*path;
 
+	
 	if (cmd[0] == '.' && cmd[1] == '/')
 	{
 		i = 2;

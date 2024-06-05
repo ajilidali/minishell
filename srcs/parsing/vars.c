@@ -3,39 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 10:19:51 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:35:11 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_local_fct(MS *mini) //here
-{
-	size_t	exit_status;
 
-	if (!mini->ast->args[0])
-		return (0);
-	exit_status = 1;
-	if (ft_strcmp(mini->ast->args[0], "alias") == 0)
-		exit_status = run_alias(mini);
-	if (ft_strcmp(mini->ast->args[0], "cd") == 0)
-		exit_status = run_cd(mini->ast->args, mini->envp);
-	if (ft_strcmp(mini->ast->args[0], "env") == 0)
-		exit_status = run_env(mini->envp);
-	if (ft_strcmp(mini->ast->args[0], "export") == 0)
-		exit_status = run_export(mini->ast->args, &mini->envp);
-	if (ft_strcmp(mini->ast->args[0], "echo") == 0)
-		exit_status = run_echo(mini->ast->args);
-	if (ft_strcmp(mini->ast->args[0], "pwd") == 0)
-		exit_status = run_pwd();
-	if (ft_strcmp(mini->ast->args[0], "unset") == 0)
-		exit_status = run_unset(mini->ast->args, &mini->envp);
-	if (ft_strcmp(mini->ast->args[0], "exit") == 0)
-		run_exit(mini->ast->args);
-	return (exit_status);
+int is_local_fct(MS *mini, ASTNode *node) //here
+{
+  size_t	exit_status;
+
+  if (!node->args[0])
+        return 0;
+    exit_status = 1;
+    if (strcmp(node->args[0], "alias") == 0)
+        exit_status = run_alias(mini, node);
+    if (strcmp(node->args[0], "cd") == 0)
+        exit_status = run_cd(node->args);
+    if (strcmp(node->args[0], "env") == 0)
+        exit_status = run_env(mini->envp);
+    if (strcmp(node->args[0], "export") == 0)
+        exit_status = run_export(node->args, &mini->envp);
+    if (strcmp(node->args[0], "echo") == 0)
+        exit_status = run_echo(node->args);   
+    if (strcmp(node->args[0], "pwd") == 0)
+        exit_status = run_pwd();
+    if (strcmp(node->args[0], "unset") == 0)
+        exit_status = run_unset(node->args, &mini->envp);
+    if (ft_strcmp(ndoe->args[0], "exit") == 0)
+		    run_exit(node->args);
+    
+    printf("\nexit_status : %zu\n", exit_status);
+    return (exit_status);
 }
 
 Alias	*ft_init_alias(void)

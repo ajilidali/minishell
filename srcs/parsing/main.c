@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 10:18:06 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:38:42 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,23 +18,23 @@ int	main(int argc, char **argv, char **envp)
 
 	mini = NULL;
 	mini = ft_init_ms(mini, envp); // Initialize mini
-	if (getpid() != 0)
-	{
-		(void)argc;
-		(void)argv;
-		while ((mini->line = rl_shell(mini->line)))
-		{
-			mini->lexer = lexer_init(mini->line);
-			mini->parser = parser_init(mini->line);
-			mini->ast = parse_pipeline(&mini->parser);
-			if (mini->ast)
-			{
-				execute_ast(mini);
-				free_ast(mini->ast);
-			}
-		}
-	}
-	return (0);
+  if (getpid() != 0)
+    {
+        (void)argc;
+        (void)argv;
+        while ((mini->line = rl_shell(mini->line)))
+        {
+            mini->lexer = lexer_init(mini->line);
+            mini->parser = parser_init(mini->line);
+            mini->ast = parse_pipeline(&mini->parser);
+            if (mini->ast)
+            {
+                execute_ast(mini->ast, mini);
+                free_ast(mini->ast);
+            }
+        }
+    }
+    return (0);
 }
 
 void	print_envp(char **envp)
