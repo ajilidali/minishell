@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 14:17:25 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 14:50:20 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,27 +22,23 @@ char	*find_path(char *cmd, char **envp)
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
-	//fprintf(stderr, "\033[33;1m  envp : %s\033[m\n", envp[i]);
 	if (!envp[i])
-		return (/*fprintf(stderr, "\033[33;1m ENV is NULL, quitting...\033[m\n"),*/
-			NULL);
+		return (NULL);
 	paths = ft_split(envp[i] + 5, ':');
 	if (!paths)
 		return (NULL);
 	i = 0;
-	while (paths[i] && errno != ENOMEM)
+	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i++], "/");
 		path = ft_strjoin(part_path, cmd);
 		if (!part_path || !path)
 			return (freetab(paths), free(part_path), NULL);
-		//fprintf(stderr, "\033[33;1m  path : %s\033[m\n", path);
 		if (access(path, F_OK) == 0)
 			return (freetab(paths), free(part_path), path);
-		//ft_freef("%p %p", part_path, path);
+		ft_freef("%p %p", part_path, path);
 	}
-    // fprintf(stderr, "\033[33;1m  cmd : %s\033[m\n", cmd);
-	return (freetab(paths), NULL);
+	return (ft_freef("%s", paths), NULL);
 }
 
 void	error(int err)
@@ -56,16 +52,14 @@ char	*check_local_cmd(char *cmd)
 	if (!cmd)
 		return (NULL);
 	if (access(cmd, F_OK) == 0)
-		return (/*fprintf(stderr,"\033[33;1m  OK \n cmd : %s \033[m\n",cmd),*/cmd);
+		return (cmd);
 	return (NULL);
 }
 
 int	execute(ASTNode *node, char **envp)
 {
 	char	*path;
-	//int i;
-
-	//i = 0;
+	
 	path = NULL;
 	if (!path)
 		path = check_local_cmd(node->args[0]);
