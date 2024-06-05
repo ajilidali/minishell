@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 14:50:20 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 14:55:04 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,10 @@ char	*find_path(char *cmd, char **envp)
 			return (freetab(paths), free(part_path), NULL);
 		if (access(path, F_OK) == 0)
 			return (freetab(paths), free(part_path), path);
-		ft_freef("%p %p", part_path, path);
+		free(part_path);
+		free(path);
 	}
-	return (ft_freef("%s", paths), NULL);
-}
-
-void	error(int err)
-{
-	perror("c");
-	exit(err);
+	return (freetab(paths), NULL);
 }
 
 char	*check_local_cmd(char *cmd)
