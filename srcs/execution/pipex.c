@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 11:14:48 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/05 14:17:25 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,39 +53,20 @@ void	error(int err)
 
 char	*check_local_cmd(char *cmd)
 {
-	int		i;
-	int		sub;
-	char	*path;
-
-	
-	if (cmd[0] == '.' && cmd[1] == '/')
-	{
-		i = 2;
-		sub = 2;
-	}
-	i = 0;
-	sub = 0;
-	path = malloc(sizeof(char) * ft_strlen(cmd - sub));
-	if (!path)
+	if (!cmd)
 		return (NULL);
-	while (cmd[i])
-	{
-		path[i - sub] = cmd[i];
-		i++;
-	}
 	if (access(cmd, F_OK) == 0)
-		return (/*fprintf(stderr, "\033[33;1m  All good. %s \033[m\n", cmd),*/
-			path);
-	free(path);
+		return (/*fprintf(stderr,"\033[33;1m  OK \n cmd : %s \033[m\n",cmd),*/cmd);
 	return (NULL);
 }
 
 int	execute(ASTNode *node, char **envp)
 {
 	char	*path;
+	//int i;
 
+	//i = 0;
 	path = NULL;
-	//printf("node->args[0] : %s\n", node->args[0]);
 	if (!path)
 		path = check_local_cmd(node->args[0]);
 	if (!path)
@@ -96,8 +77,6 @@ int	execute(ASTNode *node, char **envp)
 		freetab(envp);
 		return (EXIT_FAILURE);
 	}
-	//fprintf(stderr, "\033[33;1m%s\033[m\n", path);
-	//fprintf(stderr, "\033[33;1m%s\033[m\n", cmd[0]);
 	if (execve(path, node->args, envp) == -1)
 	{
 		free(path);
