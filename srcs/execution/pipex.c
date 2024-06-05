@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 07:50:43 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 09:50:02 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,9 @@ int	execute(ASTNode *node, char **envp)
 	//printf("node->args[0] : %s\n", node->args[0]);
 
 	if (!path)
-		path = find_path(node->args[0], envp);
-	if (!path)
 		path = check_local_cmd(node->args[0]);
+	if (!path)
+		path = find_path(node->args[0], envp);
 	if (!path)
 	{
 		free(path);
@@ -101,8 +101,9 @@ int	execute(ASTNode *node, char **envp)
 	if (execve(path, node->args, envp) == -1)
 	{
 		free(path);
+		freetab(envp);
 		free(node->args[0]);
 		return (EXIT_FAILURE);
 	}
-	return (freetab(envp), EXIT_FAILURE);
+	return (EXIT_FAILURE);
 }

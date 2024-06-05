@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 09:28:27 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:03:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,46 @@ void	print_envp(char **envp)
 	}
 }
 
+char *make_prompt(void)
+{
+	char	*prompt;
+	char	*dir;
+	char	*path;
+
+	dir = getcwd(NULL, 0);
+	if (!dir)
+		return (NULL);
+	path = ft_strjoin(dir, "$ > \033[0m");
+	if (!path)
+		return (free(dir), NULL);
+	prompt = ft_strjoin("\033[0;32mDEDSEC ❋ ", path);
+	if (!prompt)
+		return (free(path), free(dir), NULL);
+	return (free(path), free(dir), prompt);
+}
+
 char	*rl_shell(char *line_read)
 {
-	char *dir;
+	char	*prompt;
+
 	if (line_read)
 	{
 		free(line_read);
 		line_read = NULL;
 	}
-	dir = ft_strjoin("\033[0;32mDEDSEC ❋ ", ft_strjoin(getcwd(NULL, 0), "$ > \033[0m"));
-	line_read = readline(dir);
+	prompt = make_prompt();
+	if (!prompt)
+		return (NULL);
+	line_read = readline(prompt);
 	if (line_read == NULL)
 	{
+		free(prompt);
 		rl_clear_history();
-		exit(0);
+		exit(EXIT_FAILURE);
 	}
 	// LA FONCTION EXIT EST FAITE MAIS
 	// TROUVER UN MOYEN DE FREE line_read
+	// '/!\'
 
 	//if (ft_strcmp(line_read, "exit") == 0)
 	//{
@@ -76,5 +99,5 @@ char	*rl_shell(char *line_read)
 	//}
 	if (line_read && *line_read)
 		add_history(line_read);
-	return (line_read);
+	return (free(prompt), line_read);
 }
