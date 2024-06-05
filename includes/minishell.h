@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 16:30:58 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 21:24:26 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include "../libft/libft.h"
 
 # define FREE_GB 1
-
+# define COPY 10
 //Garbage collector struct
 typedef struct s_gc
 {
@@ -161,5 +161,13 @@ char		*find_path(char *cmd, char **envp);
 
 char		*quote_master(char quote);
 int			quote_counter(const char *str, char quote);
+
+
+
+
+//beta
+t_env *give_envp(char **envp, int i);
+void test_envp(t_env *env, char *str);
+void update_envp(MS *mini);
 
 #endif // MINISHELL_H

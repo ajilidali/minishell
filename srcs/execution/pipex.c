@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 18:49:25 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 21:01:48 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int execute(ASTNode *node, char **envp)
         return (exit(1),0);
     if (execve(path, node->args, envp) == -1) 
         return (freetab(envp),EXIT_FAILURE);
-	/*printf("end my suffering\n");*/
     free(path);
     freetab(envp);
     return EXIT_FAILURE;

@@ -74,7 +74,7 @@ MS	*ft_init_ms(MS *mini, char **envp)
 	mini->lexer.length = 0;
 	mini->token.type = TOKEN_EOF;
 	mini->token.value = NULL;
-	mini->envp = copy_env(envp);
+	mini->envp = give_envp(envp,COPY);
 	mini->parser.lexer = mini->lexer;
 	mini->parser.current_token = mini->token;
 	mini->ast = NULL;

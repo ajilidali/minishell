@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 18:27:10 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 21:24:47 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,15 @@ int	main(int argc, char **argv, char **envp)
         (void)argv;
         while ((mini->line = rl_shell(mini->line)))
         {
+			if (strcmp(mini->line, "testenv") == 0)
+		{
+				test_envp(give_envp(NULL,0),"susaaafff");
+				update_envp(mini);
+		}
+		if (strcmp(mini->line, "diffcheck") == 0)
+		{
+				test_envp(give_envp(NULL,0),"actually up to date");
+		}
             mini->lexer = lexer_init(mini->line);
             mini->parser = parser_init(mini->line);
             mini->ast = parse_pipeline(&mini->parser);
