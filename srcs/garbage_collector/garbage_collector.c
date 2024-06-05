@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   garbage_collector.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:23:43 by hclaude           #+#    #+#             */
-/*   Updated: 2024/05/30 17:46:48 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:12:16 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../minishell.h"
+#include "../../includes/minishell.h"
 
 int	ft_add_gb(t_gc *gc, void *str)
 {

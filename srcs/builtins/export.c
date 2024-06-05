@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/05 08:37:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:10:44 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,7 @@ int	verify_export(char *command)
 
 	i = 0;
 	while (command[i] && command[i] != '=')
-	{
 		i++;
-	}
 	if (command[i++] == '=' && command[i] != '=')
 		return (1);
 	return (0);
@@ -42,16 +40,90 @@ static t_env	*find_variable(char *variable, t_env *env)
 	return (NULL);
 }
 
+t_env	*split_list(t_env *head)
+{
+	t_env	*slow;
+	t_env	*fast;
+	t_env	*prev;
+
+	if (!head || !head->next)
+		return (head);
+	slow = head;
+	fast = head;
+	prev = NULL;
+	while (fast && fast->next)
+	{
+		prev = slow;
+		slow = slow->next;
+		fast = fast->next->next;
+	}
+	prev->next = NULL;
+	return (slow);
+}
+
+t_env	*merge_sorted_lists(t_env *a, t_env *b)
+{
+	t_env	*result;
+
+	if (!a)
+		return (b);
+	if (!b)
+		return (a);
+	result = NULL;
+	if (strcmp(a->name_value, b->name_value) <= 0)
+	{
+		result = a;
+		result->next = merge_sorted_lists(a->next, b);
+	}
+	else
+	{
+		result = b;
+		result->next = merge_sorted_lists(a, b->next);
+	}
+	return (result);
+}
+
+t_env	*merge_sort(t_env *head)
+{
+	t_env	*middle;
+	t_env	*left;
+	t_env	*right;
+
+	if (!head || !head->next)
+		return (head);
+	middle = split_list(head);
+	left = merge_sort(head);
+	right = merge_sort(middle);
+	return (merge_sorted_lists(left, right));
+}
+
+void free_env_list(t_env *head)
+{
+    t_env *tmp;
+
+    while (head != NULL)
+	{
+        tmp = head;
+        head = head->next;
+        free(tmp->name_value);
+        free(tmp);
+    }
+}
+
 int	print_env(t_env *env)
 {
+	t_env	*tmp;
+
 	if (!env)
 		return (EXIT_SUCCESS);
-	while (env)
+	tmp = merge_sort(env);
+	while (tmp)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		ft_putendl_fd(env->name_value, STDOUT_FILENO);
-		env = env->next;
+		ft_putendl_fd(tmp->name_value, STDOUT_FILENO);
+		tmp = tmp->next;
 	}
+	//free_env_list(env);
 	return (EXIT_SUCCESS);
 }
 
