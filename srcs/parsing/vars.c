@@ -6,15 +6,15 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 09:30:33 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:19:51 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int is_local_fct(MS *mini) //here
+int	is_local_fct(MS *mini) //here
 {
-	size_t exit_status;
+	size_t	exit_status;
 
 	if (!mini->ast->args[0])
 		return (0);
@@ -38,10 +38,13 @@ int is_local_fct(MS *mini) //here
 	return (exit_status);
 }
 
-Alias* ft_init_alias(void)
+Alias	*ft_init_alias(void)
 {
-	size_t i = 0;
-	Alias *aliases = (Alias *)malloc(sizeof(Alias) * 1024);
+	size_t	i;
+	Alias	*aliases;
+
+	i = 0;
+	aliases = (Alias *)malloc(sizeof(Alias) * 1024);
 	if (!aliases)
 	{
 		ft_putendl_fd("Memory allocation error", STDERR_FILENO);

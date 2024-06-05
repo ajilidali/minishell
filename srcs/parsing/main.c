@@ -6,12 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 10:03:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:18:06 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -50,7 +49,7 @@ void	print_envp(char **envp)
 	}
 }
 
-char *make_prompt(void)
+char	*make_prompt(void)
 {
 	char	*prompt;
 	char	*dir;

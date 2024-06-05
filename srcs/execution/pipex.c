@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 09:50:02 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:30:25 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	execute(ASTNode *node, char **envp)
 
 	path = NULL;
 	//printf("node->args[0] : %s\n", node->args[0]);
-
 	if (!path)
 		path = check_local_cmd(node->args[0]);
 	if (!path)
