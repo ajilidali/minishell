@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 16:39:53 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/05 11:28:25 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_whitespace(char c)
 
 int	is_operator(char c)
 {
-	return (c == '|' || c == '&' || c == ';' || c == '<' || c == '>');
+	return (c == '&' || c == ';' || c == '<' || c == '>');
 }
 
 int	is_quote(char c)
@@ -41,17 +41,6 @@ char	lexer_peek(Lexer *lexer)
 	return (lexer->input[lexer->pos]);
 }
 
-void	lexer_advance(Lexer *lexer)
-{
-	lexer->pos++;
-}
-
-void	lexer_skip_whitespace(Lexer *lexer)
-{
-	while (is_whitespace(lexer_peek(lexer)))
-		lexer_advance(lexer);
-}
-
 Token	lexer_word(Lexer *lexer)
 {
 	size_t	start;
@@ -61,8 +50,8 @@ Token	lexer_word(Lexer *lexer)
 
 	start = lexer->pos;
 	while (!is_whitespace(lexer_peek(lexer)) && !is_operator(lexer_peek(lexer))
-		&& !is_quote(lexer_peek(lexer)) && lexer_peek(lexer) != '\0')
-		lexer_advance(lexer);
+		&& !is_quote(lexer_peek(lexer)) && !is_pipe(lexer_peek(lexer)) && lexer_peek(lexer) != '\0')
+		lexer->pos++;
 	length = lexer->pos - start;
 	value = (char *)malloc(length + 1);
 	ft_strncpy(value, lexer->input + start, length);
@@ -71,7 +60,6 @@ Token	lexer_word(Lexer *lexer)
 	token.value = value;
 	return (token);
 }
-
 
 Token	lexer_string(Lexer *lexer)
 {
@@ -86,14 +74,14 @@ Token	lexer_string(Lexer *lexer)
 		qc = quote_master(quote_type);
 	else
 		qc = ft_strdup("");
-	lexer_advance(lexer);
+	lexer->pos++;
 	start = lexer->pos;
 	while (lexer_peek(lexer) != quote_type && lexer_peek(lexer) != '\0')
-		lexer_advance(lexer);
+		lexer->pos++;
 	value = (char *)malloc(lexer->pos - start + 1);
 	ft_strncpy(value, lexer->input + start, lexer->pos - start);
 	value[lexer->pos - start] = '\0';
-	lexer_advance(lexer);
+	lexer->pos++;
 	// token.type = TOKEN_STRING;
 	token.type = TOKEN_WORD;
 	token.value = ft_strjoin(value, qc);
@@ -105,7 +93,7 @@ Token	lexer_operator(Lexer *lexer)
 	char	value[2] = {lexer_peek(lexer), '\0'};
 	Token	token;
 
-	lexer_advance(lexer);
+	lexer->pos++;
 	token.type = TOKEN_OPERATOR;
 	token.value = ft_strdup(value);
 	return (token);
@@ -125,7 +113,7 @@ Token	lexer_pipe(Lexer *lexer)
 	char	value[2] = {lexer_peek(lexer), '\0'};
 	Token	token;
 
-	lexer_advance(lexer);
+	lexer->pos++;
 	token.type = TOKEN_PIPE;
 	token.value = ft_strdup(value);
 	return (token);
@@ -136,7 +124,8 @@ Token	lexer_next_token(Lexer *lexer)
 	char	current;
 	Token	token;
 
-	lexer_skip_whitespace(lexer);
+	while (is_whitespace(lexer_peek(lexer)))
+		lexer->pos++;
 	current = lexer_peek(lexer);
 	if (current == '\0')
 	{
