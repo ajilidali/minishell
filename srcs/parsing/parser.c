@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 10:53:53 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:50:30 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,12 @@ void	execute_ast(ASTNode *node, MS *mini)
 	{
 		if (is_local_fct(mini, node) == 0)
 			return ;
-		if (fork() == 0)
+		if (fork() == 0 && execute(node, get_tabenv(mini->envp)) != 0)
 		{
-			if (execute(node, get_tabenv(mini->envp)) != 0)
-			{
 				ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
 				ft_putstr_fd(node->args[0], STDERR_FILENO);
 				ft_putstr_fd(": command not found\n", STDERR_FILENO);
 				exit(1);
-			}
 		}
 		else
 			wait(NULL);

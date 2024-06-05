@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 14:55:04 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:49:25 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,40 @@ char	*check_local_cmd(char *cmd)
 	return (NULL);
 }
 
-int	execute(ASTNode *node, char **envp)
+int	check_path(const char *path)
 {
-	char	*path;
-	
+	if (access(path, F_OK) != 0)
+	{
+		printf("Path %s does not exist.\n", path);
+		return (0);
+	}
+	if (chdir(path) == 0)
+	{
+		printf("DEDSEC: %s: is a directory.\n", path);
+		chdir("..");
+		return (1);
+	}
+	else
+		return (0);
+}
+
+int execute(ASTNode *node, char **envp)
+{
+    char *path;
+
 	path = NULL;
-	if (!path)
-		path = check_local_cmd(node->args[0]);
-	if (!path)
-		path = find_path(node->args[0], envp);
-	if (!path)
-	{
-		free(path);
-		freetab(envp);
-		return (EXIT_FAILURE);
-	}
-	if (execve(path, node->args, envp) == -1)
-	{
-		free(path);
-		freetab(envp);
-		free(node->args[0]);
-		return (EXIT_FAILURE);
-	}
-	return (EXIT_FAILURE);
+    if (!path)
+        path = check_local_cmd(node->args[0]);
+    if (!path)
+        path = find_path(node->args[0], envp);
+    if (!path) 
+        return (freetab(envp), EXIT_FAILURE);
+    if (check_path(path) == 1)
+        return (exit(1),0);
+    if (execve(path, node->args, envp) == -1) 
+        return (freetab(envp),EXIT_FAILURE);
+	/*printf("end my suffering\n");*/
+    free(path);
+    freetab(envp);
+    return EXIT_FAILURE;
 }

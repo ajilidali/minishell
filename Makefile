@@ -6,13 +6,13 @@
 #    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/06/05 13:46:45 by moajili          ###   ########.fr        #
+#    Updated: 2024/06/05 17:04:42 by moajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 CC 		= @gcc
-CFLAGS 	= -Wall -Wextra -Werror -g3
+CFLAGS 	= -Wall -Wextra -Werror -g
 
 SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/vars.c srcs/parsing/parser.c srcs/builtins/alias.c srcs/parsing/utils.c srcs/parsing/quotes.c \
 srcs/builtins/echo.c srcs/builtins/cd.c srcs/builtins/pwd.c srcs/builtins/export.c srcs/builtins/unset.c srcs/builtins/env.c \
@@ -24,7 +24,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 	@make -s -C ./libft
-	@$(CC) ${OBJS} -Llibft -lft -lreadline -o ${NAME} ${CFLAGS} -g3
+	@$(CC) ${OBJS} -Llibft -lft -lreadline -o ${NAME} ${CFLAGS}
 	@echo "\033[32mminishell compiled\033[0m"
 
 clean:

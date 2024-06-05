@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/05 16:10:44 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:22:15 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,6 @@ t_env	*merge_sort(t_env *head)
 	return (merge_sorted_lists(left, right));
 }
 
-void free_env_list(t_env *head)
-{
-    t_env *tmp;
-
-    while (head != NULL)
-	{
-        tmp = head;
-        head = head->next;
-        free(tmp->name_value);
-        free(tmp);
-    }
-}
-
 int	print_env(t_env *env)
 {
 	t_env	*tmp;
@@ -123,7 +110,6 @@ int	print_env(t_env *env)
 		ft_putendl_fd(tmp->name_value, STDOUT_FILENO);
 		tmp = tmp->next;
 	}
-	//free_env_list(env);
 	return (EXIT_SUCCESS);
 }
 
