@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 14:40:38 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:21:44 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ int print_aliases(Alias *aliases, int alias_count)
     return 0;
 }
 
-int run_alias(MS *mini)
+int run_alias(MS *mini, ASTNode *node)
 {
     int argc = 0;
     
-    while (mini->ast->args[argc])
+    if (!node)
+        return 1;
+    while (node->args[argc])
         argc++;
     if (argc == 1)
         return print_aliases(mini->aliases, mini->alias_count);

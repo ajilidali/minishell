@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 09:37:24 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:39:53 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,34 +72,6 @@ Token	lexer_word(Lexer *lexer)
 	return (token);
 }
 
-/*Token	lexer_string(Lexer *lexer)
-{
-	char	quote_type;
-	size_t	start;
-	size_t	length;
-	char	*value;
-	char	*qc;
-	Token	token;
-
-	quote_type = lexer_peek(lexer);
-	if (quote_counter(lexer->input, quote_type) % 2 != 0)
-		qc = quote_master(quote_type);
-	else
-		qc = ft_strdup("");
-	lexer_advance(lexer);
-	start = lexer->pos;
-	while (lexer_peek(lexer) != quote_type && lexer_peek(lexer) != '\0')
-		lexer_advance(lexer);
-	length = lexer->pos - start;
-	value = (char *)malloc(length + 1);
-	ft_strncpy(value, lexer->input + start, length);
-	value[length] = '\0';
-	lexer_advance(lexer);
-	// token.type = TOKEN_STRING;
-	token.type = TOKEN_WORD;
-	token.value = ft_strjoin(value, qc);
-	return (token);
-}*/
 
 Token lexer_string(Lexer *lexer)
 {

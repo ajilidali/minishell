@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 14:43:18 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:48:37 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,14 @@ typedef struct {
 //extern MS g_ms;
 
 // Built-in functions
-int			is_local_fct(MS *mini);
+int is_local_fct(MS *mini, ASTNode *node);
 int			run_echo(char **command);
 int			run_cd(char **command);
 int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
-int			run_alias(MS *mini);
+int			run_alias(MS *mini, ASTNode *node);
 
 // Env functions
 void		free_env(t_env *env);
@@ -139,9 +139,9 @@ void		parser_advance(Parser *parser);
 ASTNode		*parse_command(Parser *parser);
 ASTNode		*parse_pipeline(Parser *parser);
 void		free_ast(ASTNode *node);
-void		execute_ast(MS *mini);
-void		ft_fork_right(MS *mini, int pipefd[2]);
-void		ft_fork_left(MS *mini, int pipefd[2]);
+void		execute_ast(ASTNode *node, MS *mini);
+void		ft_fork_right(ASTNode *node, MS *mini,int pipefd[2]);
+void		ft_fork_left(ASTNode *node, MS *mini,int pipefd[2]);
 
 // Main functions
 int			executor(char *line, char **envp);

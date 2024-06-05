@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 14:40:06 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:38:42 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	main(int argc, char **argv, char **envp)
             mini->ast = parse_pipeline(&mini->parser);
             if (mini->ast)
             {
-                execute_ast(mini);
+                execute_ast(mini->ast, mini);
                 free_ast(mini->ast);
             }
         }

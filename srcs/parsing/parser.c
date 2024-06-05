@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 14:20:01 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:53:53 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,32 +103,29 @@ void	free_ast(ASTNode *node)
 }
 
 // AST Execution
-void	execute_ast(MS *mini)
+void	execute_ast(ASTNode *node, MS *mini)
 {
 	int	pipefd[2];
 
-	if (!mini->ast)
-		return ;
-	if (mini->ast->type == AST_COMMAND)
+	if(!node)
+		return;
+	if (node->type == AST_COMMAND)
 	{
-		if (is_local_fct(mini) == 0)//here
+		if (is_local_fct(mini, node) == 0)
 			return ;
 		if (fork() == 0)
 		{
-			if (execute(mini->ast, get_tabenv(mini->envp)) != 0)
-			{
-				printf("DEDSEC: %s: command not found\n", mini->ast->args[0]);
-				exit(1);
-			}
+			if (execute(node, get_tabenv(mini->envp)) != 0)
+				return (printf("DEDSEC: %s: command not found\n", node->args[0]),exit(1));
 		}
 		else
 			wait(NULL);
 	}
-	else if (mini->ast->type == AST_PIPELINE)
+	else if (node->type == AST_PIPELINE)
 	{
 		pipe(pipefd);
-		ft_fork_left(mini, pipefd);
-		ft_fork_right(mini, pipefd);
+		ft_fork_left(node->left, mini, pipefd);
+		ft_fork_right(node->right, mini, pipefd);
 		close(pipefd[0]);
 		close(pipefd[1]);
 		wait(NULL);
@@ -137,27 +134,27 @@ void	execute_ast(MS *mini)
 }
 
 // Pipe --> Right
-void	ft_fork_right(MS *mini, int pipefd[2])
+void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 {
 	if (fork() == 0)
 	{
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
 		close(pipefd[1]);
-		execute_ast(mini);//here
+		execute_ast(node, mini);
 		exit(0);
 	}
 }
 
 // Pipe --> Left
-void	ft_fork_left(MS *mini, int pipefd[2])
+void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 {
 	if (fork() == 0)
 	{
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[0]);
 		close(pipefd[1]);
-		execute_ast(mini);//here
+		execute_ast(node, mini);
 		exit(0);
 	}
 }
