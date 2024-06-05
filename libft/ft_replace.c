@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:46:33 by moajili           #+#    #+#             */
-/*   Updated: 2024/05/30 20:12:48 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/05 10:17:16 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ char	*perform_replacement(const char *in, const char *replacee,
 	size_t	in_len;
 	char	*out;
 	size_t	i;
-    size_t  j;
+	size_t	j;
 
 	i = 0;
-    j = 0;
+	j = 0;
 	in_len = ft_strlen(in);
 	out = malloc(out_len + 1);
 	if (out == NULL)

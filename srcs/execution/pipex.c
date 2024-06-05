@@ -86,14 +86,14 @@ int	execute(ASTNode *node, char **envp)
 
 	path = NULL;
 	//printf("node->args[0] : %s\n", node->args[0]);
-
-	if (!path)
-		path = find_path(node->args[0], envp);
 	if (!path)
 		path = check_local_cmd(node->args[0]);
 	if (!path)
+		path = find_path(node->args[0], envp);
+	if (!path)
 	{
 		free(path);
+		freetab(envp);
 		return (EXIT_FAILURE);
 	}
 	//fprintf(stderr, "\033[33;1m%s\033[m\n", path);
@@ -101,8 +101,9 @@ int	execute(ASTNode *node, char **envp)
 	if (execve(path, node->args, envp) == -1)
 	{
 		free(path);
+		freetab(envp);
 		free(node->args[0]);
 		return (EXIT_FAILURE);
 	}
-	return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

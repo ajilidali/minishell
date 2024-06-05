@@ -65,7 +65,7 @@ ASTNode	*parse_pipeline(Parser *parser)
 
 	left = parse_command(parser);
 	while (parser->current_token.type == TOKEN_PIPE
-		&& strcmp(parser->current_token.value, "|") == 0)
+		&& ft_strcmp(parser->current_token.value, "|") == 0)
 	{
 		node = (ASTNode *)malloc(sizeof(ASTNode));
 		node->type = AST_PIPELINE;
@@ -116,7 +116,12 @@ void	execute_ast(ASTNode *node, MS *mini)
 		if (fork() == 0)
 		{
 			if (execute(node, get_tabenv(mini->envp)) != 0)
-				return (printf("DEDSEC: %s: command not found\n", node->args[0]),exit(1));
+			{
+				ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
+				ft_putstr_fd(node->args[0], STDERR_FILENO);
+				ft_putstr_fd(": command not found\n", STDERR_FILENO);
+				exit(1);
+			}
 		}
 		else
 			wait(NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:02:06 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/04 09:23:17 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/05 08:33:02 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	find_variable(char *variable, t_env **env)
 		if (!ft_strncmp(variable, current->name_value, i))
 		{
 			previous->next = current->next;
-			return (free(current->name_value), free(current), 0);
+			return (free(current->name_value), free(current), 1);
 		}
 		previous = current;
 		current = current->next;
@@ -56,9 +56,11 @@ int	run_unset(char **command, t_env **env)
 	if (!command[1])
 	{
 		ft_putendl_fd("unset: not enough arguments", STDERR_FILENO);
-		return (0);
+		return (EXIT_FAILURE);
 	}
 	if (!verify_unset(command[1]))
-		return (0);
-	return (find_variable(command[1], env));
+		return (EXIT_FAILURE);
+	if (find_variable(command[1], env) == 0)
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

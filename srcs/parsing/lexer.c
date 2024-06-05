@@ -14,7 +14,7 @@
 #include <ctype.h>
 #include <string.h>
 
-int is_pipe(char c)
+int	is_pipe(char c)
 {
 	return (c == '|');
 }
@@ -73,13 +73,13 @@ Token	lexer_word(Lexer *lexer)
 }
 
 
-Token lexer_string(Lexer *lexer)
+Token	lexer_string(Lexer *lexer)
 {
-	char quote_type;
-	size_t start;
-	char *value;
-	char *qc;
-	Token token;
+	char	quote_type;
+	size_t	start;
+	char	*value;
+	char	*qc;
+	Token	token;
 
 	quote_type = lexer_peek(lexer);
 	if (quote_counter(lexer->input, quote_type) % 2 != 0)
@@ -99,7 +99,6 @@ Token lexer_string(Lexer *lexer)
 	token.value = ft_strjoin(value, qc);
 	return (token);
 }
-
 
 Token	lexer_operator(Lexer *lexer)
 {
@@ -135,7 +134,7 @@ Token	lexer_pipe(Lexer *lexer)
 Token	lexer_next_token(Lexer *lexer)
 {
 	char	current;
-		Token token;
+	Token	token;
 
 	lexer_skip_whitespace(lexer);
 	current = lexer_peek(lexer);
