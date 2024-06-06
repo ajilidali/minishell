@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/06 18:54:20 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/06 22:26:16 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,32 +73,23 @@ char	*copy_except_first_n_chars(const char *input, size_t n)
 	return (result);
 }
 
-Token	lexer_dollar(Lexer *lexer)
+Token lexer_dollar(Lexer *lexer)
 {
-	size_t	start;
-	char	*value;
-	Token	token;
-	t_env	*cpy;
-
-	start = lexer->pos;
-	while (!is_whitespace(lexer_peek(lexer)) 
-		&& !is_operator(lexer_peek(lexer))
-		&& !is_quote(lexer_peek(lexer)) 
-		&& !is_pipe(lexer_peek(lexer))
-		&& is_dollar(lexer_peek(lexer)) 
-		&& lexer_peek(lexer) != '\0')
-		lexer->pos++;
-	token.type = TOKEN_WORD;
-	value = copy_except_first_n_chars(lexer->input + start, 1);
-	cpy = find_envp(value, give_envp(NULL, 0));
-	if (!cpy)
-	{
-		token.value = value;
-		return (token);
-	}
-	lexer->pos += ft_strlen(value);
-	return ((token.value = copy_except_first_n_chars(cpy->name_value,
-				ft_strlen(value) + 1)), token);
+    size_t	start;
+    size_t	length;
+    char	*value;
+    Token	token;
+    start = lexer->pos;
+    lexer->pos++; 
+    while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
+        lexer->pos++;
+    length = lexer->pos - start;
+    value = (char *)malloc(length + 1);
+    strncpy(value, lexer->input + start, length);
+    value[length] = '\0';
+    token.type = TOKEN_VARIABLE;
+    token.value = value;
+    return (token);
 }
 
 Token	lexer_word(Lexer *lexer)

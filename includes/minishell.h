@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/06 18:46:01 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/06 22:36:53 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct {
 typedef enum {
     TOKEN_WORD,
     TOKEN_STRING,
+	TOKEN_VARIABLE,
     TOKEN_PIPE,
     TOKEN_OPERATOR,
     TOKEN_EOF
@@ -163,6 +164,10 @@ char		*quote_master(char quote);
 int			quote_counter(const char *str, char quote);
 
 
+// Args Mgmt
+char** filter_argv(int argc, char **argv, const char *target);
+int get_argc(char *argv[]);
+
 
 
 //beta
@@ -170,5 +175,6 @@ t_env *give_envp(char **envp, int i);
 void test_envp(t_env *env, char *str);
 void update_envp(MS *mini);
 t_env	*find_envp(char *variable, t_env *env);
+char	*copy_except_first_n_chars(const char *input, size_t n);
 
 #endif // MINISHELL_H

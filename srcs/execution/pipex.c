@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 21:01:48 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/06 21:01:53 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int execute(ASTNode *node, char **envp)
     if (!path)
         path = find_path(node->args[0], envp);
     if (!path) 
-        return (freetab(envp), EXIT_FAILURE);
+        return (freetab(envp), EXIT_FAILURE);	
     if (check_path(path) == 1)
         return (exit(1),0);
     if (execve(path, node->args, envp) == -1) 

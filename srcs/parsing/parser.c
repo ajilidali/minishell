@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/06 18:39:45 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/06 23:02:20 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,20 @@ void	parser_advance(Parser *parser)
 	parser->current_token = lexer_next_token(&parser->lexer);
 }
 
+char	*parse_variable(char *value)
+{
+	t_env	*cpy;
+
+	value = copy_except_first_n_chars(value, 1);
+	cpy = find_envp(value, give_envp(NULL, 0));
+	if (!cpy)
+	{
+		value = "";
+		return (value);
+	}
+	return (copy_except_first_n_chars(cpy->name_value,ft_strlen(value) + 1));
+}
+
 // Parse the command
 ASTNode	*parse_command(Parser *parser)
 {
@@ -42,7 +56,7 @@ ASTNode	*parse_command(Parser *parser)
 	capacity = 10;
 	count = 0;
 	node->args = (char **)malloc(capacity * sizeof(char *));
-	while (parser->current_token.type == TOKEN_WORD)
+	while (parser->current_token.type == TOKEN_WORD || parser->current_token.type == TOKEN_VARIABLE)
 	{
 		if (count >= capacity)
 		{
@@ -50,11 +64,13 @@ ASTNode	*parse_command(Parser *parser)
 			free(node->args);
 			node->args = (char **)malloc(capacity * sizeof(char *));
 		}
-		node->args[count++] = ft_strdup(parser->current_token.value);
+		if (parser->current_token.type == TOKEN_VARIABLE)
+		   	node->args[count++] = parse_variable(parser->current_token.value);
+		else
+			node->args[count++] = ft_strdup(parser->current_token.value);
 		parser_advance(parser);
 	}
-	node->args[count] = NULL;
-	return (node);
+	return (node->args[count] = NULL,node);
 }
 
 // Pipe parsing
@@ -111,6 +127,7 @@ void	execute_ast(ASTNode *node, MS *mini)
 		return;
 	if (node->type == AST_COMMAND)
 	{
+		node->args = filter_argv(get_argc(node->args),node->args, "");
 		if (is_local_fct(mini, node) == 0)
 			return ;
 		if (fork() == 0 && execute(node, get_tabenv(mini->envp)) != 0)
