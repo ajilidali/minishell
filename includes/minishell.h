@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 21:24:26 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/06 18:46:01 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,5 +169,6 @@ int			quote_counter(const char *str, char quote);
 t_env *give_envp(char **envp, int i);
 void test_envp(t_env *env, char *str);
 void update_envp(MS *mini);
+t_env	*find_envp(char *variable, t_env *env);
 
 #endif // MINISHELL_H

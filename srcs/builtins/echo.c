@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:10:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/05 08:30:58 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/06 18:41:55 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ int	echo_verif(char **command)
 		if (command[i][j++] == '-' && command[i][j] && command[i][j] == 'n')
 		{
 			while (command[i][j] == 'n')
-			{
 				j++;
-			}
 			if (command[i][j] != 'n' && command[i][j])
 				return (i);
 		}

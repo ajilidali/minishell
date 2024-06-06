@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/05 16:22:15 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/06 19:00:48 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,27 @@ int	verify_export(char *command)
 	return (0);
 }
 
-static t_env	*find_variable(char *variable, t_env *env)
+t_env	*find_envp(char *variable, t_env *env)
 {
-	int	i;
+    int	i;
+	int j;
 
-	i = 0;
-	while (variable[i] && variable[i] != '=')
-		i++;
-	while (env)
-	{
-		if (ft_strncmp(variable, env->name_value, i) == 0)
+    i = 0;
+    while (variable[i] && variable[i] != '=')
+        i++;
+    while (env)
+    {
+		j = 0;
+		while (env->name_value[j] && env->name_value[j] != '=')
+			j++;
+		if (i == j && ft_strncmp(variable, env->name_value, i) == 0)
 			return (env);
 		env = env->next;
-	}
-	return (NULL);
+    }
+    return (NULL);
 }
 
-t_env	*split_list(t_env *head)
+/*t_env	*split_list(t_env *head)
 {
 	t_env	*slow;
 	t_env	*fast;
@@ -95,20 +99,20 @@ t_env	*merge_sort(t_env *head)
 	left = merge_sort(head);
 	right = merge_sort(middle);
 	return (merge_sorted_lists(left, right));
-}
+}*/
 
 int	print_env(t_env *env)
 {
-	t_env	*tmp;
+	//t_env	*tmp;
 
 	if (!env)
 		return (EXIT_SUCCESS);
-	tmp = merge_sort(env);
-	while (tmp)
+	//tmp = merge_sort(env);
+	while (env)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-		ft_putendl_fd(tmp->name_value, STDOUT_FILENO);
-		tmp = tmp->next;
+		ft_putendl_fd(env->name_value, STDOUT_FILENO);
+		env = env->next;
 	}
 	return (EXIT_SUCCESS);
 }
@@ -125,7 +129,7 @@ int	run_export(char **command, t_env **env)
 		return (EXIT_SUCCESS);
 	while (tmp->next)
 		tmp = tmp->next;
-	node = find_variable(command[1], *env);
+	node = find_envp(command[1], *env);
 	if (!node)
 	{
 		tmp->next = new_node(command[1]);

@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
+#    By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/22 13:55:06 by moajili           #+#    #+#              #
-#    Updated: 2024/06/05 14:55:34 by moajili          ###   ########.fr        #
+#    Updated: 2024/06/06 17:25:59 by sakaido          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = @gcc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 AR=ar
 ARFLAGS = rcs
 NAME = libft.a
