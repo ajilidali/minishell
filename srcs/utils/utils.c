@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:14:13 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/05 21:25:32 by moajili          ###   ########.fr       */
+/*   Updated: 2024/06/06 23:15:09 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_env *give_envp(char **envp, int i)
             free_env(env);
         env = copy_env(envp);
     }
-    return env;
+    return (env);
 }
 
 void update_envp(MS *mini)

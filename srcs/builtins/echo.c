@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:10:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/06 18:41:55 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/06 23:15:19 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-// Marche pas bien car si plusieurs espaces entre mots, ces espaces ne sont pas affiches
-// faut trouver une solution
 
 int	echo_verif(char **command)
 {
