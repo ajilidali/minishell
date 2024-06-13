@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/06 23:02:20 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/13 14:12:18 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ ASTNode	*parse_command(Parser *parser)
 	node->left = node->right = NULL;
 	capacity = 10;
 	count = 0;
-	node->args = (char **)malloc(capacity * sizeof(char *));
+	node->args = malloc(capacity * sizeof(char *));
 	while (parser->current_token.type == TOKEN_WORD || parser->current_token.type == TOKEN_VARIABLE)
 	{
 		if (count >= capacity)
@@ -96,19 +96,14 @@ ASTNode	*parse_pipeline(Parser *parser)
 // Free AST
 void	free_ast(ASTNode *node)
 {
-	char	**arg;
+	//char	**arg;
 
 	if (!node)
 		return ;
 	if (node->type == AST_COMMAND)
 	{
-		arg = node->args;
-		while (*arg)
-		{
-			free(*arg);
-			arg++;
-		}
-		free(node->args);
+		freetab(node->args);
+		//free(node);
 	}
 	else if (node->type == AST_PIPELINE)
 	{
