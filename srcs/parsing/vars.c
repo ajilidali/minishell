@@ -14,31 +14,31 @@
 #include "../../includes/minishell.h"
 
 
-int is_local_fct(MS *mini, ASTNode *node) //here
+int is_local_fct(MS *mini, ASTNode *node)
 {
-  size_t	exit_status;
+	size_t	exit_status;
+	t_env	*env;
 
-  if (!node->args[0])
-        return 0;
+	env = give_envp(NULL, 0);
+	if (!node->args[0])
+		return 0;
     exit_status = 1;
     if (strcmp(node->args[0], "alias") == 0)
         exit_status = run_alias(mini, node);
     if (strcmp(node->args[0], "cd") == 0)
-        exit_status = run_cd(node->args, mini->envp);
+        exit_status = run_cd(node->args, env);
     if (strcmp(node->args[0], "env") == 0)
-        exit_status = run_env(mini->envp);
+        exit_status = run_env(env);
     if (strcmp(node->args[0], "export") == 0)
-        exit_status = run_export(node->args, &mini->envp);
+        exit_status = run_export(node->args, &env);
     if (strcmp(node->args[0], "echo") == 0)
         exit_status = run_echo(node->args);   
     if (strcmp(node->args[0], "pwd") == 0)
         exit_status = run_pwd();
     if (strcmp(node->args[0], "unset") == 0)
-        exit_status = run_unset(node->args, &mini->envp);
+        exit_status = run_unset(node->args, &env);
     if (ft_strcmp(node->args[0], "exit") == 0)
 		    run_exit(node->args);
-    
-    printf("\nexit_status : %zu\n", exit_status);
     return (exit_status);
 }
 
