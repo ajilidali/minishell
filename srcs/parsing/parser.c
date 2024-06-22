@@ -11,6 +11,13 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdio.h>
+#include <sys/types.h>
+
+int is_redirection(char c)
+{
+    return (c == '<' || c == '>');
+}
 
 Parser	parser_init(const char *input)
 {
@@ -44,7 +51,7 @@ char	*parse_variable(char *value)
 }
 
 // Parse the command
-ASTNode	*parse_command(Parser *parser)
+/*ASTNode	*parse_command(Parser *parser)
 {
 	ASTNode	*node;
 	size_t	capacity;
@@ -54,11 +61,11 @@ ASTNode	*parse_command(Parser *parser)
 	node->type = AST_COMMAND;
 	node->left = node->right = NULL;
 	capacity = 10;
-	count = 0;
-	node->args = malloc(capacity * sizeof(char *));
+    count = 0;
+   	node->args = malloc(capacity * sizeof(char *));
 	while (parser->current_token.type == TOKEN_WORD || parser->current_token.type == TOKEN_VARIABLE)
 	{
-		if (count >= capacity)
+	    if (count >= capacity)
 		{
 			capacity *= 2;
 			free(node->args);
@@ -71,7 +78,67 @@ ASTNode	*parse_command(Parser *parser)
 		parser_advance(parser);
 	}
 	return (node->args[count] = NULL,node);
+}*/
+ASTNode *parse_command(Parser *parser)
+{
+    ASTNode *node;
+    size_t capacity, redir_capacity;
+    size_t count, redir_count;
+
+    node = (ASTNode *)malloc(sizeof(ASTNode));
+    node->type = AST_COMMAND;
+    node->left = node->right = NULL;
+    capacity = 10;
+    redir_capacity = 5;
+    count = redir_count = 0;
+    node->args = (char **)malloc(capacity * sizeof(char *));
+    node->redirections = (t_redirection *)malloc(redir_capacity * sizeof(t_redirection));
+
+    while (parser->current_token.type == TOKEN_WORD ||
+           parser->current_token.type == TOKEN_VARIABLE ||
+           parser->current_token.type == TOKEN_OPERATOR)
+    {
+        if (parser->current_token.type == TOKEN_OPERATOR && is_redirection(parser->current_token.value[0]))
+        {
+            // Handle redirections
+            if (redir_count >= redir_capacity)
+            {
+                redir_capacity *= 2;
+                node->redirections = (t_redirection *)realloc(node->redirections, redir_capacity * sizeof(t_redirection));
+            }
+            node->redirections[redir_count].type = ft_strdup(parser->current_token.value);
+            parser_advance(parser);
+            if (parser->current_token.type == TOKEN_WORD)
+            {
+                node->redirections[redir_count].file = ft_strdup(parser->current_token.value);
+                redir_count++;
+                parser_advance(parser);
+            }
+            else
+            {
+                printf("Syntax error: expected file after redirection\n");
+                exit(1);
+            }
+        }
+        else
+        {
+            if (count >= capacity)
+            {
+                capacity *= 2;
+                node->args = (char **)realloc(node->args, capacity * sizeof(char *));
+            }
+            if (parser->current_token.type == TOKEN_VARIABLE)
+                node->args[count++] = parse_variable(parser->current_token.value);
+            else
+                node->args[count++] = ft_strdup(parser->current_token.value);
+            parser_advance(parser);
+        }
+    }
+    node->args[count] = NULL;
+    node->redirection_count = redir_count;
+    return node;
 }
+
 
 // Pipe parsing
 ASTNode	*parse_pipeline(Parser *parser)
@@ -114,7 +181,7 @@ void	free_ast(ASTNode *node)
 }
 
 // AST Execution
-void	execute_ast(ASTNode *node, MS *mini)
+/*void	execute_ast(ASTNode *node, MS *mini)
 {
 	int	pipefd[2];
 
@@ -145,12 +212,57 @@ void	execute_ast(ASTNode *node, MS *mini)
 		wait(NULL);
 		wait(NULL);
 	}
+}*/
+
+void execute_ast(ASTNode *node, MS *mini)
+{
+    int pipefd[2];
+
+    if (!node)
+        return;
+
+    if (node->type == AST_COMMAND)
+    {
+        node->args = filter_argv(get_argc(node->args), node->args, "");
+        if (is_local_fct(mini, node) == 0)
+            return;
+
+        if (fork() == 0)
+        {
+            setup_redirections(node);
+            if (execute(node, get_tabenv(mini->envp)) != 0)
+            {
+                ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
+                ft_putstr_fd(node->args[0], STDERR_FILENO);
+                ft_putstr_fd(": command not found\n", STDERR_FILENO);
+                exit(1);
+            }
+        }
+        else
+        {
+            wait(NULL);
+        }
+    }
+    else if (node->type == AST_PIPELINE)
+    {
+        pipe(pipefd);
+        ft_fork_left(node->left, mini, pipefd);
+        ft_fork_right(node->right, mini, pipefd);
+        close(pipefd[0]);
+        close(pipefd[1]);
+        wait(NULL);
+        wait(NULL);
+    }
 }
+
 
 // Pipe --> Right
 void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 {
-	if (fork() == 0)
+    pid_t    pid;
+
+    pid = fork();
+	if (pid == 0)
 	{
 		dup2(pipefd[0], STDIN_FILENO);
 		close(pipefd[0]);
@@ -163,7 +275,10 @@ void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 // Pipe --> Left
 void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 {
-	if (fork() == 0)
+    pid_t    pid;
+
+    pid = fork();
+	if (pid == 0)
 	{
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[0]);

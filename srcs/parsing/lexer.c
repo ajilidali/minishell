@@ -80,7 +80,7 @@ Token lexer_dollar(Lexer *lexer)
     char	*value;
     Token	token;
     start = lexer->pos;
-    lexer->pos++; 
+    lexer->pos++;
     while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
         lexer->pos++;
     length = lexer->pos - start;
@@ -100,9 +100,9 @@ Token	lexer_word(Lexer *lexer)
 	Token	token;
 
 	start = lexer->pos;
-	while (!is_whitespace(lexer_peek(lexer)) 
+	while (!is_whitespace(lexer_peek(lexer))
 		&& !is_operator(lexer_peek(lexer))
-		&& !is_quote(lexer_peek(lexer)) 
+		&& !is_quote(lexer_peek(lexer))
 		&& !is_pipe(lexer_peek(lexer))
 		&& lexer_peek(lexer) != '\0')
 		lexer->pos++;
@@ -142,7 +142,33 @@ Token	lexer_string(Lexer *lexer)
 	return (token);
 }
 
-Token	lexer_operator(Lexer *lexer)
+
+Token lexer_operator(Lexer *lexer)
+{
+    Token token;
+    char current = lexer_peek(lexer);
+
+    if (current == '<' || current == '>')
+    {
+        lexer->pos++;
+        if (lexer_peek(lexer) == current) // Check for << or >>
+        {
+            char value[3] = {current, current, '\0'};
+            lexer->pos++;
+            token.type = TOKEN_OPERATOR;
+            token.value = ft_strdup(value);
+            return (token);
+        }
+    }
+
+    char value[2] = {current, '\0'};
+    lexer->pos++;
+    token.type = TOKEN_OPERATOR;
+    token.value = ft_strdup(value);
+    return (token);
+}
+
+/*Token	lexer_operator(Lexer *lexer)
 {
 	char	value[2];
 	Token	token;
@@ -150,10 +176,11 @@ Token	lexer_operator(Lexer *lexer)
 	value[0] = lexer_peek(lexer);
 	value[1] = '\0';
 	lexer->pos++;
-	token.type = TOKEN_OPERATOR;
+	token.type = TOKEN_PIPE;
 	token.value = ft_strdup(value);
 	return (token);
-}
+}*/
+
 
 Lexer	lexer_init(const char *input)
 {

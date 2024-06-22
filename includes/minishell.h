@@ -30,6 +30,13 @@ typedef struct s_gc
 	struct s_gc	*next;
 }	t_gc;
 
+//Redirection struct
+typedef struct s_redirection
+{
+    char *type; // ">" or ">>" or "<" or "<<"
+    char *file; // the file name for redirection
+}               t_redirection;
+
 //Env struct
 typedef struct s_env
 {
@@ -72,9 +79,11 @@ typedef enum {
 
 typedef struct ASTNode {
 	ASTNodeType		type;
-	char			**args;           // For command nodes
+	char			**args; // For command nodes
 	struct ASTNode	*left;  // For pipe nodes
 	struct ASTNode	*right; // For pipe nodes
+    t_redirection *redirections; // Array containing redirections
+    size_t redirection_count; // Number of redirections
 } ASTNode;
 
 // Parser Structs
@@ -176,5 +185,6 @@ void test_envp(t_env *env, char *str);
 void update_envp(MS *mini);
 t_env	*find_envp(char *variable, t_env *env);
 char	*copy_except_first_n_chars(const char *input, size_t n);
+void setup_redirections(ASTNode *node);
 
 #endif // MINISHELL_H

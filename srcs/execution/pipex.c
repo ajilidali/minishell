@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdio.h>
 
 char	*find_path(char *cmd, char **envp)
 {
@@ -77,11 +78,11 @@ int execute(ASTNode *node, char **envp)
         path = check_local_cmd(node->args[0]);
     if (!path)
         path = find_path(node->args[0], envp);
-    if (!path) 
-        return (freetab(envp), EXIT_FAILURE);	
+    if (!path)
+        return (freetab(envp), EXIT_FAILURE);
     if (check_path(path) == 1)
         return (exit(1),0);
-    if (execve(path, node->args, envp) == -1) 
+    if (execve(path, node->args, envp) == -1)
         return (freetab(envp),EXIT_FAILURE);
     free(path);
     freetab(envp);

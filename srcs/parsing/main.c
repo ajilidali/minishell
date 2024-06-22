@@ -17,8 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	MS	*mini;
 
 	mini = NULL;
-	if(envp[0] == NULL)
-		return(printf("envp is NULL\n"),0);
+
 	mini = ft_init_ms(mini, envp); // Initialize mini
   	if (getpid() != 0)
 	{
