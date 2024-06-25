@@ -127,14 +127,21 @@ ASTNode	*parse_pipeline(Parser *parser)
 }
 
 // Free AST
-void free_ast(ASTNode *node) {
+void free_ast(ASTNode *node)
+{
+    int i;
+
     if (!node)
         return;
-    if (node->type == AST_COMMAND) {
-        for (int i = 0; node->args[i]; i++)
-            free(node->args[i]);
+    i = 0;
+    if (node->type == AST_COMMAND)
+    {
+        while(node->args[i])
+            free(node->args[i++]);
         free(node->args);
-    } else if (node->type == AST_PIPELINE) {
+    }
+    else if (node->type == AST_PIPELINE)
+    {
         free_ast(node->left);
         free_ast(node->right);
     }

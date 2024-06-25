@@ -15,9 +15,12 @@
 
 void setup_redirections(ASTNode *node)
 {
-    for (size_t i = 0; i < node->redirections_count; ++i)
+    size_t i;
+    int fd;
+
+    i = 0;
+    while (i < node->redirections_count)
     {
-        int fd;
         if (strcmp(node->redirections[i].type, ">") == 0)
         {
             fd = open(node->redirections[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -55,5 +58,6 @@ void setup_redirections(ASTNode *node)
             dup2(fd, STDIN_FILENO);
             close(fd);
         }
+        i++;
     }
 }
