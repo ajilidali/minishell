@@ -19,3 +19,11 @@ Pour mieux comprendre : la fonction give_envp utilisee une fois pendant l'initia
 une fois appellee avec les arguments NULL et 0 elle va juste rendre le pointeur de envp, ceci est un raccourci pour eviter de se trimballer la structure du shell tout au long de plusieures fonctions avec le  unique but d'utiliser envp.
 
 Le export, quand execute sans arguments, mange une partie des envp, en les effacant effectivement de la liste envp, j'ai donc desactive de facon temporaire ke sort alphabetique.
+
+< ./readme.md cat OK
+echo bla > test.txt bla2 OK
+ec''ho blabla KO
+fct parse_command broken in smaller fcts
+~ Moved to parsecmd
+Cleaned utils
+Fixed SIGSEGV in calculate_output_length(ft_replace) : "ls \n"

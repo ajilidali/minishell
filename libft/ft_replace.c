@@ -15,28 +15,27 @@
 size_t	calculate_output_length(const char *in, const char *replacee,
 		const char *replaced)
 {
-	size_t	replacee_len;
-	size_t	replaced_len;
-	size_t	out_len;
-	size_t	i;
+	size_t		replacee_len;
+	size_t		in_len;
+	size_t		replaced_len;
+	size_t		count;
+	const char	*tmp = in;
+	size_t		final_length;
 
-	replacee_len = ft_strlen(replacee);
-	replaced_len = ft_strlen(replaced);
-	out_len = ft_strlen(in);
+
+	replacee_len = strlen(replacee);
+	in_len = strlen(in);
+	replaced_len = strlen(replaced);
 	if (replacee_len == 0)
-		return (out_len);
-	i = 0;
-	while (i <= ft_strlen(in) - replacee_len)
+		return (in_len);
+	count = 0;
+	while ((tmp = strstr(tmp, replacee)) != NULL)
 	{
-		if (ft_strncmp(&in[i], replacee, replacee_len) == 0)
-		{
-			out_len = out_len - replacee_len + replaced_len;
-			i += replacee_len;
-		}
-		else
-			i++;
+		count++;
+		tmp += replacee_len;
 	}
-	return (out_len);
+	final_length = in_len + count * (replaced_len - replacee_len);
+	return (final_length);
 }
 
 char	*perform_replacement(const char *in, const char *replacee,

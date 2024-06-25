@@ -83,8 +83,13 @@ typedef struct ASTNode {
 	struct ASTNode	*left;  // For pipe nodes
 	struct ASTNode	*right; // For pipe nodes
     t_redirection *redirections; // Array containing redirections
-    size_t redirection_count; // Number of redirections
+    size_t redirections_count; // Number of redirections
+    size_t args_capacity;
+    size_t redirections_capacity;
+    size_t args_count;
 } ASTNode;
+
+
 
 // Parser Structs
 typedef struct {
@@ -160,6 +165,8 @@ char		*rl_shell(char *line_read);
 MS			*ft_init_ms(MS *mini, char **envp);
 
 // Other functions
+char	*parse_variable(char *value);
+char	*copy_except_first_n_chars(const char *input, size_t n);
 void		print_envp(char **envp);
 //void		process_arguments(int argc, char *argv[]);
 void		trim_whitespace(char *str);
@@ -181,8 +188,6 @@ int get_argc(char *argv[]);
 
 //beta
 t_env *give_envp(char **envp, int i);
-void test_envp(t_env *env, char *str);
-void update_envp(MS *mini);
 t_env	*find_envp(char *variable, t_env *env);
 char	*copy_except_first_n_chars(const char *input, size_t n);
 void setup_redirections(ASTNode *node);

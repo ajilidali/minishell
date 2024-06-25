@@ -14,11 +14,6 @@
 #include <stdio.h>
 #include <sys/types.h>
 
-int is_redirection(char c)
-{
-    return (c == '<' || c == '>');
-}
-
 Parser	parser_init(const char *input)
 {
 	Parser	parser;
@@ -50,36 +45,7 @@ char	*parse_variable(char *value)
 	return (copy_except_first_n_chars(cpy->name_value,ft_strlen(value) + 1));
 }
 
-// Parse the command
-/*ASTNode	*parse_command(Parser *parser)
-{
-	ASTNode	*node;
-	size_t	capacity;
-	size_t	count;
-
-	node = (ASTNode *)malloc(sizeof(ASTNode));
-	node->type = AST_COMMAND;
-	node->left = node->right = NULL;
-	capacity = 10;
-    count = 0;
-   	node->args = malloc(capacity * sizeof(char *));
-	while (parser->current_token.type == TOKEN_WORD || parser->current_token.type == TOKEN_VARIABLE)
-	{
-	    if (count >= capacity)
-		{
-			capacity *= 2;
-			free(node->args);
-			node->args = (char **)malloc(capacity * sizeof(char *));
-		}
-		if (parser->current_token.type == TOKEN_VARIABLE)
-		   	node->args[count++] = parse_variable(parser->current_token.value);
-		else
-			node->args[count++] = ft_strdup(parser->current_token.value);
-		parser_advance(parser);
-	}
-	return (node->args[count] = NULL,node);
-}*/
-ASTNode *parse_command(Parser *parser)
+/*ASTNode *parse_command(Parser *parser)
 {
     ASTNode *node;
     size_t capacity, redir_capacity;
@@ -137,7 +103,7 @@ ASTNode *parse_command(Parser *parser)
     node->args[count] = NULL;
     node->redirection_count = redir_count;
     return node;
-}
+}*/
 
 
 // Pipe parsing
@@ -161,76 +127,46 @@ ASTNode	*parse_pipeline(Parser *parser)
 }
 
 // Free AST
-void	free_ast(ASTNode *node)
-{
-	//char	**arg;
-
-	if (!node)
-		return ;
-	if (node->type == AST_COMMAND)
-	{
-		freetab(node->args);
-		//free(node);
-	}
-	else if (node->type == AST_PIPELINE)
-	{
-		free_ast(node->left);
-		free_ast(node->right);
-	}
-	free(node);
-}
-
-// AST Execution
-/*void	execute_ast(ASTNode *node, MS *mini)
-{
-	int	pipefd[2];
-
-	if(!node)
-		return;
-	if (node->type == AST_COMMAND)
-	{
-		node->args = filter_argv(get_argc(node->args),node->args, "");
-		if (is_local_fct(mini, node) == 0)
-			return ;
-		if (fork() == 0 && execute(node, get_tabenv(mini->envp)) != 0)
-		{
-				ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-				ft_putstr_fd(node->args[0], STDERR_FILENO);
-				ft_putstr_fd(": command not found\n", STDERR_FILENO);
-				exit(1);
-		}
-		else
-			wait(NULL);
-	}
-	else if (node->type == AST_PIPELINE)
-	{
-		pipe(pipefd);
-		ft_fork_left(node->left, mini, pipefd);
-		ft_fork_right(node->right, mini, pipefd);
-		close(pipefd[0]);
-		close(pipefd[1]);
-		wait(NULL);
-		wait(NULL);
-	}
-}*/
-
-void execute_ast(ASTNode *node, MS *mini)
-{
-    int pipefd[2];
-
+void free_ast(ASTNode *node) {
     if (!node)
         return;
+    if (node->type == AST_COMMAND) {
+        for (int i = 0; node->args[i]; i++)
+            free(node->args[i]);
+        free(node->args);
+    } else if (node->type == AST_PIPELINE) {
+        free_ast(node->left);
+        free_ast(node->right);
+    }
+    free(node);
+}
 
+/*void execute_ast(ASTNode *node, MS *mini)
+{
+    int pipefd[2];
+    size_t i;
+
+    i = 1;
+    if (!node)
+        return;
     if (node->type == AST_COMMAND)
     {
-        node->args = filter_argv(get_argc(node->args), node->args, "");
-        if (is_local_fct(mini, node) == 0)
-            return;
-
         if (fork() == 0)
         {
             setup_redirections(node);
-            if (execute(node, get_tabenv(mini->envp)) != 0)
+            if (strcmp(node->args[0], "echo") == 0)
+            {
+                while (node->args[i] != NULL)
+                {
+                    if (i > 1)
+                        printf(" ");
+                    printf("%s", node->args[i]);
+                    i++;
+                }
+                printf("\n");
+                exit(0);
+            }
+            else if (execute(node, get_tabenv(mini->envp)) != 0)
             {
                 ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
                 ft_putstr_fd(node->args[0], STDERR_FILENO);
@@ -239,9 +175,7 @@ void execute_ast(ASTNode *node, MS *mini)
             }
         }
         else
-        {
             wait(NULL);
-        }
     }
     else if (node->type == AST_PIPELINE)
     {
@@ -253,8 +187,58 @@ void execute_ast(ASTNode *node, MS *mini)
         wait(NULL);
         wait(NULL);
     }
-}
+}*/
 
+void execute_ast(ASTNode *node, MS *mini)
+{
+    int pipefd[2];
+    pid_t pid;
+
+    if (!node)
+        return;
+    if (node->type == AST_COMMAND) {
+        if (fork() == 0) {
+            if (strcmp(node->args[0], "echo") == 0) {
+                for (size_t i = 1; node->args[i] != NULL; i++) {
+                    if (i > 1)
+                        printf(" ");
+                    printf("%s", node->args[i]);
+                }
+                printf("\n");
+                exit(0);
+            } else if (execute(node, get_tabenv(give_envp(NULL, 0))) != 0) {
+                fprintf(stderr, "DEDSEC: %s: command not found\n", node->args[0]);
+                exit(1);
+            }
+        } else
+            wait(NULL);
+    } else if (node->type == AST_PIPELINE)
+    {
+        pipe(pipefd);
+        pid = fork();
+        if (pid == 0)
+        {
+            close(pipefd[0]);
+            dup2(pipefd[1], STDOUT_FILENO);
+            close(pipefd[1]);
+            execute_ast(node->left, mini);
+            exit(0);
+        }
+        pid = fork();
+        if (pid == 0)
+        {
+            close(pipefd[1]);
+            dup2(pipefd[0], STDIN_FILENO);
+            close(pipefd[0]);
+            execute_ast(node->right, mini);
+            exit(0);
+        }
+        close(pipefd[0]);
+        close(pipefd[1]);
+        wait(NULL);
+        wait(NULL);
+    }
+}
 
 // Pipe --> Right
 void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])

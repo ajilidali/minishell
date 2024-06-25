@@ -55,7 +55,7 @@ t_env *give_envp(char **envp, int i)
     static t_env *env = NULL;
 
     if (i == COPY && envp)
-	{ 
+	{
         if (env)
             free_env(env);
         env = copy_env(envp);
@@ -63,20 +63,29 @@ t_env *give_envp(char **envp, int i)
     return (env);
 }
 
-void update_envp(MS *mini)
+char	*copy_except_first_n_chars(const char *input, size_t n)
 {
-	mini->envp = give_envp(NULL, 0);
-}
+	char	*result;
+	size_t	len;
 
-void test_envp(t_env *env, char *str)
-{
-   // t_env *env = give_envp(envp, COPY); // COPY is 10
-
-    if (env)
+	if (input == NULL)
 	{
-        printf("Before: %s\n", env->name_value);
-        free(env->name_value);
-        env->name_value = strdup(str);
-        printf("After: %s\n", env->name_value);
-    }
+		result = (char *)malloc(1);
+		if (result)
+			result[0] = '\0';
+		return (result);
+	}
+	len = strlen(input);
+	if (len <= n)
+	{
+		result = (char *)malloc(1);
+		if (result)
+			result[0] = '\0';
+		return (result);
+	}
+	result = (char *)malloc(len - n + 1);
+	if (result == NULL)
+		return (NULL);
+	strcpy(result, input + n);
+	return (result);
 }

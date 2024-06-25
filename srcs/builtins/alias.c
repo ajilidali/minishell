@@ -27,7 +27,7 @@ int	alias_finder(Alias *aliases, char *cmd, int alias_count)
 }
 
 // Attention fonction pas protege si erreur de malloc
-void assign_alias(MS *mini, char *alias, char *cmd)
+void	assign_alias(MS *mini, char *alias, char *cmd)
 {
 	int	replace;
 
@@ -43,19 +43,23 @@ void assign_alias(MS *mini, char *alias, char *cmd)
 	mini->alias_count++;
 }
 
-void	process_arguments(MS *mini,int argc)
+void	process_arguments(MS *mini, int argc)
 {
-	int	i;
+	int		i;
+	char	*arg;
+	char	*equal_sign;
+	char	*left_part;
+	char	*right_part;
 
 	i = 1;
 	while (i < argc)
 	{
-		char *arg = mini->ast->args[i];
-		char *equal_sign = ft_strchr(arg, '=');
+		arg = mini->ast->args[i];
+		equal_sign = ft_strchr(arg, '=');
 		if (equal_sign)
 		{
-			char *left_part = ft_strndup(arg, equal_sign - arg);
-			char *right_part = ft_strdup(equal_sign + 1);
+			left_part = ft_strndup(arg, equal_sign - arg);
+			right_part = ft_strdup(equal_sign + 1);
 			trim_whitespace(left_part);
 			trim_whitespace(right_part);
 			if (*right_part != '\0' && *left_part != '\0')
@@ -83,17 +87,17 @@ int	print_aliases(Alias *aliases, int alias_count)
 	return (0);
 }
 
-int run_alias(MS *mini, ASTNode *node)
+int	run_alias(MS *mini, ASTNode *node)
 {
-    int argc = 0;
-    
-    if (!node)
-        return 1;
-    while (node->args[argc])
-        argc++;
-    if (argc == 1)
-        return print_aliases(mini->aliases, mini->alias_count);
-    process_arguments(mini,argc);
-    return 0;
-}
+	int	argc;
 
+	argc = 0;
+	if (!node)
+		return (1);
+	while (node->args[argc])
+		argc++;
+	if (argc == 1)
+		return (print_aliases(mini->aliases, mini->alias_count));
+	process_arguments(mini, argc);
+	return (0);
+}
