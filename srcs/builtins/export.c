@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/06 19:00:48 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:08:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	verify_export(char *command)
 {
@@ -26,22 +26,18 @@ int	verify_export(char *command)
 
 t_env	*find_envp(char *variable, t_env *env)
 {
-    int	i;
-	int j;
+	int	i;
 
-    i = 0;
-    while (variable[i] && variable[i] != '=')
-        i++;
-    while (env)
-    {
-		j = 0;
-		while (env->name_value[j] && env->name_value[j] != '=')
-			j++;
-		if (i == j && ft_strncmp(variable, env->name_value, i) == 0)
+	i = 0;
+	while (variable[i] && variable[i] != '=')
+		i++;
+	while (env)
+	{
+		if (ft_strncmp(variable, env->name_value, i) == 0)
 			return (env);
 		env = env->next;
-    }
-    return (NULL);
+	}
+	return (NULL);
 }
 
 /*t_env	*split_list(t_env *head)

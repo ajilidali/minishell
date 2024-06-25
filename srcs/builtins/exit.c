@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/05 10:30:49 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:14:44 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-int	valid_value(char *value)
+static int	valid_value(char *value)
 {
 	int	i;
 	int	sign;
@@ -39,7 +39,7 @@ void	run_exit(char **command) // Besoin du dernier exit_code
 {
 	int	exit_value;
 
-	rl_clear_history();
+	clear_history();
 	if (!command[1])
 		exit(/*LAST EXIT CODE*/0);
 	if (!valid_value(command[1]))

@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_freetab.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 15:55:12 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/07 10:32:22 by hclaude          ###   ########.fr       */
+/*   Created: 2024/06/25 17:08:11 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/25 17:08:41 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	run_env(t_env *env)
+void	freetab(char **str)
 {
-	if (!env)
-		return (EXIT_FAILURE);
-	while (env)
-	{
-		ft_putendl_fd(env->name_value, STDOUT_FILENO);
-		env = env->next;
-	}
-	return (EXIT_SUCCESS);
+	int	i;
+
+	i = 0;
+	while (str[i])
+		free(str[i++]);
+	free(str);
+	str = NULL;
 }

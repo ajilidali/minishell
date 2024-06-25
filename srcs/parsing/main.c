@@ -5,12 +5,13 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/20 16:50:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/13 14:04:36 by hclaude          ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2024/06/25 17:24:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+
+#include "minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -19,7 +20,8 @@ int	main(int argc, char **argv, char **envp)
 	mini = NULL;
 
 	mini = ft_init_ms(mini, envp); // Initialize mini
-  	if (getpid() != 0)
+	sigint_handler();
+	if (getpid() != 0)
 	{
 		(void)argc;
 		(void)argv;
@@ -30,24 +32,14 @@ int	main(int argc, char **argv, char **envp)
 			mini->ast = parse_pipeline(&mini->parser);
 			if (mini->ast)
 			{
-				execute_ast(mini->ast, mini);
+				sigint_handler();
+				// execute_ast(mini->ast, mini);
+				exec_commands(mini->ast, mini);
 				free_ast(mini->ast);
 			}
 		}
 	}
 	return (0);
-}
-
-void	print_envp(char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-	{
-		printf("envp[%d]: %s\n", i, envp[i]);
-		i++;
-	}
 }
 
 char	*make_prompt(void)
@@ -84,7 +76,8 @@ char	*rl_shell(char *line_read)
 	if (line_read == NULL)
 	{
 		free(prompt);
-		rl_clear_history();
+		clear_history();
+		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	// LA FONCTION EXIT EST FAITE MAIS

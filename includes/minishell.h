@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/06 22:36:53 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:41:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,13 @@
 # include <readline/history.h>
 # include <sys/wait.h>
 # include <errno.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
+# include <signal.h>
 
 # define FREE_GB 1
 # define COPY 10
+
 //Garbage collector struct
 typedef struct s_gc
 {
@@ -79,7 +82,9 @@ typedef enum {
 
 typedef struct ASTNode {
 	ASTNodeType		type;
-	char			**args; // For command nodes
+	char			**args;           // For command nodes
+	int				fd_in;
+	int				fd_out;
 	struct ASTNode	*left;  // For pipe nodes
 	struct ASTNode	*right; // For pipe nodes
     t_redirection *redirections; // Array containing redirections
@@ -105,15 +110,24 @@ typedef struct {
     Parser	parser;
     ASTNode	*ast;
     size_t	alias_count;
-    t_env	*envp;
+    t_env	*env;
     char	*line;
 } MS;
+
+typedef struct s_pipex
+{
+	int		fd1;
+	int		fd2;
+	int		nbr_cmd;
+	char	**argv;
+	char	**envp;
+}	t_pipex;
 
 // Extern global variable
 //extern MS g_ms;
 
 // Built-in functions
-int is_local_fct(MS *mini, ASTNode *node);
+int			is_local_fct(MS *mini, ASTNode *node);
 int			run_echo(char **command);
 int			run_cd(char **command, t_env *env);
 int			run_export(char **command, t_env **env);
@@ -165,31 +179,37 @@ char		*rl_shell(char *line_read);
 MS			*ft_init_ms(MS *mini, char **envp);
 
 // Other functions
-char	*parse_variable(char *value);
-char	*copy_except_first_n_chars(const char *input, size_t n);
+char		*parse_variable(char *value);
 void		print_envp(char **envp);
 //void		process_arguments(int argc, char *argv[]);
 void		trim_whitespace(char *str);
-void		freetab(char **str);
 
 // Pipex functions
+int			exec_commands(ASTNode *node, MS *ms);
 int			execute(ASTNode *node, char **envp);
 char		*find_path(char *cmd, char **envp);
-
+int			init_pipex(int nargument, char **command, char **envp);
 char		*quote_master(char quote);
 int			quote_counter(const char *str, char quote);
+void		exec_pipe(ASTNode *node, MS *mini);
 
 
 // Args Mgmt
-char** filter_argv(int argc, char **argv, const char *target);
-int get_argc(char *argv[]);
-
+char		**filter_argv(int argc, char **argv, const char *target);
+int			get_argc(char *argv[]);
 
 
 //beta
-t_env *give_envp(char **envp, int i);
-t_env	*find_envp(char *variable, t_env *env);
-char	*copy_except_first_n_chars(const char *input, size_t n);
-void setup_redirections(ASTNode *node);
+t_env		*find_envp(char *variable, t_env *env);
+void		setup_redirections(ASTNode *node);
+//utils
+t_env		*give_envp(char **envp, int flag);
+void		test_envp(t_env *env, char *str);
+void		update_envp(MS *mini);
+t_env		*find_envp(char *variable, t_env *env);
+char		*copy_except_first_n_chars(const char *input, size_t n);
+void		sigint_handler(void);
+char		*env_get_var(char *variable, t_env *env);
+void		update_pwd(char *old_path, t_env *env);
 
 #endif // MINISHELL_H

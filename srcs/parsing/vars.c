@@ -3,43 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 18:35:11 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:51:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
-
-int is_local_fct(MS *mini, ASTNode *node)
+int	is_local_fct(MS *mini, ASTNode *node)
 {
-	size_t	exit_status;
-	t_env	*env;
+	int	exit_status;
 
-	env = give_envp(NULL, 0);
 	if (!node->args[0])
-		return 0;
-    exit_status = 1;
-    if (strcmp(node->args[0], "alias") == 0)
-        exit_status = run_alias(mini, node);
-    if (strcmp(node->args[0], "cd") == 0)
-        exit_status = run_cd(node->args, env);
-    if (strcmp(node->args[0], "env") == 0)
-        exit_status = run_env(env);
-    if (strcmp(node->args[0], "export") == 0)
-        exit_status = run_export(node->args, &env);
-    if (strcmp(node->args[0], "echo") == 0)
-        exit_status = run_echo(node->args);   
-    if (strcmp(node->args[0], "pwd") == 0)
-        exit_status = run_pwd();
-    if (strcmp(node->args[0], "unset") == 0)
-        exit_status = run_unset(node->args, &env);
-    if (ft_strcmp(node->args[0], "exit") == 0)
-		    run_exit(node->args);
-    return (exit_status);
+		return (0);
+	exit_status = -1;
+	if (ft_strcmp(node->args[0], "alias") == 0)
+		exit_status = run_alias(mini, node);
+	if (ft_strcmp(node->args[0], "cd") == 0)
+		exit_status = run_cd(node->args, mini->env);
+	if (ft_strcmp(node->args[0], "env") == 0)
+		exit_status = run_env(mini->env);
+	if (ft_strcmp(node->args[0], "export") == 0)
+		exit_status = run_export(node->args, &mini->env);
+	if (ft_strcmp(node->args[0], "echo") == 0)
+		exit_status = run_echo(node->args);
+	if (ft_strcmp(node->args[0], "pwd") == 0)
+		exit_status = run_pwd();
+	if (ft_strcmp(node->args[0], "unset") == 0)
+		exit_status = run_unset(node->args, &mini->env);
+	if (ft_strcmp(node->args[0], "exit") == 0)
+		run_exit(node->args);
+	//printf("\nexit_status : %d\n", exit_status);
+	return (exit_status);
 }
 
 Alias	*ft_init_alias(void)
@@ -74,7 +71,7 @@ MS	*ft_init_ms(MS *mini, char **envp)
 	mini->lexer.length = 0;
 	mini->token.type = TOKEN_EOF;
 	mini->token.value = NULL;
-	mini->envp = give_envp(envp,COPY);
+	mini->env = give_envp(envp, COPY);
 	mini->parser.lexer = mini->lexer;
 	mini->parser.current_token = mini->token;
 	mini->ast = NULL;

@@ -27,3 +27,9 @@ fct parse_command broken in smaller fcts
 ~ Moved to parsecmd
 Cleaned utils
 Fixed SIGSEGV in calculate_output_length(ft_replace) : "ls \n"
+
+J'ai pas fait les liens symboliques avec cd
+Faire en sorte de modifier la valeur exit quand signal avec variable globale
+Signal pour ctrl + \ ne marche pas bien dutout notament avec cat
+
+![alt text](<Screenshot from 2024-06-19 19-27-15.png>)

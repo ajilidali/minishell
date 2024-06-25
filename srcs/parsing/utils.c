@@ -6,11 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:49:52 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 10:24:31 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/07 10:32:22 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 void	trim_whitespace(char *str)
 {

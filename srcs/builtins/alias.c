@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/04 17:21:44 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:19:44 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	alias_finder(Alias *aliases, char *cmd, int alias_count)
 {
@@ -89,15 +89,14 @@ int	print_aliases(Alias *aliases, int alias_count)
 
 int	run_alias(MS *mini, ASTNode *node)
 {
-	int	argc;
+    int argc = 0;
 
-	argc = 0;
-	if (!node)
-		return (1);
-	while (node->args[argc])
-		argc++;
-	if (argc == 1)
-		return (print_aliases(mini->aliases, mini->alias_count));
-	process_arguments(mini, argc);
-	return (0);
+    if (!node)
+        return 1;
+    while (node->args[argc])
+        argc++;
+    if (argc == 1)
+        return print_aliases(mini->aliases, mini->alias_count);
+    process_arguments(mini,argc);
+    return 0;
 }

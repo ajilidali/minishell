@@ -3,33 +3,42 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+         #
+#    By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/06/06 23:03:35 by sakaido          ###   ########.fr        #
+#    Updated: 2024/06/25 17:17:11 by hclaude          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-CC 		= @gcc
-CFLAGS 	= -Wall -Wextra -Werror -g
+CC 		= @cc
+INCLUDE = -I./includes
+CFLAGS 	= -Wall -Wextra -Werror -g3
+
+OBJDIR= .objs
 
 SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/vars.c srcs/parsing/parser.c srcs/builtins/alias.c srcs/parsing/utils.c srcs/parsing/quotes.c \
 srcs/builtins/echo.c srcs/builtins/cd.c srcs/builtins/pwd.c srcs/builtins/export.c srcs/builtins/unset.c srcs/builtins/env.c \
-srcs/builtins/copy_env.c srcs/execution/pipex.c srcs/utils/utils.c srcs/builtins/exit.c srcs/parsing/args.c srcs/execution/redirect.c srcs/parsing/parsecmd.c
-OBJS	= ${SRCS:.c=.o}
-MAIN 	= srcs/main.c
+srcs/utils/utils.c srcs/builtins/exit.c srcs/execution/redirect.c srcs/parsing/parsecmd.c \
+srcs/utils/copy_env.c srcs/parsing/args.c srcs/execution/exec.c srcs/execution/exec_utils.c \
+srcs/utils/signals.c srcs/utils/utils2.c srcs/builtins/cd2.c srcs/execution/exec_pipe.c \
+
+OBJS	= $(patsubst %.c, $(OBJDIR)/%.o, $(SRCS))
 
 all: ${NAME}
 
+$(OBJDIR)/%.o: %.c
+	@mkdir -p $(@D)
+	@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+
 ${NAME}: ${OBJS}
 	@make -s -C ./libft
-	@$(CC) ${OBJS} -Llibft -lft -lreadline -o ${NAME} ${CFLAGS}
+	@$(CC) ${OBJS} -Llibft -lft $(INCLUDE) -lreadline -ltermcap -I/usr/local/opt/readline/include -L/usr/local/opt/readline/lib -o ${NAME} ${CFLAGS}
 	@echo "\033[32mminishell compiled\033[0m"
 
 clean:
 	@make clean -C ./libft
-	@rm -f ${OBJS}
+	@rm -rf $(OBJDIR)
 	@echo "\033[31mclean minishell\033[0m"
 
 fclean: clean
