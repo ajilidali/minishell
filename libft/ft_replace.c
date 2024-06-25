@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:46:33 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/05 10:17:16 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:12:55 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,9 @@ size_t	calculate_output_length(const char *in, const char *replacee,
 	const char	*tmp = in;
 	size_t		final_length;
 
-
-	replacee_len = strlen(replacee);
-	in_len = strlen(in);
-	replaced_len = strlen(replaced);
+	replacee_len = ft_strlen(replacee);
+	in_len = ft_strlen(in);
+	replaced_len = ft_strlen(replaced);
 	if (replacee_len == 0)
 		return (in_len);
 	count = 0;

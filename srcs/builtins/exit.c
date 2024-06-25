@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 17:14:44 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:03:06 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	run_exit(char **command) // Besoin du dernier exit_code
 {
 	int	exit_value;
 
-	clear_history();
+	rl_clear_history();
 	if (!command[1])
 		exit(/*LAST EXIT CODE*/0);
 	if (!valid_value(command[1]))

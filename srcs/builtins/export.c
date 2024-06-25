@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/07 15:08:38 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:11:48 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ t_env	*merge_sort(t_env *head)
 int	print_env(t_env *env)
 {
 	//t_env	*tmp;
-
 	if (!env)
 		return (EXIT_SUCCESS);
 	//tmp = merge_sort(env);

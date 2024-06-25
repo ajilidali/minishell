@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/25 17:41:38 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:15:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ typedef struct s_gc
 //Redirection struct
 typedef struct s_redirection
 {
-    char *type; // ">" or ">>" or "<" or "<<"
-    char *file; // the file name for redirection
-}               t_redirection;
+	char	*type; // ">" or ">>" or "<" or "<<"
+	char	*file; // the file name for redirection
+}	t_redirection;
 
 //Env struct
 typedef struct s_env
@@ -55,12 +55,12 @@ typedef struct {
 
 //Lexer Structs
 typedef enum {
-    TOKEN_WORD,
-    TOKEN_STRING,
+	TOKEN_WORD,
+	TOKEN_STRING,
 	TOKEN_VARIABLE,
-    TOKEN_PIPE,
-    TOKEN_OPERATOR,
-    TOKEN_EOF
+	TOKEN_PIPE,
+	TOKEN_OPERATOR,
+	TOKEN_EOF
 } TokenType;
 
 typedef struct {
@@ -82,19 +82,17 @@ typedef enum {
 
 typedef struct ASTNode {
 	ASTNodeType		type;
-	char			**args;           // For command nodes
+	char			**args; // For command nodes
 	int				fd_in;
 	int				fd_out;
-	struct ASTNode	*left;  // For pipe nodes
+	struct ASTNode	*left; // For pipe nodes
 	struct ASTNode	*right; // For pipe nodes
-    t_redirection *redirections; // Array containing redirections
-    size_t redirections_count; // Number of redirections
-    size_t args_capacity;
-    size_t redirections_capacity;
-    size_t args_count;
+	t_redirection	*redirections; // Array containing redirections
+	size_t			redirections_count; // Number of redirections
+	size_t			args_capacity;
+	size_t			redirections_capacity;
+	size_t			args_count;
 } ASTNode;
-
-
 
 // Parser Structs
 typedef struct {
@@ -104,14 +102,14 @@ typedef struct {
 
 // Minishell Structs
 typedef struct {
-    Alias	*aliases;
-    Lexer	lexer;
-    Token	token;
-    Parser	parser;
-    ASTNode	*ast;
-    size_t	alias_count;
-    t_env	*env;
-    char	*line;
+	Alias	*aliases;
+	Lexer	lexer;
+	Token	token;
+	Parser	parser;
+	ASTNode	*ast;
+	size_t	alias_count;
+	t_env	*env;
+	char	*line;
 } MS;
 
 typedef struct s_pipex
@@ -193,11 +191,9 @@ char		*quote_master(char quote);
 int			quote_counter(const char *str, char quote);
 void		exec_pipe(ASTNode *node, MS *mini);
 
-
 // Args Mgmt
 char		**filter_argv(int argc, char **argv, const char *target);
 int			get_argc(char *argv[]);
-
 
 //beta
 t_env		*find_envp(char *variable, t_env *env);

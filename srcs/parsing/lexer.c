@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/07 10:32:22 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/25 18:06:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,22 @@ char	lexer_peek(Lexer *lexer)
 
 Token lexer_dollar(Lexer *lexer)
 {
-    size_t	start;
-    size_t	length;
-    char	*value;
-    Token	token;
-    start = lexer->pos;
-    lexer->pos++;
-    while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
-        lexer->pos++;
-    length = lexer->pos - start;
-    value = (char *)malloc(length + 1);
-    ft_strncpy(value, lexer->input + start, length);
-    value[length] = '\0';
-    token.type = TOKEN_VARIABLE;
-    token.value = value;
-    return (token);
+	size_t	start;
+	size_t	length;
+	char	*value;
+	Token	token;
+
+	start = lexer->pos;
+	lexer->pos++;
+	while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
+		lexer->pos++;
+	length = lexer->pos - start;
+	value = (char *)malloc(length + 1);
+	ft_strncpy(value, lexer->input + start, length);
+	value[length] = '\0';
+	token.type = TOKEN_VARIABLE;
+	token.value = value;
+	return (token);
 }
 
 Token	lexer_word(Lexer *lexer)
@@ -121,32 +122,30 @@ Token	lexer_string(Lexer *lexer)
 	return (token);
 }
 
-
-Token lexer_operator(Lexer *lexer)
+Token	lexer_operator(Lexer *lexer)
 {
-    Token token;
-    char current = lexer_peek(lexer);
+	Token	token;
+	char	current;
 
-    if (current == '<' || current == '>')
-    {
-        lexer->pos++;
-        if (lexer_peek(lexer) == current) // Check for << or >>
-        {
-            char value[3] = {current, current, '\0'};
-            lexer->pos++;
-            token.type = TOKEN_OPERATOR;
-            token.value = ft_strdup(value);
-            return (token);
-        }
-    }
-
-    char value[2] = {current, '\0'};
-    lexer->pos++;
-    token.type = TOKEN_OPERATOR;
-    token.value = ft_strdup(value);
-    return (token);
+	current = lexer_peek(lexer);
+	if (current == '<' || current == '>')
+	{
+		lexer->pos++;
+		if (lexer_peek(lexer) == current) // Check for << or >>
+		{
+			char value[3] = {current, current, '\0'};
+			lexer->pos++;
+			token.type = TOKEN_OPERATOR;
+			token.value = ft_strdup(value);
+			return (token);
+		}
+	}
+	char value[2] = {current, '\0'};
+	lexer->pos++;
+	token.type = TOKEN_OPERATOR;
+	token.value = ft_strdup(value);
+	return (token);
 }
-
 
 Lexer	lexer_init(const char *input)
 {

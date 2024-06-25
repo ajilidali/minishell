@@ -5,11 +5,10 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/06/25 17:24:43 by hclaude          ###   ########.fr       */
+/*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
+/*   Updated: 2024/06/25 18:03:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "minishell.h"
 
@@ -18,7 +17,6 @@ int	main(int argc, char **argv, char **envp)
 	MS	*mini;
 
 	mini = NULL;
-
 	mini = ft_init_ms(mini, envp); // Initialize mini
 	sigint_handler();
 	if (getpid() != 0)
@@ -32,8 +30,6 @@ int	main(int argc, char **argv, char **envp)
 			mini->ast = parse_pipeline(&mini->parser);
 			if (mini->ast)
 			{
-				sigint_handler();
-				// execute_ast(mini->ast, mini);
 				exec_commands(mini->ast, mini);
 				free_ast(mini->ast);
 			}
