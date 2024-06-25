@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 17:46:02 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:56:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 				exit(1);
 		close(pipefd[0]);
 		close(pipefd[1]);
-		exec_ast(node, mini);
+		exec_pipe(node, mini);
 		exit(0);
 	}
 }
@@ -93,7 +93,7 @@ void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 				exit(1);
 		close(pipefd[0]);
 		close(pipefd[1]);
-		exec_ast(node, mini);
+		exec_pipe(node, mini);
 		exit(0);
 	}
 }
