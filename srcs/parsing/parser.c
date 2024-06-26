@@ -39,73 +39,12 @@ char	*parse_variable(char *value)
 	cpy = find_envp(value, give_envp(NULL, 0));
 	if (!cpy)
 	{
-		value = "";
+		value = ft_strdup("");
 		return (value);
 	}
 	return (copy_except_first_n_chars(cpy->name_value, ft_strlen(value) + 1));
 }
 
-/*ASTNode *parse_command(Parser *parser)
-{
-	ASTNode *node;
-	size_t capacity, redir_capacity;
-	size_t count, redir_count;
-
-	node = (ASTNode *)malloc(sizeof(ASTNode));
-	node->type = AST_COMMAND;
-	node->left = node->right = NULL;
-	capacity = 10;
-	redir_capacity = 5;
-	count = redir_count = 0;
-	node->args = (char **)malloc(capacity * sizeof(char *));
-	node->redirections = (t_redirection *)malloc(redir_capacity * sizeof(t_redirection));
-
-	while (parser->current_token.type == TOKEN_WORD ||
-		   parser->current_token.type == TOKEN_VARIABLE ||
-		   parser->current_token.type == TOKEN_OPERATOR)
-	{
-		if (parser->current_token.type == TOKEN_OPERATOR && is_redirection(parser->current_token.value[0]))
-		{
-			// Handle redirections
-			if (redir_count >= redir_capacity)
-			{
-				redir_capacity *= 2;
-				node->redirections = (t_redirection *)realloc(node->redirections, redir_capacity * sizeof(t_redirection));
-			}
-			node->redirections[redir_count].type = ft_strdup(parser->current_token.value);
-			parser_advance(parser);
-			if (parser->current_token.type == TOKEN_WORD)
-			{
-				node->redirections[redir_count].file = ft_strdup(parser->current_token.value);
-				redir_count++;
-				parser_advance(parser);
-			}
-			else
-			{
-				printf("Syntax error: expected file after redirection\n");
-				exit(1);
-			}
-		}
-		else
-		{
-			if (count >= capacity)
-			{
-				capacity *= 2;
-				node->args = (char **)realloc(node->args, capacity * sizeof(char *));
-			}
-			if (parser->current_token.type == TOKEN_VARIABLE)
-				node->args[count++] = parse_variable(parser->current_token.value);
-			else
-				node->args[count++] = ft_strdup(parser->current_token.value);
-			parser_advance(parser);
-		}
-	}
-	node->args[count] = NULL;
-	node->redirection_count = redir_count;
-	return node;
-}*/
-
-// Pipe parsing
 ASTNode	*parse_pipeline(Parser *parser)
 {
 	ASTNode	*left;
@@ -128,16 +67,16 @@ ASTNode	*parse_pipeline(Parser *parser)
 // Free AST
 void	free_ast(ASTNode *node)
 {
-	int	i;
+	size_t	i;
 
 	if (!node)
 		return ;
 	i = 0;
 	if (node->type == AST_COMMAND)
 	{
-		while (node->args[i])
-			free(node->args[i++]);
-		free(node->args);
+        while (i <= node->args_count-1)
+            free(node->args[i++]);
+        free(node->args);
 	}
 	else if (node->type == AST_PIPELINE)
 	{
