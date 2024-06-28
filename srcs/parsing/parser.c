@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 17:58:53 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/28 14:37:06 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	parser_advance(Parser *parser)
 char	*parse_variable(char *value)
 {
 	t_env	*cpy;
-
+	
 	value = copy_except_first_n_chars(value, 1);
 	cpy = find_envp(value, give_envp(NULL, 0));
 	if (!cpy)
 	{
-		value = ft_strdup("");
+		value = ft_strdup(NULL);
 		return (value);
 	}
 	return (copy_except_first_n_chars(cpy->name_value, ft_strlen(value) + 1));
@@ -74,7 +74,7 @@ void	free_ast(ASTNode *node)
 	i = 0;
 	if (node->type == AST_COMMAND)
 	{
-        while (i <= node->args_count-1)
+        while (i <= node->args_count-1  && node->args_count > 0)
             free(node->args[i++]);
         free(node->args);
 	}

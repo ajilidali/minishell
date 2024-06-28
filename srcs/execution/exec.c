@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/07 11:21:43 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 17:47:17 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:10:20 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+#include <stdio.h>
 
 int	make_redirection(ASTNode *node)
 {
@@ -37,18 +38,34 @@ int	make_redirection(ASTNode *node)
 	return (1);
 }
 
+static int has_fwdslash(const char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '/')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 static int	check_path(const char *path)
 {
-	if (access(path, F_OK) != 0)
-		return (0);
-	if (chdir(path) == 0)
-	{
-		printf("DEDSEC: %s: is a directory.\n", path);
-		chdir("..");
-		return (1);
-	}
-	else
-		return (0);
+    if(has_fwdslash(path))
+    {
+       	if (access(path, F_OK) != 0)
+            return (0);
+    	if (chdir(path) == 0)
+    	{
+    		printf("DEDSEC: %s: is a directory.\n", path);
+    		chdir("..");
+    		return (1);
+    	}
+    }
+    return (0);
 }
 
 static int	exec_command(ASTNode *node, MS *ms)

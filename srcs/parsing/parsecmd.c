@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/25 18:11:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:09:55 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_redirection(char c)
 static ASTNode	*initialize_ast_node()
 {
 	ASTNode	*node = (ASTNode *)malloc(sizeof(ASTNode));
-	
+
 	node->type = AST_COMMAND;
 	node->left = node->right = NULL;
 	node->args = (char **)malloc(10 * sizeof(char *));
@@ -43,7 +43,9 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 	}
 	node->redirections[node->redirections_count].type = ft_strdup(parser->current_token.value);
 	parser_advance(parser);
-	if (parser->current_token.type == TOKEN_WORD)
+	if (parser->current_token.type == TOKEN_EMPTY)
+        parser_advance(parser);
+	else if (parser->current_token.type == TOKEN_WORD)
 	{
 		node->redirections[node->redirections_count].file = ft_strdup(parser->current_token.value);
 		node->redirections_count++;
@@ -66,7 +68,14 @@ static void handle_argument(Parser *parser, ASTNode *node)
 		node->args = (char **)malloc(node->args_capacity * sizeof(char *));
 	}
 	if (parser->current_token.type == TOKEN_VARIABLE)
-		node->args[node->args_count++] = parse_variable(parser->current_token.value);
+	{
+		node->args[node->args_count] = parse_variable(parser->current_token.value);
+		/*if (node->args[node->args_count][0] == '\0')
+		{
+			printf("juif");
+		}*/
+		node->args_count++;
+	}
 	else
 		node->args[node->args_count++] = ft_strdup(parser->current_token.value);
 	parser_advance(parser);

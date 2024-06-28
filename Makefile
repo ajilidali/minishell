@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+         #
+#    By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/06/25 17:17:11 by hclaude          ###   ########.fr        #
+#    Updated: 2024/06/28 14:29:30 by sakaido          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 CC 		= @cc
 INCLUDE = -I./includes
-CFLAGS 	= -Wall -Wextra -Werror -g3
+CFLAGS 	= -Wall -Wextra -Werror -g3 
 
 OBJDIR= .objs
 

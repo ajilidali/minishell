@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/25 18:06:01 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/28 15:10:08 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,22 @@ char	lexer_peek(Lexer *lexer)
 
 Token lexer_dollar(Lexer *lexer)
 {
-	size_t	start;
-	size_t	length;
-	char	*value;
-	Token	token;
-
-	start = lexer->pos;
-	lexer->pos++;
-	while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
-		lexer->pos++;
-	length = lexer->pos - start;
-	value = (char *)malloc(length + 1);
-	ft_strncpy(value, lexer->input + start, length);
-	value[length] = '\0';
-	token.type = TOKEN_VARIABLE;
-	token.value = value;
-	return (token);
+    size_t	start;
+    size_t	length;
+    char	*value;
+    Token	token;
+	
+    start = lexer->pos;
+    lexer->pos++; 
+    while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
+        lexer->pos++;
+    length = lexer->pos - start;
+    value = (char *)malloc(length + 1);
+    ft_strncpy(value, lexer->input + start, length);
+    value[length] = '\0';
+    token.type = TOKEN_VARIABLE;
+    token.value = value;
+    return (token);
 }
 
 Token	lexer_word(Lexer *lexer)
@@ -97,27 +97,34 @@ Token	lexer_string(Lexer *lexer)
 	char	quote_type;
 	size_t	start;
 	char	*value;
-	char	*qc;
+	//char	*qc;
 	Token	token;
 
 	quote_type = lexer_peek(lexer);
 	//printf("lexer lenght :%zu\n",lexer->length);
-	if (quote_counter(lexer->input, quote_type) % 2 != 0)
+	/*if (quote_counter(lexer->input, quote_type) % 2 != 0)
 		qc = quote_master(quote_type);
 	else
-		qc = ft_strdup("");
+		qc = ft_strdup("");*/
+//	printf("%d",quote_counter(lexer->input, quote_type));
 	lexer->pos++;
 	start = lexer->pos;
 	while (lexer_peek(lexer) != quote_type && lexer_peek(lexer) != '\0')
 		lexer->pos++;
-	value = (char *)malloc(lexer->pos - start + 1);
-	ft_strncpy(value, lexer->input + start, lexer->pos - start);
-	value[lexer->pos - start] = '\0';
-	lexer->pos++;
-	printf("value : %s\n",value);
-	// token.type = TOKEN_STRING;
-	token.type = TOKEN_WORD;
-	token.value = ft_strjoin(value, qc);
+	if (quote_counter(lexer->input, quote_type) % 2 == 0)
+	{
+        value = (char *)malloc(lexer->pos - start + 1);
+    	ft_strncpy(value, lexer->input + start, lexer->pos - start);
+    	value[lexer->pos - start] = '\0';
+    	lexer->pos++;
+        token.type = TOKEN_WORD;
+    }else
+    {
+      	perror("syntax error");
+		value = NULL;
+		token.type = TOKEN_EMPTY;
+    }
+	token.value = value;//ft_strjoin(value, qc);
 	printf("tok : %s\n",token.value);
 	return (token);
 }

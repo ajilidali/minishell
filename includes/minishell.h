@@ -56,6 +56,7 @@ typedef struct {
 //Lexer Structs
 typedef enum {
 	TOKEN_WORD,
+	TOKEN_EMPTY,
 	TOKEN_STRING,
 	TOKEN_VARIABLE,
 	TOKEN_PIPE,
