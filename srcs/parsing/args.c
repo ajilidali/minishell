@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static int	is_similar(const char *str1, const char *str2)
 {
-	return (strcmp(str1, str2) == 0); // forbidden function
+	return (ft_strcmp(str1, str2) == 0); // forbidden function
 }
 
 char	**filter_argv(int argc, char **argv, const char *target)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 int	make_redirection(ASTNode *node)
 {
@@ -37,6 +37,20 @@ int	make_redirection(ASTNode *node)
 	return (1);
 }
 
+static int	check_path(const char *path)
+{
+	if (access(path, F_OK) != 0)
+		return (0);
+	if (chdir(path) == 0)
+	{
+		printf("DEDSEC: %s: is a directory.\n", path);
+		chdir("..");
+		return (1);
+	}
+	else
+		return (0);
+}
+
 static int	exec_command(ASTNode *node, MS *ms)
 {
 	char	*path;
@@ -53,11 +67,14 @@ static int	exec_command(ASTNode *node, MS *ms)
 		path = find_path(node->args[0], envp);
 	if (!path)
 	{
+		if (node->args[0][0] == '.')
+			printf("DEDSEC: %s: No such file or directory\n", node->args[0]);
 		freetab(envp);
 		exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
 	{
+		check_path(path);
 		free(path);
 		freetab(envp);
 		exit(1);

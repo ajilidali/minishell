@@ -38,7 +38,7 @@ int		ft_isalpha(int a);
 int		ft_isalnum(int a);
 int		ft_atoi(const char *nptr);
 int		ft_lstsize(t_list *lst);
-int		ft_strcmp(char *s1, char *s2);
+int		ft_strcmp(const char *s1, const char *s2);
 long	ft_atol(const char *nptr);
 char	*ft_strcat(char *s1, const char *s2);
 char	*ft_strndup(const char *s, size_t n);
