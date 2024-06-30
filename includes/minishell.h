@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/25 18:15:56 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/30 17:28:44 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # include <signal.h>
 
 # define FREE_GB 1
-# define COPY 10
+# define COPY 10 // Flag for copying envp to global
 
 //Garbage collector struct
 typedef struct s_gc
@@ -189,7 +189,7 @@ int			execute(ASTNode *node, char **envp);
 char		*find_path(char *cmd, char **envp);
 int			init_pipex(int nargument, char **command, char **envp);
 char		*quote_master(char quote);
-int			quote_counter(const char *str, char quote);
+int			char_counter(const char *str, char c);
 void		exec_pipe(ASTNode *node, MS *mini);
 
 // Args Mgmt
@@ -197,7 +197,6 @@ char		**filter_argv(int argc, char **argv, const char *target);
 int			get_argc(char *argv[]);
 
 //beta
-t_env		*find_envp(char *variable, t_env *env);
 void		setup_redirections(ASTNode *node);
 //utils
 t_env		*give_envp(char **envp, int flag);

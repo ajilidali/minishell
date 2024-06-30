@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/28 14:37:06 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/30 17:26:33 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,14 @@ char	*parse_variable(char *value)
 {
 	t_env	*cpy;
 	
-	value = copy_except_first_n_chars(value, 1);
+	value = ft_strdup(&value[1]);
 	cpy = find_envp(value, give_envp(NULL, 0));
 	if (!cpy)
 	{
 		value = ft_strdup(NULL);
 		return (value);
 	}
-	return (copy_except_first_n_chars(cpy->name_value, ft_strlen(value) + 1));
+	return (ft_strdup(&cpy->name_value[ft_strlen(value)+1]));
 }
 
 ASTNode	*parse_pipeline(Parser *parser)

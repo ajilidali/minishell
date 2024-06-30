@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/07 10:32:22 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/28 17:27:36 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	quote_counter(const char *str, char quote)
+int	char_counter(const char *str, char c)
 {
 	int	count;
 	int	len;
@@ -20,7 +20,7 @@ int	quote_counter(const char *str, char quote)
 	count = 0;
 	len = ft_strlen(str) - 1;
 	while (len >= 0)
-		if (str[len--] == quote)
+		if (str[len--] == c)
 			count++;
 	return (count);
 }
@@ -35,7 +35,7 @@ char	*quote_closer(char quote)
 
 	count = 0;
 	closer = readline("quote > ");
-	count = quote_counter(closer, quote);
+	count = char_counter(closer, quote);
 	if ((count % 2) != 1)
 	{
 		recursive_result = quote_closer(quote);

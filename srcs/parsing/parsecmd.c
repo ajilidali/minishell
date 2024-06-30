@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/28 15:09:55 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/30 10:18:18 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,20 +68,13 @@ static void handle_argument(Parser *parser, ASTNode *node)
 		node->args = (char **)malloc(node->args_capacity * sizeof(char *));
 	}
 	if (parser->current_token.type == TOKEN_VARIABLE)
-	{
-		node->args[node->args_count] = parse_variable(parser->current_token.value);
-		/*if (node->args[node->args_count][0] == '\0')
-		{
-			printf("juif");
-		}*/
-		node->args_count++;
-	}
+		node->args[node->args_count++] = parse_variable(parser->current_token.value);
 	else
 		node->args[node->args_count++] = ft_strdup(parser->current_token.value);
 	parser_advance(parser);
 }
 
-ASTNode *parse_command(Parser *parser)
+ASTNode *parse_command(Parser *parser)// Memory allocation failure
 {
 	ASTNode *node = initialize_ast_node();
 

@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/28 15:10:08 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/06/30 17:27:26 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,32 +91,66 @@ Token	lexer_word(Lexer *lexer)
 	return (token);
 }
 
+char *replace_variables(char *input)
+{
+    char *result = NULL;
+    char *final = NULL;
+    int start = 0;
+    int i = 0;
+    int end = 0;
+
+    if (!input)
+        return NULL;
+    while (input[i] && input[i] != '$')
+        i++;
+    start = i;
+    if (i < (int)strlen(input) && input[i] == '$') 
+	{
+        i++; // move past the '$' character
+        while (i < (int)strlen(input) && (input[i] == '_' || isalnum(input[i])))
+            i++;
+        end = i;
+    } else {
+        start = 0;
+        end = strlen(input);
+    }
+    result = (char *)malloc(sizeof(char) * ((end - start) + 1)); // +1 for null-terminator
+    if (!result)
+        return NULL;
+    strncpy(result, &input[start], end - start);
+    result[end - start] = '\0';
+    result = parse_variable(result);
+    if (!result)
+        return (free(result),NULL);
+    final = (char *)malloc(start + strlen(result) + 1); // +1 for null-terminator
+    if (!final) 
+        return (free(result),NULL);
+    strncpy(final, input, start);
+    final[start] = '\0';
+    strcat(final, result);
+    free(input);
+    free(result);
+    return final;
+}
+
 
 Token	lexer_string(Lexer *lexer)
 {
 	char	quote_type;
 	size_t	start;
 	char	*value;
-	//char	*qc;
 	Token	token;
-
+	
 	quote_type = lexer_peek(lexer);
-	//printf("lexer lenght :%zu\n",lexer->length);
-	/*if (quote_counter(lexer->input, quote_type) % 2 != 0)
-		qc = quote_master(quote_type);
-	else
-		qc = ft_strdup("");*/
-//	printf("%d",quote_counter(lexer->input, quote_type));
 	lexer->pos++;
 	start = lexer->pos;
 	while (lexer_peek(lexer) != quote_type && lexer_peek(lexer) != '\0')
 		lexer->pos++;
-	if (quote_counter(lexer->input, quote_type) % 2 == 0)
+	if (char_counter(lexer->input, quote_type) % 2 == 0)
 	{
         value = (char *)malloc(lexer->pos - start + 1);
     	ft_strncpy(value, lexer->input + start, lexer->pos - start);
-    	value[lexer->pos - start] = '\0';
-    	lexer->pos++;
+    	value[lexer->pos++ - start] = '\0';
         token.type = TOKEN_WORD;
     }else
     {
@@ -124,8 +158,7 @@ Token	lexer_string(Lexer *lexer)
 		value = NULL;
 		token.type = TOKEN_EMPTY;
     }
-	token.value = value;//ft_strjoin(value, qc);
-	printf("tok : %s\n",token.value);
+	token.value = replace_variables(value);
 	return (token);
 }
 
