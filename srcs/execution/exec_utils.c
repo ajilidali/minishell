@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:20:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/07 12:05:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:03:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,41 @@ void	open_files(t_pipex *data, char **argv, int argc)
 	if (data->fd1 == -1 || data->fd2 == -1)
 		exit_process(data, EXIT_SUCCESS);
 	data->nbr_cmd = argc - 1;
+}
+
+static int has_fwdslash(const char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '/')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void check_path(char *path)
+{
+	if(has_fwdslash(path))
+	{
+		if (access(path, F_OK) == 0)
+		{
+			ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
+			ft_putstr_fd(path, STDERR_FILENO);
+			ft_putendl_fd(": Is a directory", STDERR_FILENO);
+			exit(126);
+		}
+		else
+		{
+			ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
+			ft_putstr_fd(path, STDERR_FILENO);
+			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+			exit(127);
+		}
+	}
 }
 
 char	*find_path(char *cmd, char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/30 10:18:18 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:24:51 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@ static ASTNode	*initialize_ast_node()
 	return node;
 }
 
+int type_of_redirect(char *str)
+{
+	if (ft_strcmp(str, ">") == 0)
+		return (FD_OUT);
+	if (ft_strcmp(str, ">>") == 0)
+		return (FD_ADDOUT);
+	if (ft_strcmp(str, "<") == 0)
+		return (FD_IN);
+	return (FD_HD);
+}
+
 static void handle_redirection(Parser *parser, ASTNode *node)
 {
 	if (node->redirections_count >= node->redirections_capacity)
@@ -41,7 +52,7 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 			free(node->redirections);
 		node->redirections = (t_redirection *)malloc(node->redirections_capacity * sizeof(t_redirection));
 	}
-	node->redirections[node->redirections_count].type = ft_strdup(parser->current_token.value);
+	node->redirections[node->redirections_count].flag = type_of_redirect(parser->current_token.value);
 	parser_advance(parser);
 	if (parser->current_token.type == TOKEN_EMPTY)
         parser_advance(parser);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/03 03:40:39 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/03 15:56:06 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,15 @@ void	parser_advance(Parser *parser)
 char	*parse_variable(char *value)
 {
 	char	*cpy;
-	
-	value = ft_strdup(&value[1]);
-	printf("Value = %s\n\n\n\n\n\n", value);
-	cpy = env_get_var(value, give_envp(NULL, 0));
+
+	//value = ft_strdup(&value[1]); // ?
+	cpy = env_get_var(++value, give_envp(NULL, 0));
 	if (!cpy)
 	{
 		// value = ft_strdup(NULL); // ?
-		printf("NO VARIABLE\n");
 		return (NULL);
 	}
-	printf("CPY = %s\n", cpy);
-	return (ft_strdup(cpy));
+	return (ft_strdup(cpy)); // faut se calmer avec les strdup
 }
 
 ASTNode	*parse_pipeline(Parser *parser)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/30 17:28:44 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:24:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@
 # define FREE_GB 1
 # define COPY 10 // Flag for copying envp to global
 
+# define FD_IN 0
+# define FD_HD 1
+# define FD_OUT 2
+# define FD_ADDOUT 3
+
 //Garbage collector struct
 typedef struct s_gc
 {
@@ -36,7 +41,7 @@ typedef struct s_gc
 //Redirection struct
 typedef struct s_redirection
 {
-	char	*type; // ">" or ">>" or "<" or "<<"
+	int		flag;  // ">" or ">>" or "<" or "<<"
 	char	*file; // the file name for redirection
 }	t_redirection;
 
@@ -198,6 +203,7 @@ int			get_argc(char *argv[]);
 
 //beta
 void		setup_redirections(ASTNode *node);
+
 //utils
 t_env		*give_envp(char **envp, int flag);
 void		test_envp(t_env *env, char *str);
@@ -207,5 +213,6 @@ char		*copy_except_first_n_chars(const char *input, size_t n);
 void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
 void		update_pwd(char *old_path, t_env *env);
+void		check_path(char *path);
 
 #endif // MINISHELL_H

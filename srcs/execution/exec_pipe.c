@@ -6,36 +6,40 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 17:56:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/03 16:02:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	exec_command(ASTNode *node, MS *ms)
+static void	exec_command(ASTNode *node, MS *ms)
 {
 	char	*path;
 	char	**envp;
 
+	check_path(node->args[0]);
 	envp = get_tabenv(ms->env);
 	if (!envp)
-		return (1);
+		exit(1);
 	if (!access(node->args[0], X_OK))
 		path = ft_strdup(node->args[0]);
 	else
 		path = find_path(node->args[0], envp);
 	if (!path)
 	{
+		ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
+		ft_putstr_fd(node->args[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		freetab(envp);
-		return (1);
+		exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
 	{
 		free(path);
 		freetab(envp);
-		return (1);
+		exit(1);
 	}
-	return (1);
+	exit(1);
 }
 
 // Pipe --> Right
@@ -121,13 +125,7 @@ void	exec_pipe(ASTNode *node, MS *mini)
 		node->args = filter_argv(get_argc(node->args), node->args, "");
 		if (is_local_fct(mini, node) != -1)
 			return ;
-		if (exec_command(node, mini))
-		{
-			ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-			ft_putstr_fd(node->args[0], STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			exit(1);
-		}
+		exec_command(node, mini);
 	}
 	else if (node->type == AST_PIPELINE)
 		make_pipe(node, mini);

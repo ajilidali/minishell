@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/07 11:21:43 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/28 15:10:20 by sakaido          ###   ########.fr       */
+/*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
+/*   Updated: 2024/07/03 15:59:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,41 +38,12 @@ int	make_redirection(ASTNode *node)
 	return (1);
 }
 
-static int has_fwdslash(const char *str)
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '/')
-            return (1);
-        i++;
-    }
-    return (0);
-}
-
-static int	check_path(const char *path)
-{
-    if(has_fwdslash(path))
-    {
-       	if (access(path, F_OK) != 0)
-            return (0);
-    	if (chdir(path) == 0)
-    	{
-    		printf("DEDSEC: %s: is a directory.\n", path);
-    		chdir("..");
-    		return (1);
-    	}
-    }
-    return (0);
-}
-
 static int	exec_command(ASTNode *node, MS *ms)
 {
 	char	*path;
 	char	**envp;
 
+	check_path(node->args[0]);
 	if (!make_redirection(node))
 		exit(1);
 	envp = get_tabenv(ms->env);
@@ -84,14 +55,14 @@ static int	exec_command(ASTNode *node, MS *ms)
 		path = find_path(node->args[0], envp);
 	if (!path)
 	{
-		if (node->args[0][0] == '.')
-			printf("DEDSEC: %s: No such file or directory\n", node->args[0]);
+		ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
+		ft_putstr_fd(node->args[0], STDERR_FILENO);
+		ft_putstr_fd(": command not found\n", STDERR_FILENO);
 		freetab(envp);
 		exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
 	{
-		check_path(path);
 		free(path);
 		freetab(envp);
 		exit(1);
@@ -115,13 +86,8 @@ int	exec_commands(ASTNode *node, MS *ms)
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
-		if (WEXITSTATUS(status))
-		{
-			ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-			ft_putstr_fd(node->args[0], STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			return (1);
-		}
+		printf("status: %d\n", WEXITSTATUS(status));
+		return (1);
 	}
 	else
 		exec_pipe(node, ms);
