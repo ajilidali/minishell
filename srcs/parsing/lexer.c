@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/30 17:27:26 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/03 03:40:22 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char *replace_variables(char *input)
     if (!result)
         return NULL;
     strncpy(result, &input[start], end - start);
-    result[end - start] = '\0';
+    // result[end - start] = '\0';
     result = parse_variable(result);
     if (!result)
         return (free(result),NULL);
@@ -130,9 +130,8 @@ char *replace_variables(char *input)
     strcat(final, result);
     free(input);
     free(result);
-    return final;
+    return (final);
 }
-
 
 Token	lexer_string(Lexer *lexer)
 {

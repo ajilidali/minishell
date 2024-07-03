@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/30 16:47:57 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/03 03:14:53 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,51 @@ int	verify_export(char *command)
 	return (0);
 }
 
-t_env	*find_envp(char *name, t_env *env)
+// t_env	*find_envp(char *name, t_env *env)
+// {
+// 	char **split;
+
+//     if (!name || !env)
+//         return (NULL);
+//     while (!env)
+// 	{
+// 		split = ft_split(env->name_value,'=');
+// 		//printf("comparing string and split : %s , %s = %d\n",name,split[0],strcmp(name,split[0]));
+//         if (ft_strcmp(name, ft_split(env->name_value,'=')[0]) == 0)
+// 		{
+// 			freetab(split);
+//             return env;  // Match found, return the value
+//         }
+// 		free(split);
+//         env = env->next;  // Move to the next environment variable
+//     }
+//     return NULL;  // No match found
+// }
+
+t_env	*find_envp(char *variable, t_env *env)
 {
-	char **split;
+	int	i;
+	int	j;
 
-    if (name == NULL || env == NULL)
-        return NULL;
-    while (env != NULL)
+	i = 0;
+	j = 0;
+	if (!variable || !env)
+		return (NULL);
+	while (variable[i] && variable[i] != '=')
+		i++;
+	while (env)
 	{
-		split = ft_split(env->name_value,'=');
-		//printf("comparing string and split : %s , %s = %d\n",name,split[0],strcmp(name,split[0]));
-        if (strcmp(name,ft_split(env->name_value,'=')[0]) == 0)
-		{
-			freetab(split);
-            return env;  // Match found, return the value
-        }
-		free(split);
-        env = env->next;  // Move to the next environment variable
-    }
-    return NULL;  // No match found
+		while (env->name_value[j] && env->name_value[j] != '=')
+			j++;
+		printf("env->name_value = %s, j = %d et i = %d\n", env->name_value, j, i);
+		if (ft_strncmp(variable, env->name_value, i) == 0 && j == i)
+			return (env);
+		env = env->next;
+		j = 0;
+	}
+	printf("EXISTE PAS\n");
+	return (NULL);
 }
-
-
 
 
 /*t_env	*split_list(t_env *head)

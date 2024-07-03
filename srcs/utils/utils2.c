@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 15:49:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/30 18:00:08 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	change_shlvl(t_env *env)
 	char	*str_lvl;
 	char	*new_lvl;
 
-	str_lvl = env_get_var("SHLVL", env);
-	node_shlvl = find_envp("SHLVL", env);
+	str_lvl = env_get_var("SHLVL=", env);
+	node_shlvl = find_envp("SHLVL=", env);
 	if (!node_shlvl)
 		return ((void)env_add_var("SHLVL=0", env), 1);
 	shlvl = ft_atoi(str_lvl) + 1;

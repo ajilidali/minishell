@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 18:03:06 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/30 17:50:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	run_exit(char **command) // Besoin du dernier exit_code
 {
 	int	exit_value;
 
-	rl_clear_history();
+	clear_history();
 	if (!command[1])
 		exit(/*LAST EXIT CODE*/0);
 	if (!valid_value(command[1]))

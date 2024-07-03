@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/22 17:22:44 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/06/30 17:50:41 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handler(int signal)
 	if (signal == SIGINT) // ctrl c
 	{
 		ft_putchar_fd('\n', 1);
-		rl_replace_line("", 0);
+		// rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}
