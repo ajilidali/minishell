@@ -6,12 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/04 16:15:57 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:54:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include <stdio.h>
+#include "minishell.h"
 #include <sys/types.h>
 
 Parser	parser_init(const char *input)

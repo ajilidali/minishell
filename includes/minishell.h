@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/03 16:24:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:07:50 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@
 # define FD_HD 1
 # define FD_OUT 2
 # define FD_ADDOUT 3
+
+# define ER_SYNTAX_ERROR 1
+# define ER_QUOTE_ERROR 2
+# define ER_REDIRECT_ERROR 3
+# define ER_CMD_NOT_FOUND 4
+# define ER_PERM_DENIED 5
+# define ER_NO_FILE_DIR 6
+# define ER_NO_FILE 7
+# define ER_IS_DIR 8
 
 //Garbage collector struct
 typedef struct s_gc
@@ -214,5 +223,6 @@ void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
 void		update_pwd(char *old_path, t_env *env);
 void		check_path(char *path);
+void		print_errors(char *str, int flag);
 
 #endif // MINISHELL_H

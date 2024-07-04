@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/04 17:01:12 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:10:32 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ static void	exec_command(ASTNode *node, MS *ms)
 		path = find_path(node->args[0], envp);
 	if (!path)
 	{
-		ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-		ft_putstr_fd(node->args[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
-		exit(1);
+		exit(127);
 	}
 	if (execve(path, node->args, envp) == -1)
 	{

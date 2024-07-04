@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:20:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/03 16:03:27 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:09:59 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,12 @@ void check_path(char *path)
 	{
 		if (access(path, F_OK) == 0)
 		{
-			ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-			ft_putstr_fd(path, STDERR_FILENO);
-			ft_putendl_fd(": Is a directory", STDERR_FILENO);
+			print_errors(path, ER_IS_DIR);
 			exit(126);
 		}
 		else
 		{
-			ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-			ft_putstr_fd(path, STDERR_FILENO);
-			ft_putendl_fd(": No such file or directory", STDERR_FILENO);
+			print_errors(path, ER_NO_FILE_DIR);
 			exit(127);
 		}
 	}

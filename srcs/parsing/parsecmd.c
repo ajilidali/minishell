@@ -6,11 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/04 15:25:37 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:18:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 
 int	is_redirection(char c)
 {
@@ -64,7 +64,7 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 	}
 	else
 	{
-		printf("Syntax error: expected file after redirection\n");
+		print_errors(NULL, ER_REDIRECT_ERROR);
 		exit(1);
 	}
 }

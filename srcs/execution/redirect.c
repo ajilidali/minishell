@@ -6,12 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/04 17:28:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:53:37 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include <fcntl.h>
+#include "minishell.h"
 
 static void	setup_redirect_in(ASTNode *node, size_t i)
 {

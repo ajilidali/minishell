@@ -6,12 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/04 17:24:43 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:22:25 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include <stdio.h>
+#include "minishell.h"
 
 void print_redirections(ASTNode *node)
 {
@@ -51,7 +50,7 @@ int	make_redirection(ASTNode *node)
 	return (1);
 }
 
-static int	exec_command(ASTNode *node, MS *ms)
+static void	exec_command(ASTNode *node, MS *ms)
 {
 	char	*path;
 	char	**envp;
@@ -69,18 +68,12 @@ static int	exec_command(ASTNode *node, MS *ms)
 		path = find_path(node->args[0], envp);
 	if (!path)
 	{
-		ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-		ft_putstr_fd(node->args[0], STDERR_FILENO);
-		ft_putstr_fd(": command not found\n", STDERR_FILENO);
+		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
 		exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
-	{
-		free(path);
-		freetab(envp);
-		exit(1);
-	}
+		return (free(path), freetab(envp), exit(1));
 	exit(1);
 }
 
