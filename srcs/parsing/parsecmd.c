@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/03 17:24:51 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 15:25:37 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static ASTNode	*initialize_ast_node()
 
 int type_of_redirect(char *str)
 {
-	if (ft_strcmp(str, ">") == 0)
+	if (!ft_strcmp(str, ">"))
 		return (FD_OUT);
-	if (ft_strcmp(str, ">>") == 0)
+	if (!ft_strcmp(str, ">>"))
 		return (FD_ADDOUT);
-	if (ft_strcmp(str, "<") == 0)
+	if (!ft_strcmp(str, "<"))
 		return (FD_IN);
 	return (FD_HD);
 }
@@ -99,5 +99,5 @@ ASTNode *parse_command(Parser *parser)// Memory allocation failure
 			handle_argument(parser, node);
 	}
 	node->args[node->args_count] = NULL;
-	return node;
+	return (node);
 }

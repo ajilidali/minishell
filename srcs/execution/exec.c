@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/03 15:59:01 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 16:10:17 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 int	make_redirection(ASTNode *node)
 {
-	node->fd_in = STDIN_FILENO;
-	node->fd_out = STDOUT_FILENO;
+	setup_redirections(node);
 	if (node->fd_in != STDIN_FILENO)
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
@@ -70,11 +69,24 @@ static int	exec_command(ASTNode *node, MS *ms)
 	exit(1);
 }
 
+void print_redirections(ASTNode *node)
+{
+	size_t i;
+
+	i = 0;
+	while (i < node->redirections_count)
+	{
+		printf("redirections[%zu]: %d %s\n", i, node->redirections[i].flag, node->redirections[i].file);
+		i++;
+	}
+}
+
 int	exec_commands(ASTNode *node, MS *ms)
 {
 	int	pid;
 	int	status;
 
+	print_redirections(node);
 	if (node->type == AST_COMMAND)
 	{
 		status = is_local_fct(ms, node);
