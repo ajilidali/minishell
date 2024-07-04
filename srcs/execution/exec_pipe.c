@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/03 16:02:28 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:01:12 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 	int	pid;
 
 	pid = fork();
-	node->fd_out = 1;
-	node->fd_in = 0;
 	if (pid == -1)
 		return ;
 	if (pid == 0)
 	{
+		setup_redirections(node);
 		if (node->fd_in != STDIN_FILENO)
 		{
 			if (dup2(node->fd_in, STDIN_FILENO) == -1)
@@ -78,12 +77,11 @@ void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 	int	pid;
 
 	pid = fork();
-	node->fd_out = 1;
-	node->fd_in = 0;
 	if (pid == -1)
 		return ;
 	if (pid == 0)
 	{
+		setup_redirections(node);
 		if (node->fd_in != STDIN_FILENO)
 			if (dup2(node->fd_in, STDIN_FILENO) == -1)
 				exit(1);
