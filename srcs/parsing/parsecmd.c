@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/04 18:18:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/05 18:17:25 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 	node->redirections[node->redirections_count].flag = type_of_redirect(parser->current_token.value);
 	parser_advance(parser);
 	if (parser->current_token.type == TOKEN_EMPTY)
-        parser_advance(parser);
+		parser_advance(parser);
 	else if (parser->current_token.type == TOKEN_WORD)
 	{
 		node->redirections[node->redirections_count].file = ft_strdup(parser->current_token.value);
@@ -64,8 +64,8 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 	}
 	else
 	{
-		print_errors(NULL, ER_REDIRECT_ERROR);
-		exit(1);
+		print_errors(NULL, ER_REDIRECT_ERROR); // Proubleme ici
+		//exit(1);
 	}
 }
 
@@ -91,8 +91,8 @@ ASTNode *parse_command(Parser *parser)// Memory allocation failure
 
 	while (parser->current_token.type == TOKEN_WORD ||
 			parser->current_token.type == TOKEN_VARIABLE ||
-			parser->current_token.type == TOKEN_OPERATOR) {
-
+			parser->current_token.type == TOKEN_OPERATOR)
+	{
 		if (parser->current_token.type == TOKEN_OPERATOR && is_redirection(parser->current_token.value[0]))
 			handle_redirection(parser, node);
 		else
