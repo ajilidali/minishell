@@ -6,7 +6,7 @@
 #    By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/07/04 18:30:05 by hclaude          ###   ########.fr        #
+#    Updated: 2024/07/05 18:37:06 by hclaude          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,14 +37,13 @@ ${NAME}: ${OBJS}
 	@echo "\033[32mminishell compiled\033[0m"
 
 clean:
-	@make clean -C ./libft
+	@make -s clean -C ./libft
 	@rm -rf $(OBJDIR)
 	@echo "\033[31mclean minishell\033[0m"
 
 fclean: clean
-	@make fclean -C ./libft
+	@make -s fclean -C ./libft
 	@rm -f $(NAME)
-	@echo "Done!"
 
 re:	fclean all
 
