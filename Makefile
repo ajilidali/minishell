@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+         #
+#    By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/06/28 14:29:30 by sakaido          ###   ########.fr        #
+#    Updated: 2024/07/04 18:30:05 by hclaude          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
 CC 		= @cc
 INCLUDE = -I./includes
-CFLAGS 	= -Wall -Wextra -Werror -g3 
+CFLAGS 	= -Wall -Wextra -Werror -g3
 
 OBJDIR= .objs
 
@@ -21,7 +21,7 @@ SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/vars.c srcs/parsing
 srcs/builtins/echo.c srcs/builtins/cd.c srcs/builtins/pwd.c srcs/builtins/export.c srcs/builtins/unset.c srcs/builtins/env.c \
 srcs/utils/utils.c srcs/builtins/exit.c srcs/execution/redirect.c srcs/parsing/parsecmd.c \
 srcs/utils/copy_env.c srcs/parsing/args.c srcs/execution/exec.c srcs/execution/exec_utils.c \
-srcs/utils/signals.c srcs/utils/utils2.c srcs/builtins/cd2.c srcs/execution/exec_pipe.c \
+srcs/utils/signals.c srcs/utils/utils2.c srcs/builtins/cd2.c srcs/execution/exec_pipe.c srcs/utils/print_errors.c \
 
 OBJS	= $(patsubst %.c, $(OBJDIR)/%.o, $(SRCS))
 

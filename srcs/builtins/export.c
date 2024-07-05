@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/30 16:47:57 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/03 15:49:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,29 +24,28 @@ int	verify_export(char *command)
 	return (0);
 }
 
-t_env	*find_envp(char *name, t_env *env)
+t_env	*find_envp(char *variable, t_env *env)
 {
-	char **split;
+	int	i;
+	int	j;
 
-    if (name == NULL || env == NULL)
-        return NULL;
-    while (env != NULL)
+	i = 0;
+	j = 0;
+	if (!variable || !env)
+		return (NULL);
+	while (variable[i] && variable[i] != '=')
+		i++;
+	while (env)
 	{
-		split = ft_split(env->name_value,'=');
-		//printf("comparing string and split : %s , %s = %d\n",name,split[0],strcmp(name,split[0]));
-        if (strcmp(name,ft_split(env->name_value,'=')[0]) == 0)
-		{
-			freetab(split);
-            return env;  // Match found, return the value
-        }
-		free(split);
-        env = env->next;  // Move to the next environment variable
-    }
-    return NULL;  // No match found
+		while (env->name_value[j] && env->name_value[j] != '=')
+			j++;
+		if (ft_strncmp(variable, env->name_value, i) == 0 && j == i)
+			return (env);
+		env = env->next;
+		j = 0;
+	}
+	return (NULL);
 }
-
-
-
 
 /*t_env	*split_list(t_env *head)
 {
@@ -108,6 +107,7 @@ t_env	*merge_sort(t_env *head)
 int	print_env(t_env *env)
 {
 	//t_env	*tmp;
+
 	if (!env)
 		return (EXIT_SUCCESS);
 	//tmp = merge_sort(env);
@@ -125,10 +125,6 @@ int	run_export(char **command, t_env **env)
 	t_env	*node;
 	t_env	*tmp;
 
-	printf("arg[0] : %s\n", command[0]);
-	printf("arg[1] : %s\n", command[1]);
-	printf("arg[2] : %s\n", command[2]);
-	printf("arg[3] : %s\n", command[3]);
 	tmp = *env;
 	if (!command[1])
 		return (print_env(*env));

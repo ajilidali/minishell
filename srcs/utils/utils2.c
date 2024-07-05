@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 15:49:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/05 15:44:19 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ int	change_shlvl(t_env *env)
 	char	*str_lvl;
 	char	*new_lvl;
 
-	str_lvl = env_get_var("SHLVL", env);
-	node_shlvl = find_envp("SHLVL", env);
+	str_lvl = env_get_var("SHLVL=", env);
+	node_shlvl = find_envp("SHLVL=", env);
 	if (!node_shlvl)
 		return ((void)env_add_var("SHLVL=0", env), 1);
 	shlvl = ft_atoi(str_lvl) + 1;
@@ -72,8 +72,6 @@ t_env	*give_envp(char **envp, int flag)
 	if (flag == COPY && envp)
 	{
 		env = copy_env(envp);
-		if (!change_shlvl(env))
-			return (NULL);
 	}
 	return (env);
 }

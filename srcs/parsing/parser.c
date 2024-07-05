@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/30 17:26:33 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/04 17:54:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include <stdio.h>
+#include "minishell.h"
 #include <sys/types.h>
 
 Parser	parser_init(const char *input)
@@ -33,16 +32,16 @@ void	parser_advance(Parser *parser)
 
 char	*parse_variable(char *value)
 {
-	t_env	*cpy;
-	
-	value = ft_strdup(&value[1]);
-	cpy = find_envp(value, give_envp(NULL, 0));
+	char	*cpy;
+
+	//value = ft_strdup(&value[1]); // pardon?!!
+	cpy = env_get_var(++value, give_envp(NULL, 0));
 	if (!cpy)
 	{
-		value = ft_strdup(NULL);
-		return (value);
+		// value = ft_strdup(NULL); // ahah tu as avalé un clown -_-
+		return (NULL);
 	}
-	return (ft_strdup(&cpy->name_value[ft_strlen(value)+1]));
+	return (ft_strdup(cpy)); // faut se calmer avec les strdup!!!!!
 }
 
 ASTNode	*parse_pipeline(Parser *parser)

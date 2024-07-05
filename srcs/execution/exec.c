@@ -3,20 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/07 11:21:43 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/28 15:10:20 by sakaido          ###   ########.fr       */
+/*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
+/*   Updated: 2024/07/05 17:36:06 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
-#include <stdio.h>
+#include "minishell.h"
+
+void print_redirections(ASTNode *node)
+{
+	size_t i;
+
+	i = 0;
+	while (i < node->redirections_count)
+	{
+		printf("redirections[%zu]: %d %s\n", i, node->redirections[i].flag, node->redirections[i].file);
+		printf("fd_in: %d\n", node->fd_in);
+		printf("fd_out: %d\n", node->fd_out);
+		i++;
+	}
+}
 
 int	make_redirection(ASTNode *node)
 {
-	node->fd_in = STDIN_FILENO;
-	node->fd_out = STDOUT_FILENO;
+	setup_redirections(node);
 	if (node->fd_in != STDIN_FILENO)
 	{
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
@@ -38,43 +50,14 @@ int	make_redirection(ASTNode *node)
 	return (1);
 }
 
-static int has_fwdslash(const char *str)
-{
-    int i;
-
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == '/')
-            return (1);
-        i++;
-    }
-    return (0);
-}
-
-static int	check_path(const char *path)
-{
-    if(has_fwdslash(path))
-    {
-       	if (access(path, F_OK) != 0)
-            return (0);
-    	if (chdir(path) == 0)
-    	{
-    		printf("DEDSEC: %s: is a directory.\n", path);
-    		chdir("..");
-    		return (1);
-    	}
-    }
-    return (0);
-}
-
-static int	exec_command(ASTNode *node, MS *ms)
+static void	exec_command(ASTNode *node, MS *ms)
 {
 	char	*path;
 	char	**envp;
 
 	if (!make_redirection(node))
 		exit(1);
+	//print_redirections(node);
 	envp = get_tabenv(ms->env);
 	if (!envp)
 		exit(1);
@@ -82,20 +65,17 @@ static int	exec_command(ASTNode *node, MS *ms)
 		path = ft_strdup(node->args[0]);
 	else
 		path = find_path(node->args[0], envp);
+	ft_putendl_fd(path, STDERR_FILENO);
 	if (!path)
 	{
-		if (node->args[0][0] == '.')
-			printf("DEDSEC: %s: No such file or directory\n", node->args[0]);
+		check_path(node->args[0]);
+		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
 		exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
-	{
-		check_path(path);
-		free(path);
-		freetab(envp);
-		exit(1);
-	}
+		return (print_errors(path, ER_PERM_DENIED), free(path),
+			freetab(envp), exit(1));
 	exit(1);
 }
 
@@ -115,13 +95,8 @@ int	exec_commands(ASTNode *node, MS *ms)
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
-		if (WEXITSTATUS(status))
-		{
-			ft_putstr_fd("DEDSEC: ", STDERR_FILENO);
-			ft_putstr_fd(node->args[0], STDERR_FILENO);
-			ft_putstr_fd(": command not found\n", STDERR_FILENO);
-			return (1);
-		}
+		printf("status: %d\n", WEXITSTATUS(status)); // recup
+		return (1);
 	}
 	else
 		exec_pipe(node, ms);

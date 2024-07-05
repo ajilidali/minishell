@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/30 17:27:26 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/04 18:12:59 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "minishell.h"
 #include <ctype.h>
-#include <stdio.h>
 #include <string.h>
 
 int	is_pipe(char c)
@@ -49,22 +48,22 @@ char	lexer_peek(Lexer *lexer)
 
 Token lexer_dollar(Lexer *lexer)
 {
-    size_t	start;
-    size_t	length;
-    char	*value;
-    Token	token;
-	
-    start = lexer->pos;
-    lexer->pos++; 
-    while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
-        lexer->pos++;
-    length = lexer->pos - start;
-    value = (char *)malloc(length + 1);
-    ft_strncpy(value, lexer->input + start, length);
-    value[length] = '\0';
-    token.type = TOKEN_VARIABLE;
-    token.value = value;
-    return (token);
+	size_t	start;
+	size_t	length;
+	char	*value;
+	Token	token;
+
+	start = lexer->pos;
+	lexer->pos++;
+	while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
+		lexer->pos++;
+	length = lexer->pos - start;
+	value = (char *)malloc(length + 1);
+	ft_strncpy(value, lexer->input + start, length);
+	value[length] = '\0';
+	token.type = TOKEN_VARIABLE;
+	token.value = value;
+	return (token);
 }
 
 Token	lexer_word(Lexer *lexer)
@@ -93,46 +92,45 @@ Token	lexer_word(Lexer *lexer)
 
 char *replace_variables(char *input)
 {
-    char *result = NULL;
-    char *final = NULL;
-    int start = 0;
-    int i = 0;
-    int end = 0;
+	char *result = NULL;
+	char *final = NULL;
+	int start = 0;
+	int i = 0;
+	int end = 0;
 
-    if (!input)
-        return NULL;
-    while (input[i] && input[i] != '$')
-        i++;
-    start = i;
-    if (i < (int)strlen(input) && input[i] == '$') 
+	if (!input)
+		return NULL;
+	while (input[i] && input[i] != '$')
+		i++;
+	start = i;
+	if (i < (int)strlen(input) && input[i] == '$')
 	{
-        i++; // move past the '$' character
-        while (i < (int)strlen(input) && (input[i] == '_' || isalnum(input[i])))
-            i++;
-        end = i;
-    } else {
-        start = 0;
-        end = strlen(input);
-    }
-    result = (char *)malloc(sizeof(char) * ((end - start) + 1)); // +1 for null-terminator
-    if (!result)
-        return NULL;
-    strncpy(result, &input[start], end - start);
-    result[end - start] = '\0';
-    result = parse_variable(result);
-    if (!result)
-        return (free(result),NULL);
-    final = (char *)malloc(start + strlen(result) + 1); // +1 for null-terminator
-    if (!final) 
-        return (free(result),NULL);
-    strncpy(final, input, start);
-    final[start] = '\0';
-    strcat(final, result);
-    free(input);
-    free(result);
-    return final;
+		i++; // move past the '$' character
+		while (i < (int)strlen(input) && (input[i] == '_' || isalnum(input[i])))
+			i++;
+		end = i;
+	} else {
+		start = 0;
+		end = strlen(input);
+	}
+	result = (char *)malloc(sizeof(char) * ((end - start) + 1)); // +1 for null-terminator
+	if (!result)
+		return NULL;
+	strncpy(result, &input[start], end - start);
+	// result[end - start] = '\0';
+	result = parse_variable(result);
+	if (!result)
+		return (free(result),NULL);
+	final = (char *)malloc(start + strlen(result) + 1); // +1 for null-terminator
+	if (!final)
+		return (free(result),NULL);
+	strncpy(final, input, start);
+	final[start] = '\0';
+	strcat(final, result);
+	free(input);
+	free(result);
+	return (final);
 }
-
 
 Token	lexer_string(Lexer *lexer)
 {
@@ -140,7 +138,7 @@ Token	lexer_string(Lexer *lexer)
 	size_t	start;
 	char	*value;
 	Token	token;
-	
+
 	quote_type = lexer_peek(lexer);
 	lexer->pos++;
 	start = lexer->pos;
@@ -148,16 +146,17 @@ Token	lexer_string(Lexer *lexer)
 		lexer->pos++;
 	if (char_counter(lexer->input, quote_type) % 2 == 0)
 	{
-        value = (char *)malloc(lexer->pos - start + 1);
-    	ft_strncpy(value, lexer->input + start, lexer->pos - start);
-    	value[lexer->pos++ - start] = '\0';
-        token.type = TOKEN_WORD;
-    }else
-    {
-      	perror("syntax error");
+		value = (char *)malloc(lexer->pos - start + 1);
+		ft_strncpy(value, lexer->input + start, lexer->pos - start);
+		value[lexer->pos++ - start] = '\0';
+		token.type = TOKEN_WORD;
+	}
+	else
+	{
+		print_errors(NULL, ER_SYNTAX_ERROR);
 		value = NULL;
 		token.type = TOKEN_EMPTY;
-    }
+	}
 	token.value = replace_variables(value);
 	return (token);
 }
