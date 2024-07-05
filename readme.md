@@ -31,5 +31,10 @@ Fixed SIGSEGV in calculate_output_length(ft_replace) : "ls \n"
 J'ai pas fait les liens symboliques avec cd
 Faire en sorte de modifier la valeur exit quand signal avec variable globale
 Signal pour ctrl + \ ne marche pas bien dutout notament avec cat
+faire here_doc
+
+ATTENTION CTRL+Z FAIT UN TRUC BIZARD
+Probleme quand on fait deux commandes avec pipe qui provoquent une erreur les messages d'erreur s'affiche en meme temps
+Exemple avec cette commande : srcs/builtins/export.c | srcs/builtins/echo.c
 
 ![alt text](<Screenshot from 2024-06-19 19-27-15.png>)

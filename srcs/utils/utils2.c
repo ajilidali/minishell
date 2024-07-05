@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/30 18:00:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/05 15:44:19 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ t_env	*give_envp(char **envp, int flag)
 	if (flag == COPY && envp)
 	{
 		env = copy_env(envp);
-		if (!change_shlvl(env))
-			return (NULL);
 	}
 	return (env);
 }

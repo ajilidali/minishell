@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/04 18:10:32 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/05 17:32:05 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ static void	exec_command(ASTNode *node, MS *ms)
 	char	*path;
 	char	**envp;
 
-	check_path(node->args[0]);
 	envp = get_tabenv(ms->env);
 	if (!envp)
 		exit(1);
@@ -27,6 +26,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 		path = find_path(node->args[0], envp);
 	if (!path)
 	{
+		check_path(node->args[0]);
 		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
 		exit(127);
@@ -96,6 +96,7 @@ void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 		exec_pipe(node, mini);
 		exit(0);
 	}
+	waitpid(pid, NULL, WNOHANG);
 }
 
 void make_pipe(ASTNode *node, MS *ms)

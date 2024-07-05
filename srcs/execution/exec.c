@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/04 18:22:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/05 17:36:06 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ static void	exec_command(ASTNode *node, MS *ms)
 	char	*path;
 	char	**envp;
 
-	check_path(node->args[0]);
 	if (!make_redirection(node))
 		exit(1);
 	//print_redirections(node);
@@ -66,14 +65,17 @@ static void	exec_command(ASTNode *node, MS *ms)
 		path = ft_strdup(node->args[0]);
 	else
 		path = find_path(node->args[0], envp);
+	ft_putendl_fd(path, STDERR_FILENO);
 	if (!path)
 	{
+		check_path(node->args[0]);
 		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
 		exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
-		return (free(path), freetab(envp), exit(1));
+		return (print_errors(path, ER_PERM_DENIED), free(path),
+			freetab(envp), exit(1));
 	exit(1);
 }
 
@@ -93,7 +95,7 @@ int	exec_commands(ASTNode *node, MS *ms)
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
-		printf("status: %d\n", WEXITSTATUS(status));
+		printf("status: %d\n", WEXITSTATUS(status)); // recup
 		return (1);
 	}
 	else

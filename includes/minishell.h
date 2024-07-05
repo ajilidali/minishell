@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/04 18:07:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/05 16:33:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <signal.h>
+#include <sys/stat.h>
 
 # define FREE_GB 1
 # define COPY 10 // Flag for copying envp to global
@@ -224,5 +225,6 @@ char		*env_get_var(char *variable, t_env *env);
 void		update_pwd(char *old_path, t_env *env);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
+int			change_shlvl(t_env *env);
 
 #endif // MINISHELL_H
