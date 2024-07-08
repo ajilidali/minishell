@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/05 16:33:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/08 20:46:39 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_pipex
 int			is_local_fct(MS *mini, ASTNode *node);
 int			run_echo(char **command);
 int			run_cd(char **command, t_env *env);
+t_list		*copy_pwd(char *pwd, char *env_pwd);
 int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
