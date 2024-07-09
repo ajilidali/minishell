@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 19:01:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/08 20:55:31 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/09 15:24:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,9 @@ t_list	*copy_pwd(char *pwd, char *env_pwd)
 	if (!pwd)
 		return (NULL); // Dans le cas ou pas d'argument mais chercher autre solution
 	// Si commence par un backslash il faut juste chdir si ca marche on copie pwd dans env
+	printf("%s et %zu\n", pwd, ft_strlen(pwd));
+	if (ft_strlen(pwd) == 1 && pwd[0] == '/')
+		return ((void)printf("chaisse\n"), lnew_node("/"));
 	split_env_pwd = ft_split(env_pwd, '/');
 	if (!split_env_pwd)
 		return (NULL);

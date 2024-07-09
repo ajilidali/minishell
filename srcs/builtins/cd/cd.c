@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/08 21:09:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/09 23:25:32 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,28 @@ void	get_pwd(char *pwd, t_env *env)
 	//char		*path;
 	t_list		*list;
 	char		*new_pwd;
-	char		*old_pwd;
+	char		*temp_pwd;
+	char		*pwd_join;
 
 	//i = 0;
 	char *env_pwd = env_get_var("PWD", env);
 	list = copy_pwd(pwd, env_pwd);
+	if (!list)
+		return ;
 	env = env->next;
-	new_pwd = ft_strjoin;
-	old_pwd = NULL;
+	temp_pwd = NULL;
+	new_pwd = NULL;
 	while (list)
 	{
+		// ou alors backslash en seconde string
 		//printf("%s ", (char *)list->content);
-		new_pwd = ft_strjoin(new_pwd, (char *)list->content);
+		temp_pwd = ft_strdup((char *)list->content);
+		list->content = ft_strjoin("/", temp_pwd);
+		free(temp_pwd);
+		temp_pwd = ft_strjoin(new_pwd, (char *)list->content);
+		if (new_pwd)
+			free(new_pwd);
+		new_pwd = temp_pwd;
 		list = list->next;
 	}
 	printf("pwd = %s\n", new_pwd);
