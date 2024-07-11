@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/05 17:32:05 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:52:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 	waitpid(pid, NULL, WNOHANG);
 }
 
-void make_pipe(ASTNode *node, MS *ms)
+void	make_pipe(ASTNode *node, MS *ms)
 {
 	int	pipefd[2];
 

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/25 16:19:44 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:50:51 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,15 @@ int	print_aliases(Alias *aliases, int alias_count)
 
 int	run_alias(MS *mini, ASTNode *node)
 {
-    int argc = 0;
+	int	argc;
 
-    if (!node)
-        return 1;
-    while (node->args[argc])
-        argc++;
-    if (argc == 1)
-        return print_aliases(mini->aliases, mini->alias_count);
-    process_arguments(mini,argc);
-    return 0;
+	argc = 0;
+	if (!node)
+		return (1);
+	while (node->args[argc])
+		argc++;
+	if (argc == 1)
+		return (print_aliases(mini->aliases, mini->alias_count));
+	process_arguments(mini, argc);
+	return (0);
 }

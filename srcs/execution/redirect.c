@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/04 17:53:37 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:52:00 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ static void	setup_redirect_in(ASTNode *node, size_t i)
 	{
 		if (node->fd_out != STDOUT_FILENO)
 			close(node->fd_out);
-		node->fd_out = open(node->redirections[i].file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		node->fd_out = open(node->redirections[i].file, O_WRONLY
+				| O_CREAT | O_TRUNC, 0644);
 		if (node->fd_out == -1)
 		{
 			perror("DEDSEC");
@@ -29,7 +30,8 @@ static void	setup_redirect_in(ASTNode *node, size_t i)
 	{
 		if (node->fd_out != STDOUT_FILENO)
 			close(node->fd_out);
-		node->fd_out = open(node->redirections[i].file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		node->fd_out = open(node->redirections[i].file, O_WRONLY
+				| O_CREAT | O_APPEND, 0644);
 		if (node->fd_out == -1)
 		{
 			perror("DEDSEC");
@@ -57,9 +59,9 @@ static void	setup_redirect_out(ASTNode *node, size_t i)
 	}
 }
 
-void setup_redirections(ASTNode *node)
+void	setup_redirections(ASTNode *node)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	node->fd_in = STDIN_FILENO;

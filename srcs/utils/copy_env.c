@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:39:18 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/05 16:15:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:54:33 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_env	*new_node(char *name_value)
 	return (node);
 }
 
-t_env *create_empty_env(void)
+t_env	*create_empty_env(void)
 {
 	t_env	*head;
 	char	*path;

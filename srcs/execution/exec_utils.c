@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:20:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/05 17:35:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:52:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ void	open_files(t_pipex *data, char **argv, int argc)
 	data->nbr_cmd = argc - 1;
 }
 
-void check_path(char *path)
+void	check_path(char *path)
 {
 	struct stat	path_info;
 
 	if (stat(path, &path_info) == -1)
 	{
 		perror(path);
-		//print_errors(path, ER_NO_FILE_DIR);
 		exit(127);
 	}
 	if (S_ISDIR(path_info.st_mode))

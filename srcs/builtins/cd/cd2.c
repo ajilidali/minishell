@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:08:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/18 18:08:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:43:52 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ void	add_pwd(t_env *env)
 		env->next = new_node("OLDPWD=");
 }
 
-void	update_pwd(char *old_path, t_env *env)
+void	update_pwd(char *old_pwd, char *path, t_env *env)
 {
 	char	*new_path;
 
-	new_path = getcwd(NULL, 0);
 	add_pwd(env);
+	new_path = get_pwd(path, old_pwd);
 	while (env)
 	{
 		if (ft_strncmp("PWD=", env->name_value, 4) == 0)
@@ -66,10 +66,10 @@ void	update_pwd(char *old_path, t_env *env)
 		if (ft_strncmp("OLDPWD=", env->name_value, 7) == 0)
 		{
 			free(env->name_value);
-			env->name_value = ft_strjoin("OLDPWD=", old_path);
+			env->name_value = ft_strjoin("OLDPWD=", old_pwd);
 		}
 		env = env->next;
 	}
-	free(old_path);
+	free(old_pwd);
 	free(new_path);
 }

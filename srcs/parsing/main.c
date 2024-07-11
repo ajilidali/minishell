@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/05 18:06:09 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:55:20 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	main(int argc, char **argv, char **envp)
 	MS	*mini;
 
 	mini = NULL;
-	mini = ft_init_ms(mini, envp); // Initialize mini
+	mini = ft_init_ms(mini, envp);
 	sigint_handler();
 	if (getpid() != 0)
 	{
@@ -44,16 +44,16 @@ char	*make_prompt(void)
 	char	*dir;
 	char	*path;
 
-	dir = getcwd(NULL, 0);
+	dir = env_get_var("PWD", give_envp(NULL, 0));
 	if (!dir)
 		return (NULL);
 	path = ft_strjoin(dir, "$ > \033[0m");
 	if (!path)
-		return (free(dir), NULL);
+		return (NULL);
 	prompt = ft_strjoin("\033[0;32mDEDSEC ❋ ", path);
 	if (!prompt)
-		return (free(path), free(dir), NULL);
-	return (free(path), free(dir), prompt);
+		return (free(path), NULL);
+	return (free(path), prompt);
 }
 
 char	*rl_shell(char *line_read)

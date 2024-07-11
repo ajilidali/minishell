@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/08 20:46:39 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:49:16 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,6 @@ typedef struct s_pipex
 int			is_local_fct(MS *mini, ASTNode *node);
 int			run_echo(char **command);
 int			run_cd(char **command, t_env *env);
-t_list		*copy_pwd(char *pwd, char *env_pwd);
 int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
@@ -157,6 +156,7 @@ void		free_env(t_env *env);
 char		**get_tabenv(t_env *env);
 t_env		*copy_env(char **envp);
 t_env		*new_node(char *name_value);
+t_list		*copy_pwd(char *pwd, char *env_pwd);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while,
 // have to make sure can run fcts from structs
@@ -223,9 +223,16 @@ t_env		*find_envp(char *variable, t_env *env);
 char		*copy_except_first_n_chars(const char *input, size_t n);
 void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
-void		update_pwd(char *old_path, t_env *env);
+void		update_pwd(char *old_pwd, char *path, t_env *env);
+char		*get_pwd(char *path, char *old_pwd);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
+
+//list for pwd 
+t_list		*lnew_node(char *name_value);
+int			add_node(char *content, t_list *list);
+void		delete_last_node(t_list *list);
+void		free_list(t_list *env);
 
 #endif // MINISHELL_H

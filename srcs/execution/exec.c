@@ -6,15 +6,15 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/05 18:02:23 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 13:52:52 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_redirections(ASTNode *node)
+void	print_redirections(ASTNode *node)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (i < node->redirections_count)
