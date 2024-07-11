@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 19:01:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/09 15:24:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/10 19:07:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ void	free_list(t_list *env)
 t_list	*lnew_node(char *name_value)
 {
 	t_list	*node;
+	char	*folder;
 
 	node = malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
-	node->content = ft_strdup(name_value);
+	folder = ft_strjoin("/", name_value);
+	node->content = folder;
 	if (!node->content)
 	{
 		free(node);
@@ -44,9 +46,6 @@ t_list	*lnew_node(char *name_value)
 
 int	add_node(char *content, t_list *list)
 {
-	//t_list *temp;
-
-	//temp = list;
 	if (!list)
 		return (0);
 	while (list->next)
@@ -85,12 +84,31 @@ t_list	*copy_pwd(char *pwd, char *env_pwd)
 	int		i;
 	t_list	*l_pwd;
 
+	l_pwd = NULL;
 	if (!pwd)
-		return (NULL); // Dans le cas ou pas d'argument mais chercher autre solution
-	// Si commence par un backslash il faut juste chdir si ca marche on copie pwd dans env
-	printf("%s et %zu\n", pwd, ft_strlen(pwd));
-	if (ft_strlen(pwd) == 1 && pwd[0] == '/')
-		return ((void)printf("chaisse\n"), lnew_node("/"));
+		return (NULL); // Dans le cas ou pas d'argument mais chercher autre solution ca sera egal au path du home
+	if (pwd[0] == '/')
+	{
+		split_pwd = ft_split(pwd, '/');
+		if (!split_pwd)
+			return (NULL);
+		l_pwd = lnew_node(split_pwd[0]);
+		if (!l_pwd)
+			return (freetab(split_pwd), NULL);
+		i = 1;
+		while (split_pwd[i])
+		{
+			if (ft_strncmp("..", split_env_pwd[i], 1) == 0)
+			{
+				delete_last_node(l_pwd);
+				i++;
+			}
+			else if (!add_node(split_pwd[i], l_pwd))
+				return (freetab(split_pwd), free_list(l_pwd), NULL);
+			i++;
+		}
+		return (l_pwd);
+	}
 	split_env_pwd = ft_split(env_pwd, '/');
 	if (!split_env_pwd)
 		return (NULL);
@@ -99,7 +117,7 @@ t_list	*copy_pwd(char *pwd, char *env_pwd)
 		return (freetab(split_env_pwd), NULL);
 	l_pwd = lnew_node(split_env_pwd[0]);
 	if (!l_pwd)
-		return (NULL); // faut free mais flemme
+		return (freetab(split_env_pwd), freetab(split_pwd), NULL); // faut free mais flemme
 	i = 1;
 	while (split_env_pwd[i])
 	{
@@ -110,8 +128,9 @@ t_list	*copy_pwd(char *pwd, char *env_pwd)
 		}
 		else
 			if (!add_node(split_env_pwd[i++], l_pwd))
-				return (free_list(l_pwd), NULL);
+				return (freetab(split_env_pwd), freetab(split_pwd), free_list(l_pwd), NULL);
 	}
+	freetab(split_env_pwd);
 	i = 0;
 	while (split_pwd[i])
 	{
@@ -122,7 +141,7 @@ t_list	*copy_pwd(char *pwd, char *env_pwd)
 		}
 		else
 			if (!add_node(split_pwd[i++], l_pwd))
-				return (free_list(l_pwd), NULL);
+				return (freetab(split_pwd), free_list(l_pwd), NULL);
 	}
 	return (l_pwd);
 }

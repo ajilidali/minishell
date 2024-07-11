@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/09 23:25:32 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/10 18:42:42 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	get_pwd(char *pwd, t_env *env)
 	t_list		*list;
 	char		*new_pwd;
 	char		*temp_pwd;
-	char		*pwd_join;
 
 	//i = 0;
 	char *env_pwd = env_get_var("PWD", env);
@@ -54,17 +53,16 @@ void	get_pwd(char *pwd, t_env *env)
 		return ;
 	env = env->next;
 	temp_pwd = NULL;
-	new_pwd = NULL;
+	new_pwd = ft_strdup("");
 	while (list)
 	{
 		// ou alors backslash en seconde string
 		//printf("%s ", (char *)list->content);
-		temp_pwd = ft_strdup((char *)list->content);
-		list->content = ft_strjoin("/", temp_pwd);
-		free(temp_pwd);
 		temp_pwd = ft_strjoin(new_pwd, (char *)list->content);
 		if (new_pwd)
 			free(new_pwd);
+		if (!temp_pwd)
+			return ;
 		new_pwd = temp_pwd;
 		list = list->next;
 	}
