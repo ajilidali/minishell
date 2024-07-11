@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:47:03 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:47:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/11 14:49:39 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,25 +52,27 @@ int	split_in_list(char *path, t_list **list)
 	return (split_in_list2(split_path, i, list));
 }
 
-char	*convert_list_pwd(t_list *list)
+char	*convert_list_pwd(t_list **list)
 {
 	char	*pwd;
 	char	*temp_pwd;
+	t_list	*temp_list;
 
+	temp_list = *list;
 	pwd = ft_strdup("");
 	temp_pwd = NULL;
 	if (!pwd)
-		return (free_list(list), NULL);
-	while (list)
+		return (free_list(*list), NULL);
+	while (temp_list)
 	{
-		temp_pwd = ft_strjoin(pwd, (char *)list->content);
+		temp_pwd = ft_strjoin(pwd, (char *)temp_list->content);
 		free(pwd);
 		if (!temp_pwd)
-			return (free_list(list), NULL);
+			return (free_list(*list), NULL);
 		pwd = temp_pwd;
-		list = list->next;
+		temp_list = temp_list->next;
 	}
-	return (free_list(list), pwd);
+	return (free_list(*list), pwd);
 }
 
 char	*get_pwd(char *path, char *old_pwd)
@@ -83,11 +85,11 @@ char	*get_pwd(char *path, char *old_pwd)
 		if (split_in_list(path, &list))
 			return (free_list(list), getcwd(NULL, 0));
 		else
-			return (convert_list_pwd(list));
+			return (convert_list_pwd(&list));
 	}
 	if (split_in_list(old_pwd, &list) == 2)
 		return (free_list(list), getcwd(NULL, 0));
 	if (split_in_list(path, &list))
 		return (free_list(list), getcwd(NULL, 0));
-	return (convert_list_pwd(list));
+	return (convert_list_pwd(&list));
 }

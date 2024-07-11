@@ -15,7 +15,6 @@ fct parse_command broken in smaller fcts
 Cleaned utils
 Fixed SIGSEGV in calculate_output_length(ft_replace) : "ls \n"
 
-- J'ai pas fait les liens symboliques avec cd
 - Faire en sorte de modifier la valeur exit quand signal avec variable globale
 - Signal pour ctrl + \ ne marche pas bien dutout notament avec cat
 - faire here_doc
@@ -27,17 +26,3 @@ Arbre AST pour comprendre comment c'est fait :
 
 ![alt text](<Screenshot from 2024-06-19 19-27-15.png>)
 
-Lien symbolique :
-
-short = lien symbolique vers home
-
-cd home/document/short/document
-
-1er etape : Test si lien symbolique dans le chemin
-Si oui
-- Appel de foncton pour creer path prenant le lien symbolique
-Sinon
-- getcwd
-
-Logique de la fonction pour lien symbolique :
-On test premier dossier grace au "/" ensuite on passe au prochain jusqu'a trouver
