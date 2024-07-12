@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/11 13:49:16 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:06:52 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,16 +126,8 @@ typedef struct {
 	size_t	alias_count;
 	t_env	*env;
 	char	*line;
+	int		exit_code;
 } MS;
-
-typedef struct s_pipex
-{
-	int		fd1;
-	int		fd2;
-	int		nbr_cmd;
-	char	**argv;
-	char	**envp;
-}	t_pipex;
 
 // Extern global variable
 //extern MS g_ms;
@@ -185,8 +177,8 @@ ASTNode		*parse_command(Parser *parser);
 ASTNode		*parse_pipeline(Parser *parser);
 void		free_ast(ASTNode *node);
 void		execute_ast(ASTNode *node, MS *mini);
-void		ft_fork_right(ASTNode *node, MS *mini,int pipefd[2]);
-void		ft_fork_left(ASTNode *node, MS *mini,int pipefd[2]);
+int			ft_fork_right(ASTNode *node, MS *mini,int pipefd[2]);
+int			ft_fork_left(ASTNode *node, MS *mini,int pipefd[2]);
 
 // Main functions
 int			executor(char *line, char **envp);
@@ -229,7 +221,7 @@ void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
 
-//list for pwd 
+//list for pwd
 t_list		*lnew_node(char *name_value);
 int			add_node(char *content, t_list *list);
 void		delete_last_node(t_list *list);

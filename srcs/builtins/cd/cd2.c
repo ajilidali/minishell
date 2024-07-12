@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:08:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:43:52 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:51:02 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,10 @@ void	update_pwd(char *old_pwd, char *path, t_env *env)
 
 	add_pwd(env);
 	new_path = get_pwd(path, old_pwd);
+	if (!new_path)
+		new_path = getcwd(NULL, 0);
+	if (!new_path)
+		return ;
 	while (env)
 	{
 		if (ft_strncmp("PWD=", env->name_value, 4) == 0)

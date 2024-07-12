@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:52:52 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:27:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	exec_commands(ASTNode *node, MS *ms)
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
-		printf("status: %d\n", WEXITSTATUS(status)); // recup
+		ms->exit_code = WEXITSTATUS(status); // recup
 		return (1);
 	}
 	else

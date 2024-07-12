@@ -6,19 +6,11 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:20:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:52:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:14:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	exit_process(t_pipex *data, int status)
-{
-	close(data->fd1);
-	close(data->fd2);
-	free(data);
-	exit(status);
-}
 
 int	get_valid_line(char **envp)
 {
@@ -30,15 +22,6 @@ int	get_valid_line(char **envp)
 	if (!envp[i])
 		return (-1);
 	return (i);
-}
-
-void	open_files(t_pipex *data, char **argv, int argc)
-{
-	data->fd1 = open(argv[1], O_RDONLY);
-	data->fd2 = open(argv[argc - 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (data->fd1 == -1 || data->fd2 == -1)
-		exit_process(data, EXIT_SUCCESS);
-	data->nbr_cmd = argc - 1;
 }
 
 void	check_path(char *path)

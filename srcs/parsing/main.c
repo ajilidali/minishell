@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:55:20 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:21:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				exec_commands(mini->ast, mini);
 				free_ast(mini->ast);
+				printf("status = %d\n", mini->exit_code);
 			}
 		}
 	}

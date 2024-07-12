@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/25 17:51:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 10:58:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ MS	*ft_init_ms(MS *mini, char **envp)
 	mini->ast = NULL;
 	mini->line = NULL;
 	mini->alias_count = 0;
+	mini->exit_code = 0;
 	return (mini);
 }

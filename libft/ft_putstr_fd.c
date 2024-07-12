@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/31 18:23:11 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:13:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,5 @@ void	ft_putstr_fd(char *s, int fd)
 	i = 0;
 	if (!s)
 		return ;
-	while (s[i])
-	{
-		write(fd, &s[i], 1);
-		i++;
-	}
+	write(fd, s, ft_strlen(s));
 }

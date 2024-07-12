@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:52:38 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:24:45 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ static void	exec_command(ASTNode *node, MS *ms)
 }
 
 // Pipe --> Right
-void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
+int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 {
 	int	pid;
+	int	status;
 
 	pid = fork();
 	if (pid == -1)
-		return ;
+		return (1);
 	if (pid == 0)
 	{
 		setup_redirections(node);
@@ -65,18 +66,21 @@ void	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 		close(pipefd[0]);
 		close(pipefd[1]);
 		exec_pipe(node, mini);
-		exit(0);
+		exit(1);
 	}
+	waitpid(pid, &status, 0);
+	return (WEXITSTATUS(status));
 }
 
 // Pipe --> Left
-void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
+int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 {
 	int	pid;
+	int	status;
 
 	pid = fork();
 	if (pid == -1)
-		return ;
+		return (1);
 	if (pid == 0)
 	{
 		setup_redirections(node);
@@ -94,9 +98,10 @@ void	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 		close(pipefd[0]);
 		close(pipefd[1]);
 		exec_pipe(node, mini);
-		exit(0);
+		exit(1);
 	}
-	waitpid(pid, NULL, WNOHANG);
+	waitpid(pid, &status, WNOHANG);
+	return (WEXITSTATUS(status));
 }
 
 void	make_pipe(ASTNode *node, MS *ms)
@@ -105,12 +110,10 @@ void	make_pipe(ASTNode *node, MS *ms)
 
 	if (pipe(pipefd) == -1)
 		return ;
-	ft_fork_left(node->left, ms, pipefd);
-	ft_fork_right(node->right, ms, pipefd);
-	close(pipefd[0]);
+	ms->exit_code = ft_fork_left(node->left, ms, pipefd);
 	close(pipefd[1]);
-	wait(NULL);
-	wait(NULL);
+	ms->exit_code = ft_fork_right(node->right, ms, pipefd);
+	close(pipefd[0]);
 }
 
 void	exec_pipe(ASTNode *node, MS *mini)
