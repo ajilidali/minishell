@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/30 17:50:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 12:02:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ static int	valid_value(char *value)
 	return (1);
 }
 
-void	run_exit(char **command) // Besoin du dernier exit_code
+void	run_exit(char **command, MS *mini)
 {
 	int	exit_value;
 
 	clear_history();
 	if (!command[1])
-		exit(/*LAST EXIT CODE*/0);
+		exit(mini->exit_code);
 	if (!valid_value(command[1]))
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);

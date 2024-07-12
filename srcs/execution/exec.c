@@ -6,11 +6,38 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/12 11:27:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:57:17 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_local_fct(MS *mini, ASTNode *node)
+{
+	int	exit_status;
+
+	if (!node->args[0])
+		return (0);
+	exit_status = -1;
+	if (ft_strcmp(node->args[0], "alias") == 0)
+		exit_status = run_alias(mini, node);
+	if (ft_strcmp(node->args[0], "cd") == 0)
+		exit_status = run_cd(node->args, mini->env);
+	if (ft_strcmp(node->args[0], "env") == 0)
+		exit_status = run_env(mini->env);
+	if (ft_strcmp(node->args[0], "export") == 0)
+		exit_status = run_export(node->args, &mini->env);
+	if (ft_strcmp(node->args[0], "echo") == 0)
+		exit_status = run_echo(node->args);
+	if (ft_strcmp(node->args[0], "pwd") == 0)
+		exit_status = run_pwd();
+	if (ft_strcmp(node->args[0], "unset") == 0)
+		exit_status = run_unset(node->args, &mini->env);
+	if (ft_strcmp(node->args[0], "exit") == 0)
+		run_exit(node->args, mini);
+	//printf("\nexit_status : %d\n", exit_status);
+	return (exit_status);
+}
 
 void	print_redirections(ASTNode *node)
 {
