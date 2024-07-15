@@ -2,9 +2,7 @@ Reference a revoir pour comprendre variable env 'globale'
 
 ERREURS :
 
-- Le export, quand execute sans arguments, mange une partie des envp, en les effacant effectivement de la liste envp, j'ai donc desactive de facon temporaire le sort alphabetique.
-- Probleme quand on fait deux commandes avec pipe qui provoquent une erreur les messages d'erreur s'affiche en meme temps. Exemple avec cette commande : srcs/builtins/export.c | srcs/builtins/echo.c
-- Probleme ligne 67 dans parsecmd lorsque l'on fait par exemple : "ls >" on a le message d'erreur mais le programme continue donc pas bon avant il y avait un exit(1) mais c'est pas bon.
+- Le export, quand execute sans arguments, mange une partie des envp, en les effacant effectivement de la liste envp, j'ai donc desactive de facon temporaire le sort alphabetique. En vrai osef
 - Quand je fais ca : export "OLDPWD=$PWD". La variable OLDPWD est egale a $PWD alors qu'elle devrait etre egale au contenue de $PWD
 
 < ./readme.md cat OK

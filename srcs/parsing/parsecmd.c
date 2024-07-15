@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/05 18:17:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/15 11:44:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 	else
 	{
 		print_errors(NULL, ER_REDIRECT_ERROR); // Proubleme ici
+		parser_advance(parser);
 		//exit(1);
 	}
 }

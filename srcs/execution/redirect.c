@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/12 11:20:44 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/15 11:44:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,18 @@ static void	setup_redirect_in(ASTNode *node, size_t i)
 
 static void	setup_redirect_out(ASTNode *node, size_t i)
 {
+	char *str_gnl;
+	//char *str;
+
+	str_gnl = NULL;
 	if (node->redirections[i].flag == FD_HD)
 	{
-		//heredoc
+		//str_gnl = ft_strdup("");
+		//str = get_next_line(STDIN_FILENO);
+		//while (str)
+		//{
+		//	ft_replace(&str_gnl, ft_strjoin(str_gnl, str));
+		//}
 	}
 	else if (node->redirections[i].flag == FD_IN)
 	{

@@ -1,4 +1,4 @@
-# valgrind --leak-check=full --show-leak-kinds=all --suppressions=vg.supp ./minishell
+# valgrind --leak-check=full --show-leak-kinds=all --suppressions=vg.supp -toux ./minishell
 
 {
    leak readline
