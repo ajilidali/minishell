@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd2.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:08:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/12 11:51:02 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/16 19:14:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ void	update_pwd(char *old_pwd, char *path, t_env *env)
 {
 	char	*new_path;
 
+	old_pwd = ft_strdup(old_pwd);
 	add_pwd(env);
 	new_path = get_pwd(path, old_pwd);
 	if (!new_path)
 		new_path = getcwd(NULL, 0);
 	if (!new_path)
-		return ;
+		return (free(old_pwd));
 	while (env)
 	{
 		if (ft_strncmp("PWD=", env->name_value, 4) == 0)

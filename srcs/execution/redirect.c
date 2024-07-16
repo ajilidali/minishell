@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/15 11:44:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/16 13:54:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,10 @@ static void	setup_redirect_in(ASTNode *node, size_t i)
 
 static void	setup_redirect_out(ASTNode *node, size_t i)
 {
-	char *str_gnl;
+	// char *str_gnl;
 	//char *str;
 
-	str_gnl = NULL;
+	// str_gnl = NULL;
 	if (node->redirections[i].flag == FD_HD)
 	{
 		//str_gnl = ft_strdup("");

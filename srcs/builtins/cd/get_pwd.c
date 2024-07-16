@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:47:03 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 14:49:39 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/16 16:17:25 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	split_in_list(char *path, t_list **list)
 	int		i;
 
 	i = 0;
+	if (access(path, F_OK) != 0)
+		return (1);
 	split_path = ft_split(path, '/');
 	if (!split_path)
 		return (2);
@@ -80,6 +82,8 @@ char	*get_pwd(char *path, char *old_pwd)
 	t_list	*list;
 
 	list = NULL;
+	if (!path || !old_pwd)
+		return (NULL);
 	if (path[0] == '/')
 	{
 		if (split_in_list(path, &list))

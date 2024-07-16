@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:44:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/16 16:13:11 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	run_cd(char **command, t_env *env)
 	char	*home;
 	char	*old_pwd;
 
-	old_pwd = getcwd(NULL, 0);
+	old_pwd = env_get_var("PWD=", env);
 	if (!command[1])
 	{
 		home = env_get_var("HOME", env);
