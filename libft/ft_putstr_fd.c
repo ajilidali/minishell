@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putstr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/18 11:12:59 by sakaido		   #+#    #+#             */
-/*   Updated: 2024/07/18 11:12:59 by sakaido          ###   ########.fr       */
+/*   Created: 2024/07/18 18:07:35 by hclaude           #+#    #+#             */
+/*   Updated: 2024/07/18 18:07:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "libft.h"
 

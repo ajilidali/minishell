@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/12 11:57:17 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/18 18:03:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,22 +35,7 @@ int	is_local_fct(MS *mini, ASTNode *node)
 		exit_status = run_unset(node->args, &mini->env);
 	if (ft_strcmp(node->args[0], "exit") == 0)
 		run_exit(node->args, mini);
-	//printf("\nexit_status : %d\n", exit_status);
 	return (exit_status);
-}
-
-void	print_redirections(ASTNode *node)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < node->redirections_count)
-	{
-		printf("redirections[%zu]: %d %s\n", i, node->redirections[i].flag, node->redirections[i].file);
-		printf("fd_in: %d\n", node->fd_in);
-		printf("fd_out: %d\n", node->fd_out);
-		i++;
-	}
 }
 
 int	make_redirection(ASTNode *node)
@@ -84,7 +69,6 @@ static void	exec_command(ASTNode *node, MS *ms)
 
 	if (!make_redirection(node))
 		exit(1);
-	//print_redirections(node);
 	envp = get_tabenv(ms->env);
 	if (!envp)
 		exit(1);

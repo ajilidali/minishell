@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/12 11:21:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/18 18:01:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,6 @@ char	*rl_shell(char *line_read)
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(EXIT_FAILURE);
 	}
-	// LA FONCTION EXIT EST FAITE MAIS
-	// TROUVER UN MOYEN DE FREE line_read
-	// '/!\'
-
-	//if (ft_strcmp(line_read, "exit") == 0)
-	//{
-	//	rl_clear_history();
-	//	free(line_read);
-	//	exit(127);
-	//}
 	if (line_read && *line_read)
 		add_history(line_read);
 	return (free(prompt), line_read);

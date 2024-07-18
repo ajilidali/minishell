@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/18 17:52:11 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/18 18:05:36 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 {
 	int		pid;
 	char	*str;
-	
+
 	pid = fork();
 	if (pid == -1)
 		exit(EXIT_FAILURE);
@@ -55,7 +55,8 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 		str = get_next_line(STDIN_FILENO);
 		while (1)
 		{
-			if ((ft_strlen(str)) > 1 && !ft_strncmp(str, node->redirections[i].file, ft_strlen(str) - 1))
+			if ((ft_strlen(str)) > 1 && !ft_strncmp
+				(str, node->redirections[i].file, ft_strlen(str) - 1))
 				exit(0);
 			ft_putstr_fd(str, pipefd[1]);
 			free(str);
@@ -71,7 +72,7 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 static void	setup_redirect_out(ASTNode *node, size_t i)
 {
 	int	pipefd[2];
-	
+
 	if (node->redirections[i].flag == FD_HD)
 	{
 		if (pipe(pipefd) == -1)
