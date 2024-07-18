@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/04 18:12:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/16 14:27:48 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,15 +97,17 @@ char *replace_variables(char *input)
 	int start = 0;
 	int i = 0;
 	int end = 0;
-
+	
 	if (!input)
 		return NULL;
+	if (char_counter(input,'$') == 0)
+		return (input);
 	while (input[i] && input[i] != '$')
 		i++;
 	start = i;
 	if (i < (int)strlen(input) && input[i] == '$')
 	{
-		i++; // move past the '$' character
+		i++;
 		while (i < (int)strlen(input) && (input[i] == '_' || isalnum(input[i])))
 			i++;
 		end = i;
@@ -113,20 +115,15 @@ char *replace_variables(char *input)
 		start = 0;
 		end = strlen(input);
 	}
-	result = (char *)malloc(sizeof(char) * ((end - start) + 1)); // +1 for null-terminator
+	result = (char *)malloc(sizeof(char) * ((end - start) + 1));
 	if (!result)
 		return NULL;
 	strncpy(result, &input[start], end - start);
-	// result[end - start] = '\0';
-	result = parse_variable(result);
 	if (!result)
 		return (free(result),NULL);
-	final = (char *)malloc(start + strlen(result) + 1); // +1 for null-terminator
-	if (!final)
-		return (free(result),NULL);
-	strncpy(final, input, start);
-	final[start] = '\0';
-	strcat(final, result);
+	final = ft_replace(input,result,parse_variable(result));
+	if (char_counter(input,'$') != 0)
+		return (replace_variables(final));
 	free(input);
 	free(result);
 	return (final);
