@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/16 14:27:48 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/24 14:38:20 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,30 +63,60 @@ Token lexer_dollar(Lexer *lexer)
 	value[length] = '\0';
 	token.type = TOKEN_VARIABLE;
 	token.value = value;
-	return (token);
+	return (token);	
 }
-
-Token	lexer_word(Lexer *lexer)
+Token lexer_word(Lexer *lexer)
 {
-	size_t	start;
-	size_t	length;
-	char	*value;
-	Token	token;
+	size_t start;
+	size_t i, j;
+	char *value;
+	Token token;
+	int inside_quotes = 0;
+	char current_quote = '\0';
 
 	start = lexer->pos;
-	while (!is_whitespace(lexer_peek(lexer))
-		&& !is_operator(lexer_peek(lexer))
-		&& !is_quote(lexer_peek(lexer))
-		&& !is_pipe(lexer_peek(lexer))
-		&& lexer_peek(lexer) != '\0')
+	while (lexer_peek(lexer) != '\0')
+	{
+		if (!inside_quotes && is_whitespace(lexer_peek(lexer)))
+			break;
+		if (lexer_peek(lexer) == '\'' || lexer_peek(lexer) == '\"')
+		{
+			if (inside_quotes && lexer_peek(lexer) == current_quote)
+			{
+				inside_quotes = 0;
+				current_quote = '\0';
+			}
+			else if (!inside_quotes)
+			{
+				inside_quotes = 1;
+				current_quote = lexer_peek(lexer);
+			}
+		}
 		lexer->pos++;
-
-	length = lexer->pos - start;
-	value = (char *)malloc(length + 1);
-	ft_strncpy(value, lexer->input + start, length);
-	value[length] = '\0';
-	token.type = TOKEN_WORD;
+	}
+	value = (char *)malloc((lexer->pos - start) + 1);
+	if (!value)
+	{
+		token.type = TOKEN_EMPTY;
+		token.value = NULL;
+		return token;
+	}
+	i = 0;
+	j = 0;
+	while (i < lexer->pos - start)
+	{
+		if (lexer->input[start + i] != '\'' && lexer->input[start + i] != '\"')
+		{
+			value[j] = lexer->input[start + i];
+			j++;
+		}
+		i++;
+	}
+	value[j] = '\0';
 	token.value = value;
+	if (current_quote != '\'')
+		token.value = replace_variables(value);
+	token.type = TOKEN_WORD;
 	return (token);
 }
 
@@ -154,7 +184,10 @@ Token	lexer_string(Lexer *lexer)
 		value = NULL;
 		token.type = TOKEN_EMPTY;
 	}
-	token.value = replace_variables(value);
+	if (quote_type != '\'')
+		token.value = replace_variables(value);
+	else
+		token.value = value;
 	return (token);
 }
 
