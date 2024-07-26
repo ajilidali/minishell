@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/24 14:38:20 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:54:04 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,31 +46,34 @@ char	lexer_peek(Lexer *lexer)
 	return (lexer->input[lexer->pos]);
 }
 
+Token	create_token(TokenType type, char *value)
+{
+	Token	token;
+	token.type = type;
+	token.value = value;
+	return token;
+}
+
 Token lexer_dollar(Lexer *lexer)
 {
 	size_t	start;
 	size_t	length;
 	char	*value;
-	Token	token;
 
 	start = lexer->pos;
 	lexer->pos++;
-	while (isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
+	while (ft_isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
 		lexer->pos++;
 	length = lexer->pos - start;
-	value = (char *)malloc(length + 1);
+    value = allocate_string(length + 1);
 	ft_strncpy(value, lexer->input + start, length);
-	value[length] = '\0';
-	token.type = TOKEN_VARIABLE;
-	token.value = value;
-	return (token);	
+    return create_token(TOKEN_VARIABLE, value);
 }
 Token lexer_word(Lexer *lexer)
 {
 	size_t start;
 	size_t i, j;
 	char *value;
-	Token token;
 	int inside_quotes = 0;
 	char current_quote = '\0';
 
@@ -94,39 +97,24 @@ Token lexer_word(Lexer *lexer)
 		}
 		lexer->pos++;
 	}
-	value = (char *)malloc((lexer->pos - start) + 1);
-	if (!value)
-	{
-		token.type = TOKEN_EMPTY;
-		token.value = NULL;
-		return token;
-	}
+    value = allocate_string((lexer->pos - start) + 1);
 	i = 0;
 	j = 0;
 	while (i < lexer->pos - start)
-	{
 		if (lexer->input[start + i] != '\'' && lexer->input[start + i] != '\"')
-		{
-			value[j] = lexer->input[start + i];
-			j++;
-		}
-		i++;
-	}
-	value[j] = '\0';
-	token.value = value;
+			value[j++] = lexer->input[start + i++];
 	if (current_quote != '\'')
-		token.value = replace_variables(value);
-	token.type = TOKEN_WORD;
-	return (token);
+        return create_token(TOKEN_WORD,replace_variables(value));
+    return create_token(TOKEN_WORD,value);
 }
 
 char *replace_variables(char *input)
 {
-	char *result = NULL;
-	char *final = NULL;
-	int start = 0;
+	char *result;
+	char *final;
+	int start;
 	int i = 0;
-	int end = 0;
+	int end;
 	
 	if (!input)
 		return NULL;
@@ -135,20 +123,19 @@ char *replace_variables(char *input)
 	while (input[i] && input[i] != '$')
 		i++;
 	start = i;
-	if (i < (int)strlen(input) && input[i] == '$')
+	if (i < (int)ft_strlen(input) && input[i] == '$')
 	{
 		i++;
-		while (i < (int)strlen(input) && (input[i] == '_' || isalnum(input[i])))
+		while (i < (int)ft_strlen(input) && (input[i] == '_' || ft_isalnum(input[i])))
 			i++;
 		end = i;
-	} else {
+	} else
+    {
 		start = 0;
-		end = strlen(input);
+		end = ft_strlen(input);
 	}
-	result = (char *)malloc(sizeof(char) * ((end - start) + 1));
-	if (!result)
-		return NULL;
-	strncpy(result, &input[start], end - start);
+    result = allocate_string((end - start) + 1);
+	ft_strncpy(result, &input[start], end - start);
 	if (!result)
 		return (free(result),NULL);
 	final = ft_replace(input,result,parse_variable(result));
@@ -164,7 +151,6 @@ Token	lexer_string(Lexer *lexer)
 	char	quote_type;
 	size_t	start;
 	char	*value;
-	Token	token;
 
 	quote_type = lexer_peek(lexer);
 	lexer->pos++;
@@ -173,28 +159,21 @@ Token	lexer_string(Lexer *lexer)
 		lexer->pos++;
 	if (char_counter(lexer->input, quote_type) % 2 == 0)
 	{
-		value = (char *)malloc(lexer->pos - start + 1);
+        value = allocate_string(lexer->pos - start + 1);
 		ft_strncpy(value, lexer->input + start, lexer->pos - start);
-		value[lexer->pos++ - start] = '\0';
-		token.type = TOKEN_WORD;
 	}
 	else
-	{
-		print_errors(NULL, ER_SYNTAX_ERROR);
-		value = NULL;
-		token.type = TOKEN_EMPTY;
-	}
-	if (quote_type != '\'')
-		token.value = replace_variables(value);
-	else
-		token.value = value;
-	return (token);
+        return (print_errors(NULL, ER_SYNTAX_ERROR),create_token(TOKEN_EMPTY, NULL));
+    if (quote_type != '\'')
+        return(create_token(TOKEN_WORD, replace_variables(value)));
+    return (create_token(TOKEN_WORD,value));
+
 }
 
 Token	lexer_operator(Lexer *lexer)
 {
-	Token	token;
 	char	current;
+    char    value[3];
 
 	current = lexer_peek(lexer);
 	if (current == '<' || current == '>')
@@ -202,18 +181,14 @@ Token	lexer_operator(Lexer *lexer)
 		lexer->pos++;
 		if (lexer_peek(lexer) == current) // Check for << or >>
 		{
-			char value[3] = {current, current, '\0'};
+            ft_memcpy(value, (char[]){current, current, '\0'}, sizeof(value));
 			lexer->pos++;
-			token.type = TOKEN_OPERATOR;
-			token.value = ft_strdup(value);
-			return (token);
+            return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
 		}
 	}
-	char value[2] = {current, '\0'};
+    ft_memcpy(value, (char[]){current, '\0', '\0'}, sizeof(value));
 	lexer->pos++;
-	token.type = TOKEN_OPERATOR;
-	token.value = ft_strdup(value);
-	return (token);
+    return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
 }
 
 Lexer	lexer_init(const char *input)
@@ -229,31 +204,21 @@ Lexer	lexer_init(const char *input)
 Token	lexer_pipe(Lexer *lexer)
 {
 	char	value[2];
-	Token	token;
 
-	value[0] = lexer_peek(lexer);
-	value[1] = '\0';
+    ft_memcpy(value, (char[]){lexer_peek(lexer), '\0'}, sizeof(value));
 	lexer->pos++;
-	token.type = TOKEN_PIPE;
-	token.value = ft_strdup(value);
-	return (token);
+    return(create_token(TOKEN_PIPE, ft_strdup(value)));
 }
 
 Token	lexer_next_token(Lexer *lexer)
 {
 	char	current;
-	Token	token;
 
 	while (is_whitespace(lexer_peek(lexer)))
 		lexer->pos++;
 	current = lexer_peek(lexer);
 	if (current == '\0')
-	{
-		token.type = TOKEN_EOF;
-		token.value = NULL;
-		return (token);
-	}
-	//printf("%s\n",lexer->input);
+        return(create_token(TOKEN_EOF,NULL));
 	if (is_dollar(current))
 		return (lexer_dollar(lexer));
 	else if (is_pipe(current))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/24 16:00:23 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:52:59 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,9 @@
 # define ER_NO_FILE_DIR 6
 # define ER_NO_FILE 7
 # define ER_IS_DIR 8
+
+# define MAX_ARGS 1024
+# define MAX_REDIRS 5
 
 //Garbage collector struct
 typedef struct s_gc
@@ -164,6 +167,8 @@ Token		lexer_word(Lexer *lexer);
 Token		lexer_string(Lexer *lexer);
 
 char		*replace_variables(char *input);
+char		*allocate_string(size_t length);
+Token		create_token(TokenType type, char *value);
 
 // Lexer functions
 Token		lexer_next_token(Lexer *lexer);

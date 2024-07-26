@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/04 17:54:40 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:57:17 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*quote_closer(char quote)
 	{
 		recursive_result = quote_closer(quote);
 		total_len = ft_strlen(closer) + ft_strlen(recursive_result) + 1;
-		result = malloc(total_len);
+		result = allocate_string(total_len);
 		ft_strcpy(result, closer);
 		ft_strcat(result, recursive_result);
 		free(closer);
@@ -55,7 +55,6 @@ char	*quote_master(char quote)
 	char	*qc;
 
 	qc = quote_closer(quote);
-//	printf("%s",qc);
 	if (quote == '"')
 	{
 		qc = ft_replace(qc, "\"\"", "\\n");

@@ -12,6 +12,7 @@ fct parse_command broken in smaller fcts
 ~ Moved to parsecmd
 Cleaned utils
 Fixed SIGSEGV in calculate_output_length(ft_replace) : "ls \n"
+FOUND BUG, Invalid Free, cause : <<EOF | ls
 
 - Faire en sorte de modifier la valeur exit quand signal avec variable globale
 - Signal pour ctrl + \ ne marche pas bien dutout notament avec cat

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/05 15:44:19 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:54:24 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,20 @@ t_env	*give_envp(char **envp, int flag)
 	static t_env	*env = NULL;
 
 	if (flag == COPY && envp)
-	{
 		env = copy_env(envp);
-	}
 	return (env);
+}
+
+char *allocate_string(size_t length)
+{
+    char *str;
+	
+	str = ft_calloc(length + 1,1);
+    if (!str)
+	{
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
+    str[length] = '\0';
+    return (str);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:35:38 by sakaido           #+#    #+#             */
-/*   Updated: 2024/07/04 17:53:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:58:04 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	is_similar(const char *str1, const char *str2)
 {
-	return (ft_strcmp(str1, str2) == 0); // forbidden function
+	return (ft_strcmp(str1, str2) == 0);
 }
 
 char	**filter_argv(int argc, char **argv, const char *target)
@@ -42,7 +42,7 @@ char	**filter_argv(int argc, char **argv, const char *target)
 	{
 		if (!is_similar(argv[i], target))
 		{
-			new_argv[j] = ft_strdup(argv[i]);
+			new_argv[j] = argv[i];
 			if (new_argv[j] == NULL)
 				return (perror("Failed to allocate memory"), exit(EXIT_FAILURE), NULL);
 			j++;

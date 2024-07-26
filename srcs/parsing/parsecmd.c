@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/15 11:44:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/26 21:57:46 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static ASTNode	*initialize_ast_node()
 
 	node->type = AST_COMMAND;
 	node->left = node->right = NULL;
-	node->args = (char **)malloc(10 * sizeof(char *));
-	node->redirections = (t_redirection *)malloc(5 * sizeof(t_redirection));
-	node->args_capacity = 10;
-	node->redirections_capacity = 5;
+	node->args = (char **)malloc(MAX_ARGS * sizeof(char *));
+	node->redirections = (t_redirection *)malloc(MAX_REDIRS * sizeof(t_redirection));
+	node->args_capacity = MAX_ARGS;
+	node->redirections_capacity = MAX_REDIRS;
 	node->args_count = 0;
 	node->redirections_count = 0;
 	return node;
