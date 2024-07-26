@@ -6,11 +6,32 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/18 18:03:28 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/24 16:37:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	if_is_local(ASTNode *node)
+{
+	if (ft_strcmp(node->args[0], "alias") == 0)
+		return (1);
+	if (ft_strcmp(node->args[0], "cd") == 0)
+		return (1);
+	if (ft_strcmp(node->args[0], "env") == 0)
+		return (1);
+	if (ft_strcmp(node->args[0], "export") == 0)
+		return (1);
+	if (ft_strcmp(node->args[0], "echo") == 0)
+		return (1);
+	if (ft_strcmp(node->args[0], "pwd") == 0)
+		return (1);
+	if (ft_strcmp(node->args[0], "unset") == 0)
+		return (1);
+	if (ft_strcmp(node->args[0], "exit") == 0)
+		return (1);
+	return (0);
+}
 
 int	is_local_fct(MS *mini, ASTNode *node)
 {
@@ -106,10 +127,10 @@ int	exec_commands(ASTNode *node, MS *ms)
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
-		ms->exit_code = WEXITSTATUS(status); // recup
+		ms->exit_code = WEXITSTATUS(status);
 		return (1);
 	}
-	else
+	else if (node->type == AST_PIPELINE)
 		exec_pipe(node, ms);
-	return (666);
+	return (0);
 }

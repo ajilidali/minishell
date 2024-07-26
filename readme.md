@@ -15,8 +15,7 @@ Fixed SIGSEGV in calculate_output_length(ft_replace) : "ls \n"
 
 - Faire en sorte de modifier la valeur exit quand signal avec variable globale
 - Signal pour ctrl + \ ne marche pas bien dutout notament avec cat
-- faire here_doc
-- s'occuper des exits code pour l'execution
+- faire en sorte que les redirections marchent avec les builtins
 
 ATTENTION CTRL+Z FAIT UN TRUC BIZARD
 

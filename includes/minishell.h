@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/23 17:35:26 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/24 16:00:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,7 @@ Token		lexer_operator(Lexer *lexer);
 Token		lexer_word(Lexer *lexer);
 Token		lexer_string(Lexer *lexer);
 
-char *replace_variables(char *input);
-
-
+char		*replace_variables(char *input);
 
 // Lexer functions
 Token		lexer_next_token(Lexer *lexer);
@@ -224,6 +222,7 @@ char		*get_pwd(char *path, char *old_pwd);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
+int			make_redirection(ASTNode *node);
 
 //list for pwd
 t_list		*lnew_node(char *name_value);

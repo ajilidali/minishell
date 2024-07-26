@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/18 17:58:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/24 15:45:13 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,13 +118,17 @@ void	make_pipe(ASTNode *node, MS *ms)
 
 void	exec_pipe(ASTNode *node, MS *mini)
 {
+	int	exit;
+
+	exit = 0;
 	if (!node)
 		return ;
 	if (node->type == AST_COMMAND)
 	{
 		node->args = filter_argv(get_argc(node->args), node->args, "");
-		if (is_local_fct(mini, node) != -1)
-			return ;
+		exit = is_local_fct(mini, node);
+		if (exit != -1)
+			mini->exit_code = exit;
 		exec_command(node, mini);
 	}
 	else if (node->type == AST_PIPELINE)
