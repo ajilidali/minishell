@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/26 21:54:04 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/26 23:20:05 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,44 +69,55 @@ Token lexer_dollar(Lexer *lexer)
 	ft_strncpy(value, lexer->input + start, length);
     return create_token(TOKEN_VARIABLE, value);
 }
-Token lexer_word(Lexer *lexer)
-{
-	size_t start;
-	size_t i, j;
-	char *value;
-	int inside_quotes = 0;
-	char current_quote = '\0';
 
-	start = lexer->pos;
-	while (lexer_peek(lexer) != '\0')
-	{
-		if (!inside_quotes && is_whitespace(lexer_peek(lexer)))
-			break;
-		if (lexer_peek(lexer) == '\'' || lexer_peek(lexer) == '\"')
-		{
-			if (inside_quotes && lexer_peek(lexer) == current_quote)
-			{
-				inside_quotes = 0;
-				current_quote = '\0';
-			}
-			else if (!inside_quotes)
-			{
-				inside_quotes = 1;
-				current_quote = lexer_peek(lexer);
-			}
-		}
-		lexer->pos++;
-	}
-    value = allocate_string((lexer->pos - start) + 1);
+char* extract_value(const char *input, size_t start, size_t len)
+{
+    char *value;
+    size_t i;
+	size_t j;
+
 	i = 0;
 	j = 0;
-	while (i < lexer->pos - start)
-		if (lexer->input[start + i] != '\'' && lexer->input[start + i] != '\"')
-			value[j++] = lexer->input[start + i++];
-	if (current_quote != '\'')
-        return create_token(TOKEN_WORD,replace_variables(value));
-    return create_token(TOKEN_WORD,value);
+	value = allocate_string(len + 1);
+    while (i < len)
+        if (input[start + i] != '\'' && input[start + i] != '\"')
+            value[j++] = input[start + i++];
+    return value;
 }
+
+Token lexer_word(Lexer *lexer)
+{
+    size_t start;
+    int inside_quotes;
+    char current_quote;
+	char *value;
+	
+	start = lexer->pos;
+	inside_quotes = 0;
+	current_quote = '\0';
+    while (lexer_peek(lexer) != '\0' && (inside_quotes || !is_whitespace(lexer_peek(lexer))))
+    {
+        if (lexer_peek(lexer) == '\'' || lexer_peek(lexer) == '\"')
+        {
+            if (inside_quotes && lexer_peek(lexer) == current_quote)
+            {
+                inside_quotes = 0;
+                current_quote = '\0';
+            }
+            else if (!inside_quotes)
+            {
+                inside_quotes = 1;
+                current_quote = lexer_peek(lexer);
+            }
+        }
+        lexer->pos++;
+    }
+    value = extract_value(lexer->input, start, lexer->pos - start);
+    if (current_quote != '\'')
+        return create_token(TOKEN_WORD, replace_variables(value));
+    return create_token(TOKEN_WORD, value);
+}
+
 
 char *replace_variables(char *input)
 {
@@ -167,7 +178,6 @@ Token	lexer_string(Lexer *lexer)
     if (quote_type != '\'')
         return(create_token(TOKEN_WORD, replace_variables(value)));
     return (create_token(TOKEN_WORD,value));
-
 }
 
 Token	lexer_operator(Lexer *lexer)

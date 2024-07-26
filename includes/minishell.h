@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/26 22:11:57 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:43:13 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ int			char_counter(const char *str, char c);
 void		exec_pipe(ASTNode *node, MS *mini);
 
 // Args Mgmt
-char		**filter_argv(int argc, char **argv, const char *target);
+char		**filter_argv(char **argv, const char *target);
 int			get_argc(char *argv[]);
 
 //beta

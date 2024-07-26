@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/26 21:57:46 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:58:21 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,9 @@ static void handle_argument(Parser *parser, ASTNode *node)
 
 ASTNode *parse_command(Parser *parser)// Memory allocation failure
 {
-	ASTNode *node = initialize_ast_node();
-
+	ASTNode *node;
+	
+	node = initialize_ast_node();
 	while (parser->current_token.type == TOKEN_WORD ||
 			parser->current_token.type == TOKEN_VARIABLE ||
 			parser->current_token.type == TOKEN_OPERATOR)
