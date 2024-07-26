@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/26 21:54:24 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:11:46 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,4 @@ t_env	*give_envp(char **envp, int flag)
 	if (flag == COPY && envp)
 		env = copy_env(envp);
 	return (env);
-}
-
-char *allocate_string(size_t length)
-{
-    char *str;
-	
-	str = ft_calloc(length + 1,1);
-    if (!str)
-	{
-        perror("malloc");
-        exit(EXIT_FAILURE);
-    }
-    str[length] = '\0';
-    return (str);
 }

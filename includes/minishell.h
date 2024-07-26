@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/26 21:52:59 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:11:57 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,6 @@ Token		lexer_word(Lexer *lexer);
 Token		lexer_string(Lexer *lexer);
 
 char		*replace_variables(char *input);
-char		*allocate_string(size_t length);
 Token		create_token(TokenType type, char *value);
 
 // Lexer functions

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:46:33 by moajili           #+#    #+#             */
-/*   Updated: 2024/06/25 18:12:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:14:38 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,7 @@ char	*perform_replacement(const char *in, const char *replacee,
 	i = 0;
 	j = 0;
 	in_len = ft_strlen(in);
-	out = malloc(out_len + 1);
-	if (out == NULL)
-		return (NULL);
+	out = allocate_string(out_len + 1);
 	while (i < in_len)
 	{
 		if (ft_strncmp(&in[i], replacee, ft_strlen(replacee)) == 0)
@@ -62,7 +60,6 @@ char	*perform_replacement(const char *in, const char *replacee,
 		else
 			out[j++] = in[i++];
 	}
-	out[out_len] = '\0';
 	return (out);
 }
 
