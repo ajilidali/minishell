@@ -3,7 +3,6 @@ Reference a revoir pour comprendre variable env 'globale'
 ERREURS :
 
 - Le export, quand execute sans arguments, mange une partie des envp, en les effacant effectivement de la liste envp, j'ai donc desactive de facon temporaire le sort alphabetique. En vrai osef
-- Quand je fais ca : export "OLDPWD=$PWD". La variable OLDPWD est egale a $PWD alors qu'elle devrait etre egale au contenue de $PWD
 
 < ./readme.md cat OK
 echo bla > test.txt bla2 OK
@@ -16,8 +15,8 @@ FOUND BUG, Invalid Free, cause : <<EOF | ls
 
 - Faire en sorte de modifier la valeur exit quand signal avec variable globale
 - Signal pour ctrl + \ ne marche pas bien dutout notament avec cat
-- faire en sorte que les redirections marchent avec les builtins
-
+- Signal pour ctrl + z fait truc bizarre
+- here doc fonctionne mais pas a son prime
 ATTENTION CTRL+Z FAIT UN TRUC BIZARD
 
 Arbre AST pour comprendre comment c'est fait :

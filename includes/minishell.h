@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/26 22:43:13 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/28 12:24:48 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct ASTNode {
 	char			**args; // For command nodes
 	int				fd_in;
 	int				fd_out;
+	int				save_in;
+	int				save_out;
 	struct ASTNode	*left; // For pipe nodes
 	struct ASTNode	*right; // For pipe nodes
 	t_redirection	*redirections; // Array containing redirections
@@ -198,7 +200,7 @@ void		print_envp(char **envp);
 void		trim_whitespace(char *str);
 
 // Pipex functions
-int			exec_commands(ASTNode *node, MS *ms);
+void		exec_commands(ASTNode *node, MS *ms);
 int			execute(ASTNode *node, char **envp);
 char		*find_path(char *cmd, char **envp);
 int			init_pipex(int nargument, char **command, char **envp);
@@ -211,7 +213,7 @@ char		**filter_argv(char **argv, const char *target);
 int			get_argc(char *argv[]);
 
 //beta
-void		setup_redirections(ASTNode *node);
+int			setup_redirections(ASTNode *node);
 
 //utils
 t_env		*give_envp(char **envp, int flag);

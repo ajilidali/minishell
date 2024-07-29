@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 11:00:33 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:16:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 		exec_pipe(node, mini);
 		exit(1);
 	}
-	waitpid(pid, &status, WNOHANG);
+	waitpid(pid, &status, 0);
 	return (WEXITSTATUS(status));
 }
 

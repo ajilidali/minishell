@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/18 18:05:36 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/28 13:33:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	setup_redirect_in(ASTNode *node, size_t i)
+static int	setup_redirect_in(ASTNode *node, size_t i)
 {
 	if (node->redirections[i].flag == FD_OUT)
 	{
@@ -23,7 +23,7 @@ static void	setup_redirect_in(ASTNode *node, size_t i)
 		if (node->fd_out == -1)
 		{
 			perror("DEDSEC");
-			exit(1);
+			return (1);
 		}
 	}
 	else if (node->redirections[i].flag == FD_ADDOUT)
@@ -35,9 +35,10 @@ static void	setup_redirect_in(ASTNode *node, size_t i)
 		if (node->fd_out == -1)
 		{
 			perror("DEDSEC");
-			exit(1);
+			return (1);
 		}
 	}
+	return (0);
 }
 
 void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
@@ -52,15 +53,15 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 	{
 		if (node->fd_in != STDIN_FILENO)
 			close(node->fd_in);
-		str = get_next_line(STDIN_FILENO);
 		while (1)
 		{
-			if ((ft_strlen(str)) > 1 && !ft_strncmp
-				(str, node->redirections[i].file, ft_strlen(str) - 1))
+			str = get_next_line(STDIN_FILENO);
+			if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
+					node->redirections[i].file,
+					ft_strlen(node->redirections[i].file)))
 				exit(0);
 			ft_putstr_fd(str, pipefd[1]);
 			free(str);
-			str = get_next_line(STDIN_FILENO);
 		}
 		close(pipefd[1]);
 		close(pipefd[0]);
@@ -69,7 +70,7 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 	wait(NULL);
 }
 
-static void	setup_redirect_out(ASTNode *node, size_t i)
+static int	setup_redirect_out(ASTNode *node, size_t i)
 {
 	int	pipefd[2];
 
@@ -89,12 +90,13 @@ static void	setup_redirect_out(ASTNode *node, size_t i)
 		if (node->fd_in == -1)
 		{
 			perror("DEDSEC");
-			exit(1);
+			return (1);
 		}
 	}
+	return (0);
 }
 
-void	setup_redirections(ASTNode *node)
+int	setup_redirections(ASTNode *node)
 {
 	size_t	i;
 
@@ -103,8 +105,11 @@ void	setup_redirections(ASTNode *node)
 	node->fd_out = STDOUT_FILENO;
 	while (i < node->redirections_count)
 	{
-		setup_redirect_in(node, i);
-		setup_redirect_out(node, i);
+		if (setup_redirect_in(node, i))
+			return (1);
+		if (setup_redirect_out(node, i))
+			return (1);
 		i++;
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/24 16:37:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/28 12:25:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	if_is_local(ASTNode *node)
 {
+	if (!node->args[0])
+		return (1);
 	if (ft_strcmp(node->args[0], "alias") == 0)
 		return (1);
 	if (ft_strcmp(node->args[0], "cd") == 0)
@@ -40,6 +42,8 @@ int	is_local_fct(MS *mini, ASTNode *node)
 	if (!node->args[0])
 		return (0);
 	exit_status = -1;
+	if (if_is_local(node))
+		make_redirection(node);
 	if (ft_strcmp(node->args[0], "alias") == 0)
 		exit_status = run_alias(mini, node);
 	if (ft_strcmp(node->args[0], "cd") == 0)
@@ -61,24 +65,27 @@ int	is_local_fct(MS *mini, ASTNode *node)
 
 int	make_redirection(ASTNode *node)
 {
-	setup_redirections(node);
 	if (node->fd_in != STDIN_FILENO)
 	{
+		node->save_in = dup(STDIN_FILENO);
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
 		{
 			close(node->fd_in);
 			close(node->fd_out);
 			return (0);
 		}
+		close(node->fd_in);
 	}
 	if (node->fd_out != STDOUT_FILENO)
 	{
+		node->save_out = dup(STDOUT_FILENO);
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
 		{
 			close(node->fd_in);
 			close(node->fd_out);
 			return (0);
 		}
+		close(node->fd_out);
 	}
 	return (1);
 }
@@ -88,8 +95,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 	char	*path;
 	char	**envp;
 
-	if (!make_redirection(node))
-		exit(1);
+	make_redirection(node);
 	envp = get_tabenv(ms->env);
 	if (!envp)
 		exit(1);
@@ -111,26 +117,33 @@ static void	exec_command(ASTNode *node, MS *ms)
 	exit(1);
 }
 
-int	exec_commands(ASTNode *node, MS *ms)
+void	exec_commands(ASTNode *node, MS *ms) // Revoir la valeur de retour
 {
 	int	pid;
 	int	status;
 
 	if (node->type == AST_COMMAND)
 	{
+		ms->exit_code = setup_redirections(node);
+		if (ms->exit_code)
+			return ;
 		status = is_local_fct(ms, node);
 		if (status != -1)
-			return (status);
+		{
+			if (node->fd_in != STDIN_FILENO)
+				dup2(node->save_in, STDIN_FILENO);
+			if (node->fd_out != STDOUT_FILENO)
+				dup2(node->save_out, STDOUT_FILENO);
+			return ;
+		}
 		pid = fork();
 		if (pid == -1)
-			return (1);
+			return ;
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
 		ms->exit_code = WEXITSTATUS(status);
-		return (1);
 	}
 	else if (node->type == AST_PIPELINE)
 		exec_pipe(node, ms);
-	return (0);
 }
