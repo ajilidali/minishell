@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:47:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:17:15 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	env_add_var(char *var, t_env *env)
 	last = env;
 	while (last->next)
 		last = last->next;
-	last->next = new_node(var);
+	last->next = new_node(var, false);
 	if (!last->next)
 		return (0);
 	return (1);
@@ -70,11 +70,9 @@ t_env	*give_envp(char **envp, int flag)
 	static t_env	*env = NULL;
 
 	if (flag == COPY && envp)
-		env = copy_env(envp);
-	else if (!env)
 	{
-		ft_putendl_fd("test", STDERR_FILENO);
-		env = new_node("_=/usr/bin/env");
+		env = new_node("?", true);
+		env->next = copy_env(envp);
 	}
 	return (env);
 }

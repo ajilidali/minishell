@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 17:24:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:08:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <signal.h>
-#include <sys/stat.h>
+# include <sys/stat.h>
+# include <stdbool.h>
 
 # define FREE_GB 1
 # define COPY 10 // Flag for copying envp to global
@@ -62,6 +63,7 @@ typedef struct s_redirection
 typedef struct s_env
 {
 	char			*name_value;
+	bool			hide;
 	struct s_env	*next;
 }	t_env;
 
@@ -152,7 +154,7 @@ void		run_exit(char **command, MS *mini);
 void		free_env(t_env *env);
 char		**get_tabenv(t_env *env);
 t_env		*copy_env(char **envp);
-t_env		*new_node(char *name_value);
+t_env		*new_node(char *name_value, bool hide);
 t_list		*copy_pwd(char *pwd, char *env_pwd);
 t_env		*create_empty_env(void);
 

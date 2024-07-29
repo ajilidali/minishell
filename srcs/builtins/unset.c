@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:02:06 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:11:07 by moajili          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:18:31 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ static int	find_variable(char *variable, t_env **env)
 	i = ft_strlen(variable);
 	current = *env;
 	previous = NULL;
-	if (!ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
+	if (!current->hide && !ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
 	{
 		*env = current->next;
 		return (free(current->name_value), free(current), 1);
 	}
 	while (current)
 	{
-		if (!ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
+		if (!current->hide && !ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
 		{
 			previous->next = current->next;
 			return (free(current->name_value), free(current), 1);
@@ -63,6 +63,5 @@ int	run_unset(char **command, t_env **env)
 		return (EXIT_FAILURE);
 	if (find_variable(command[1], env) == 0)
 		return (EXIT_FAILURE);
-	give_envp(get_tabenv(*env), COPY);
 	return (EXIT_SUCCESS);
 }

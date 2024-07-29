@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:55:12 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:18:15 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:10:59 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	run_env(t_env *env)
 	}
 	while (env)
 	{
-		ft_putendl_fd(env->name_value, STDOUT_FILENO);
+		if (env->hide == false)
+			ft_putendl_fd(env->name_value, STDOUT_FILENO);
 		env = env->next;
 	}
 	return (EXIT_SUCCESS);

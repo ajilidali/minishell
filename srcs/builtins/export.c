@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:01:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:09:32 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	run_export(char **command, t_env **env)
 	node = find_envp(command[1], *env);
 	if (!node)
 	{
-		tmp->next = new_node(command[1]);
+		tmp->next = new_node(command[1], false);
 		if (!tmp->next)
 			return (EXIT_FAILURE);
 		return (EXIT_SUCCESS);

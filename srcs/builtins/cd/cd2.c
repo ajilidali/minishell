@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:08:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 16:24:36 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:36:02 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@ void	add_pwd(t_env *env)
 		env = env->next;
 	if (!is_pwd(new))
 	{
-		env->next = new_node("PWD=");
+		env->next = new_node("PWD=", false);
 		env = env->next;
 	}
 	if (!is_oldpwd(new))
-		env->next = new_node("OLDPWD=");
+		env->next = new_node("OLDPWD=", false);
 }
 
 void	update_pwd(char *old_pwd, char *path, t_env *env)

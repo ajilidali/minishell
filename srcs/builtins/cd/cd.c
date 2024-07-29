@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:00:47 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:36:42 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_back(t_env *env, char *old_pwd)
 	if (chdir(back_path) == -1)
 		return (1);
 	ft_putendl_fd(back_path, STDOUT_FILENO);
-	update_pwd(old_pwd, back_path, env);
+	update_pwd(ft_strdup(old_pwd), back_path, env);
 	return (0);
 }
 
@@ -52,7 +52,7 @@ int	run_cd(char **command, t_env *env)
 			printf("DEDSEC: cd: %s: %s\n", home, strerror(errno));
 			return (1);
 		}
-		return (update_pwd(old_pwd, home, env), 0);
+		return (update_pwd(ft_strdup(old_pwd), home, env), 0);
 	}
 	if (!ft_strncmp(command[1], "-", 1))
 		return (get_back(env, old_pwd));
@@ -61,5 +61,5 @@ int	run_cd(char **command, t_env *env)
 		printf("DEDSEC: cd: %s: %s\n", command[1], strerror(errno));
 		return (1);
 	}
-	return (update_pwd(old_pwd, command[1], env), 0);
+	return (update_pwd(ft_strdup(old_pwd), command[1], env), 0);
 }
