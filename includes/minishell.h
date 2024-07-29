@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/28 12:24:48 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:20:47 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,8 @@ void		test_envp(t_env *env, char *str);
 void		update_envp(MS *mini);
 t_env		*find_envp(char *variable, t_env *env);
 char		*copy_except_first_n_chars(const char *input, size_t n);
-void		sigint_handler(void);
+void	setup_signal_handler(void);
+//void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
 void		update_pwd(char *old_pwd, char *path, t_env *env);
 char		*get_pwd(char *path, char *old_pwd);

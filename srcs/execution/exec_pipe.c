@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 13:16:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:41:13 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	exec_command(ASTNode *node, MS *ms)
 	envp = get_tabenv(ms->env);
 	if (!envp)
 		exit(1);
+	if (!node->args[0])
+		exit(0);
 	if (!access(node->args[0], X_OK))
 		path = ft_strdup(node->args[0]);
 	else
@@ -35,7 +37,6 @@ static void	exec_command(ASTNode *node, MS *ms)
 	{
 		free(path);
 		freetab(envp);
-		exit(1);
 	}
 	exit(1);
 }

@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 11:37:30 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:39:38 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,8 +188,9 @@ Token	lexer_operator(Lexer *lexer)
 	current = lexer_peek(lexer);
 	if (current == '<' || current == '>')
 	{
-		if (lexer_peek(lexer) == current) // Check for << or >>
+		if (lexer->input[lexer->pos+1] == current) // Check for << or >>
 		{
+			lexer->pos++;
             ft_memcpy(value, (char[]){current, current, '\0'}, sizeof(value));
 			lexer->pos++;
             return(create_token(TOKEN_OPERATOR,ft_strdup(value)));

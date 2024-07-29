@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/28 12:53:36 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:20:20 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,21 @@ void	handler(int signal)
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	if (signal == SIGQUIT) // ctrl "\"
+	else if (signal == SIGQUIT) // ctrl "\"
 	{
 		rl_on_new_line();
 		rl_redisplay();
 	}
 }
 
-void	sigint_handler(void)
+void	setup_signal_handler(void)
 {
 	struct sigaction	act;
 
 	sigemptyset(&act.sa_mask);
-	act.sa_handler = &handler;
+	act.sa_handler = handler;
 	act.sa_flags = 0;
+	
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
 }
