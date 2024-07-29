@@ -6,11 +6,11 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/26 22:39:48 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 11:00:33 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 static void	exec_command(ASTNode *node, MS *ms)
 {
@@ -126,7 +126,7 @@ void	exec_pipe(ASTNode *node, MS *mini)
 	if (node->type == AST_COMMAND)
 	{
 		if (get_argc(node->args) < 1)
-			node->args = filter_argv(get_argc(node->args), node->args, "");
+			node->args = filter_argv(node->args, "");
 		exit = is_local_fct(mini, node);
 		if (exit != -1)
 			mini->exit_code = exit;
