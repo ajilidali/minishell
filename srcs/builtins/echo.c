@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 13:10:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 14:38:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:00:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int	echo_verif(char **command)
 
 int	run_echo(char **command)
 {
-	ft_putendl_fd("ECHO", STDERR_FILENO);
 	int		option;
 	int		n;
 
