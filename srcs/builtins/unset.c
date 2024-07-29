@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:02:06 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/07 10:31:58 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:17:29 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,19 @@ static int	find_variable(char *variable, t_env **env)
 	t_env	*current;
 	t_env	*previous;
 
+	if (*env == NULL)
+		return (0);
 	i = ft_strlen(variable);
-	current = (*env)->next;
-	previous = current;
-	i = ft_strlen(variable);
-	if (!ft_strncmp(variable, previous->name_value, i))
+	current = *env;
+	previous = NULL;
+	if (!ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
 	{
-		*env = current;
-		return (free(previous->name_value), free(previous), 1);
+		*env = current->next;
+		return (free(current->name_value), free(current), 1);
 	}
 	while (current)
 	{
-		if (!ft_strncmp(variable, current->name_value, i))
+		if (!ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
 		{
 			previous->next = current->next;
 			return (free(current->name_value), free(current), 1);
