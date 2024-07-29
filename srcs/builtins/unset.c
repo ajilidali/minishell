@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:02:06 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:01:19 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:11:07 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ int	run_unset(char **command, t_env **env)
 		return (EXIT_FAILURE);
 	if (find_variable(command[1], env) == 0)
 		return (EXIT_FAILURE);
+	give_envp(get_tabenv(*env), COPY);
 	return (EXIT_SUCCESS);
 }

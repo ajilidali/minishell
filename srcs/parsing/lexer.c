@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 13:39:38 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:01:43 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ Token lexer_dollar(Lexer *lexer)
 
 	start = lexer->pos;
 	lexer->pos++;
+	char c = lexer_peek(lexer);
+	if (c == '?')
+	{
+		printf("?");
+		return create_token(TOKEN_VARIABLE, ft_strdup("?"));
+	}
 	while (ft_isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
 		lexer->pos++;
 	length = lexer->pos - start;
