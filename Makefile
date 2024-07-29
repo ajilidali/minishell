@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+         #
+#    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/07/28 13:21:08 by hclaude          ###   ########.fr        #
+#    Updated: 2024/07/29 15:07:19 by moajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	= minishell
-CC 		= @gcc
+CC 		= @cc
 INCLUDE = -I./includes
 CFLAGS 	= -Wall -Wextra -Werror -g3
 

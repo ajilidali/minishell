@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 14:41:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 15:36:14 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 		path = ft_strdup(node->args[0]);
 	else
 		path = find_path(node->args[0], envp);
-	ft_putendl_fd(path, STDERR_FILENO);
+	ft_putendl_fd(path, STDERR_FILENO);//a effacer
 	if (!path)
 	{
 		check_path(node->args[0]);
@@ -137,7 +137,6 @@ void	exec_commands(ASTNode *node, MS *ms)
 			return ;
 		}
 		pid = fork();
-		ft_putendl_fd("FORK EXEC COMMAND", STDERR_FILENO);
 		if (pid == -1)
 			return ;
 		if (pid == 0)

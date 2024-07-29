@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 14:41:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 15:36:12 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 	int	status;
 
 	pid = fork();
-	ft_putendl_fd("FORK RIGHT", STDERR_FILENO);
 	if (pid == -1)
 		return (1);
 	if (pid == 0)
@@ -81,7 +80,6 @@ int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 	int	status;
 
 	pid = fork();
-	ft_putendl_fd("FORK LEFT", STDERR_FILENO);
 	if (pid == -1)
 		return (1);
 	if (pid == 0)
@@ -133,7 +131,10 @@ void	exec_pipe(ASTNode *node, MS *mini)
 			node->args = filter_argv(node->args, "");
 		exit = is_local_fct(mini, node);
 		if (exit != -1)
+		{
 			mini->exit_code = exit;
+			return ;
+		}	
 		exec_command(node, mini);
 	}
 	else if (node->type == AST_PIPELINE)
