@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 13:20:47 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:15:39 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
 int			make_redirection(ASTNode *node);
+int			env_add_var(char *var, t_env *env);
 
 //list for pwd
 t_list		*lnew_node(char *name_value);

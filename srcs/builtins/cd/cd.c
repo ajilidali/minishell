@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/16 16:13:11 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:38:45 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	get_back(t_env *env, char *old_pwd)
 
 int	run_cd(char **command, t_env *env)
 {
+	ft_putendl_fd("CD", STDERR_FILENO);
 	char	*home;
 	char	*old_pwd;
 

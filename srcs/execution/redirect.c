@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/28 13:33:28 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:42:13 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 	char	*str;
 
 	pid = fork();
+	ft_putendl_fd("FORK HERE DOC", STDERR_FILENO);
 	if (pid == -1)
 		exit(EXIT_FAILURE);
 	if (pid == 0)

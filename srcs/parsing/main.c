@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 13:21:00 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 13:55:08 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*make_prompt(void)
 
 	dir = env_get_var("PWD", give_envp(NULL, 0));
 	if (!dir)
-		return (NULL);
+		dir = "";
 	path = ft_strjoin(dir, "$ > \033[0m");
 	if (!path)
 		return (NULL);

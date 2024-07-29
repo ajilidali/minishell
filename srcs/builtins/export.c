@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/03 15:49:28 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:37:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	run_export(char **command, t_env **env)
 	t_env	*tmp;
 
 	tmp = *env;
+	ft_putendl_fd("EXPORT", STDERR_FILENO);
 	if (!command[1])
 		return (print_env(*env));
 	if (!verify_export(command[1]))

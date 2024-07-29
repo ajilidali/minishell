@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/28 12:25:28 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:41:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 	exit(1);
 }
 
-void	exec_commands(ASTNode *node, MS *ms) // Revoir la valeur de retour
+void	exec_commands(ASTNode *node, MS *ms)
 {
 	int	pid;
 	int	status;
@@ -137,6 +137,7 @@ void	exec_commands(ASTNode *node, MS *ms) // Revoir la valeur de retour
 			return ;
 		}
 		pid = fork();
+		ft_putendl_fd("FORK EXEC COMMAND", STDERR_FILENO);
 		if (pid == -1)
 			return ;
 		if (pid == 0)

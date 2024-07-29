@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 13:41:13 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:41:08 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 	int	status;
 
 	pid = fork();
+	ft_putendl_fd("FORK RIGHT", STDERR_FILENO);
 	if (pid == -1)
 		return (1);
 	if (pid == 0)
@@ -80,6 +81,7 @@ int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 	int	status;
 
 	pid = fork();
+	ft_putendl_fd("FORK LEFT", STDERR_FILENO);
 	if (pid == -1)
 		return (1);
 	if (pid == 0)
@@ -124,6 +126,7 @@ void	exec_pipe(ASTNode *node, MS *mini)
 	exit = 0;
 	if (!node)
 		return ;
+	// printf("Node = \n", )
 	if (node->type == AST_COMMAND)
 	{
 		if (get_argc(node->args) < 1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:55:12 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/07 10:32:22 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 14:38:10 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 int	run_env(t_env *env)
 {
+	ft_putendl_fd("ENV", STDERR_FILENO);
+	t_env	*temp;
+
 	if (!env)
+		return (EXIT_FAILURE);
+	temp = find_envp("_", env);
+	if (!temp)
+		env_add_var("_=/usr/bin/env", env);
+	free(temp->name_value);
+	temp->name_value = ft_strdup("_=/usr/bin/env");
+	if (!temp->name_value)
 		return (EXIT_FAILURE);
 	while (env)
 	{
