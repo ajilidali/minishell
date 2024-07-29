@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/26 22:11:46 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:47:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,10 @@ t_env	*give_envp(char **envp, int flag)
 
 	if (flag == COPY && envp)
 		env = copy_env(envp);
+	else if (!env)
+	{
+		ft_putendl_fd("test", STDERR_FILENO);
+		env = new_node("_=/usr/bin/env");
+	}
 	return (env);
 }

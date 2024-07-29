@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 15:36:14 by moajili          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:27:57 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	is_local_fct(MS *mini, ASTNode *node)
 	if (!node->args[0])
 		return (0);
 	exit_status = -1;
+	mini->env = give_envp(NULL, 0);
 	if (if_is_local(node))
 		make_redirection(node);
 	if (ft_strcmp(node->args[0], "alias") == 0)

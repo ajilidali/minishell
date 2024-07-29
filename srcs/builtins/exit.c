@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:01:02 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:42:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,5 @@ void	run_exit(char **command, MS *mini)
 	exit_value = ft_atoi(command[1]);
 	if (exit_value > 255)
 		exit(exit_value % 256);
-	exit(2);
+	exit(exit_value);
 }

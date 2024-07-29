@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 14:15:39 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:24:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,6 +154,7 @@ char		**get_tabenv(t_env *env);
 t_env		*copy_env(char **envp);
 t_env		*new_node(char *name_value);
 t_list		*copy_pwd(char *pwd, char *env_pwd);
+t_env		*create_empty_env(void);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while,
 // have to make sure can run fcts from structs
