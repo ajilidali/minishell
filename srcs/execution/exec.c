@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/01 17:01:43 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:18:57 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	is_local_fct(MS *mini, ASTNode *node)
 	if (ft_strcmp(node->args[0], "unset") == 0)
 		exit_status = run_unset(node->args, &mini->env);
 	if (ft_strcmp(node->args[0], "exit") == 0)
-		run_exit(node->args, mini);
+		exit_status = run_exit(node->args, mini);
 	return (exit_status);
 }
 
@@ -135,6 +135,7 @@ void	exec_commands(ASTNode *node, MS *ms)
 				dup2(node->save_in, STDIN_FILENO);
 			if (node->fd_out != STDOUT_FILENO)
 				dup2(node->save_out, STDOUT_FILENO);
+			ms->exit_code = status;
 			return ;
 		}
 		pid = fork();

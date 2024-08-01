@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:42:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:14:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,28 @@ static int	valid_value(char *value)
 	return (1);
 }
 
-void	run_exit(char **command, MS *mini)
+int	run_exit(char **command, MS *mini)
 {
 	int	exit_value;
 
 	clear_history();
 	if (!command[1])
-		exit(mini->exit_code);
+		return (exit(mini->exit_code), mini->exit_code);
+	if (command[2])
+	{
+		ft_putendl_fd("DEDSEC: exit: too many arguments", STDERR_FILENO);
+		return (1);
+	}
 	if (!valid_value(command[1]))
 	{
 		ft_putendl_fd("exit", STDERR_FILENO);
 		ft_putstr_fd("DEDSEC: exit: ", STDERR_FILENO);
 		ft_putstr_fd(command[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		exit(2);
+		return (exit(2), 2);
 	}
 	exit_value = ft_atoi(command[1]);
 	if (exit_value > 255)
-		exit(exit_value % 256);
-	exit(exit_value);
+		return (exit(exit_value % 256), exit_value % 256);
+	return (exit(exit_value), exit_value);
 }
