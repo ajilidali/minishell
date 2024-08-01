@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 15:36:12 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:04:31 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 		return (1);
 	if (pid == 0)
 	{
-		setup_redirections(node);
+		mini->exit_code = setup_redirections(node);
+		if (mini->exit_code)
+			return (close_node_fd(node), mini->exit_code);
 		if (node->fd_in != STDIN_FILENO)
 		{
 			if (dup2(node->fd_in, STDIN_FILENO) == -1)
@@ -84,7 +86,9 @@ int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 		return (1);
 	if (pid == 0)
 	{
-		setup_redirections(node);
+		mini->exit_code = setup_redirections(node);
+		if (mini->exit_code)
+			return (close_node_fd(node), mini->exit_code);
 		if (node->fd_in != STDIN_FILENO)
 			if (dup2(node->fd_in, STDIN_FILENO) == -1)
 				exit(1);
@@ -133,8 +137,8 @@ void	exec_pipe(ASTNode *node, MS *mini)
 		if (exit != -1)
 		{
 			mini->exit_code = exit;
-			return ;
-		}	
+			return (close_node_fd(node));
+		}
 		exec_command(node, mini);
 	}
 	else if (node->type == AST_PIPELINE)

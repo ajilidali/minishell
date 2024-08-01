@@ -17,6 +17,7 @@ FOUND BUG, Invalid Free, cause : <<EOF | ls
 - Signal pour ctrl + \ ne marche pas bien dutout notament avec cat
 - Signal pour ctrl + z fait truc bizarre
 - here doc fonctionne mais pas a son prime
+- seg fault quand je fais echo $?
 ATTENTION CTRL+Z FAIT UN TRUC BIZARD
 
 Arbre AST pour comprendre comment c'est fait :

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:02:06 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 18:18:31 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/01 16:49:36 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,29 @@ int	verify_unset(char *command)
 
 static int	find_variable(char *variable, t_env **env)
 {
-	size_t	i;
-	t_env	*current;
-	t_env	*previous;
+	t_env	*cur;
+	t_env	*prev;
 
 	if (*env == NULL)
 		return (0);
-	i = ft_strlen(variable);
-	current = *env;
-	previous = NULL;
-	if (!current->hide && !ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
+	cur = *env;
+	prev = NULL;
+	if (!cur->hide && !ft_strncmp(variable, cur->name_value,
+			ft_strlen(variable)) && cur->name_value[ft_strlen(variable)] == '=')
 	{
-		*env = current->next;
-		return (free(current->name_value), free(current), 1);
+		*env = cur->next;
+		return (free(cur->name_value), free(cur), 1);
 	}
-	while (current)
+	while (cur)
 	{
-		if (!current->hide && !ft_strncmp(variable, current->name_value, i) && current->name_value[i] == '=')
+		if (!cur->hide && !ft_strncmp(variable, cur->name_value, ft_strlen(
+					variable)) && cur->name_value[ft_strlen(variable)] == '=')
 		{
-			previous->next = current->next;
-			return (free(current->name_value), free(current), 1);
+			prev->next = cur->next;
+			return (free(cur->name_value), free(cur), 1);
 		}
-		previous = current;
-		current = current->next;
+		prev = cur;
+		cur = cur->next;
 	}
 	return (0);
 }

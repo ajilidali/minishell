@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 18:09:32 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/01 16:44:30 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,12 @@ int	verify_export(char *command)
 	int	i;
 
 	i = 0;
-	while (command[i] && command[i] != '=')
-		i++;
-	if (command[i++] == '=' && command[i] != '=')
-		return (1);
-	return (0);
+	if (command[0] == '=')
+		return (2);
+	while (command[i])
+		if (command[i++] == '=')
+			return (0);
+	return (1);
 }
 
 t_env	*find_envp(char *variable, t_env *env)
@@ -39,7 +40,8 @@ t_env	*find_envp(char *variable, t_env *env)
 	{
 		while (env->name_value[j] && env->name_value[j] != '=')
 			j++;
-		if (ft_strncmp(variable, env->name_value, i) == 0 && j == i)
+		if (ft_strncmp(variable, env->name_value, i) == 0 && j == i
+			&& !env->hide)
 			return (env);
 		env = env->next;
 		j = 0;
@@ -120,29 +122,50 @@ int	print_env(t_env *env)
 	return (EXIT_SUCCESS);
 }
 
-int	run_export(char **command, t_env **env)
+int	add_node_env(char *command, t_env *env)
 {
 	t_env	*node;
 	t_env	*tmp;
 
-	tmp = *env;
-	if (!command[1])
-		return (print_env(*env));
-	if (!verify_export(command[1]))
-		return (EXIT_SUCCESS);
+	tmp = env;
 	while (tmp->next)
 		tmp = tmp->next;
-	node = find_envp(command[1], *env);
+	node = find_envp(command, env);
 	if (!node)
 	{
-		tmp->next = new_node(command[1], false);
+		tmp->next = new_node(command, false);
 		if (!tmp->next)
 			return (EXIT_FAILURE);
-		return (EXIT_SUCCESS);
 	}
-	free(node->name_value);
-	node->name_value = ft_strdup(command[1]);
-	if (!node->name_value)
-		return (EXIT_FAILURE);
+	else
+	{
+		free(node->name_value);
+		node->name_value = ft_strdup(command);
+		if (!node->name_value)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	run_export(char **command, t_env **env)
+{
+	int		i;
+
+	i = 1;
+	if (!command[1])
+		return (print_env(*env));
+	while (command[i])
+	{
+		if (verify_export(command[i]))
+		{
+			if (verify_export(command[i]) == 1)
+				return (EXIT_SUCCESS);
+			else
+				return (EXIT_FAILURE);
+		}
+		if (add_node_env(command[i], *env))
+			return (EXIT_FAILURE);
+		i++;
+	}
 	return (EXIT_SUCCESS);
 }

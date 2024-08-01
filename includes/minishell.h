@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 18:08:38 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/01 16:56:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,6 +234,7 @@ void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
 int			make_redirection(ASTNode *node);
 int			env_add_var(char *var, t_env *env);
+void		close_node_fd(ASTNode *node);
 
 //list for pwd
 t_list		*lnew_node(char *name_value);

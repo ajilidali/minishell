@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 17:27:57 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/01 17:01:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	exec_commands(ASTNode *node, MS *ms)
 	{
 		ms->exit_code = setup_redirections(node);
 		if (ms->exit_code)
-			return ;
+			return (close_node_fd(node));
 		status = is_local_fct(ms, node);
 		if (status != -1)
 		{

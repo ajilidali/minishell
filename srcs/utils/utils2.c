@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 18:17:15 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/01 16:30:57 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*env_get_var(char *variable, t_env *env)
 	{
 		while (env->name_value[i] && env->name_value[i] != '=')
 			i++;
-		if (ft_strncmp(env->name_value, variable, i) == 0)
+		if (ft_strncmp(env->name_value, variable, i) == 0 && !env->hide)
 			return (env->name_value + (i + 1));
 		env = env->next;
 		i = 0;
