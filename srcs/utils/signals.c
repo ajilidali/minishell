@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 13:45:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/05 15:41:00 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	handler(int signal)
 	}
 	else if (signal == SIGQUIT) // ctrl "\"
 	{
+		// rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
 	}

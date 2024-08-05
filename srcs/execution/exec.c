@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/01 17:18:57 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/04 15:24:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	exec_commands(ASTNode *node, MS *ms)
 	{
 		ms->exit_code = setup_redirections(node);
 		if (ms->exit_code)
-			return (close_node_fd(node));
+			return (close_node_fd(node, NULL));
 		status = is_local_fct(ms, node);
 		if (status != -1)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/01 17:04:31 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/04 15:23:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,18 +54,18 @@ int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 	{
 		mini->exit_code = setup_redirections(node);
 		if (mini->exit_code)
-			return (close_node_fd(node), mini->exit_code);
+			return (close_node_fd(node, pipefd), exit(mini->exit_code), 1);
 		if (node->fd_in != STDIN_FILENO)
 		{
 			if (dup2(node->fd_in, STDIN_FILENO) == -1)
-				exit(1);
+				return (close_node_fd(node, pipefd), exit(1), 1);
 		}
 		else
 			if (dup2(pipefd[0], STDIN_FILENO) == -1)
-				exit(1);
+				return (close_node_fd(node, pipefd), exit(1), 1);
 		if (node->fd_out != STDOUT_FILENO)
 			if (dup2(node->fd_out, STDOUT_FILENO) == -1)
-				exit(1);
+				return (close_node_fd(node, pipefd), exit(1), 1);
 		close(pipefd[0]);
 		close(pipefd[1]);
 		exec_pipe(node, mini);
@@ -88,18 +88,18 @@ int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 	{
 		mini->exit_code = setup_redirections(node);
 		if (mini->exit_code)
-			return (close_node_fd(node), mini->exit_code);
+			return (close_node_fd(node, pipefd), exit(mini->exit_code), 1);
 		if (node->fd_in != STDIN_FILENO)
 			if (dup2(node->fd_in, STDIN_FILENO) == -1)
-				exit(1);
+				return (close_node_fd(node, pipefd), exit(mini->exit_code), 1);
 		if (node->fd_out != STDOUT_FILENO)
 		{
 			if (dup2(node->fd_out, STDOUT_FILENO) == -1)
-				exit(1);
+				return (close_node_fd(node, pipefd), exit(mini->exit_code), 1);
 		}
 		else
 			if (dup2(pipefd[1], STDOUT_FILENO) == -1)
-				exit(1);
+				return (close_node_fd(node, pipefd), exit(mini->exit_code), 1);
 		close(pipefd[0]);
 		close(pipefd[1]);
 		exec_pipe(node, mini);
@@ -137,7 +137,7 @@ void	exec_pipe(ASTNode *node, MS *mini)
 		if (exit != -1)
 		{
 			mini->exit_code = exit;
-			return (close_node_fd(node));
+			return (close_node_fd(node, NULL));
 		}
 		exec_command(node, mini);
 	}

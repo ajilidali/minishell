@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/01 17:13:52 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/04 15:21:57 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,7 +234,7 @@ void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
 int			make_redirection(ASTNode *node);
 int			env_add_var(char *var, t_env *env);
-void		close_node_fd(ASTNode *node);
+void		close_node_fd(ASTNode *node, int *pipefd);
 
 //list for pwd
 t_list		*lnew_node(char *name_value);
