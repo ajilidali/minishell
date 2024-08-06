@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:14:13 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:54:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:49:09 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,16 @@ char	*copy_except_first_n_chars(const char *input, size_t n)
 		return (NULL);
 	ft_strcpy(result, input + n);
 	return (result);
+}
+
+MS	*give_mini(MS *mini_cpy, int copy)
+{
+	static MS	*mini = NULL;
+
+	if (copy)
+	{
+		mini = mini_cpy;
+		return (mini);
+	}
+	return (mini);
 }
