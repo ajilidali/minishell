@@ -6,34 +6,11 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/04 15:24:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/06 16:14:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	if_is_local(ASTNode *node)
-{
-	if (!node->args[0])
-		return (1);
-	if (ft_strcmp(node->args[0], "alias") == 0)
-		return (1);
-	if (ft_strcmp(node->args[0], "cd") == 0)
-		return (1);
-	if (ft_strcmp(node->args[0], "env") == 0)
-		return (1);
-	if (ft_strcmp(node->args[0], "export") == 0)
-		return (1);
-	if (ft_strcmp(node->args[0], "echo") == 0)
-		return (1);
-	if (ft_strcmp(node->args[0], "pwd") == 0)
-		return (1);
-	if (ft_strcmp(node->args[0], "unset") == 0)
-		return (1);
-	if (ft_strcmp(node->args[0], "exit") == 0)
-		return (1);
-	return (0);
-}
 
 int	is_local_fct(MS *mini, ASTNode *node)
 {
@@ -118,6 +95,16 @@ static void	exec_command(ASTNode *node, MS *ms)
 	exit(1);
 }
 
+void	restore_std(ASTNode *node, int status)
+{
+	if (node->fd_in != STDIN_FILENO)
+		dup2(node->save_in, STDIN_FILENO);
+	if (node->fd_out != STDOUT_FILENO)
+		dup2(node->save_out, STDOUT_FILENO);
+	give_mini(NULL, 0)->exit_code = status;
+	return ;
+}
+
 void	exec_commands(ASTNode *node, MS *ms)
 {
 	int	pid;
@@ -130,14 +117,7 @@ void	exec_commands(ASTNode *node, MS *ms)
 			return (close_node_fd(node, NULL));
 		status = is_local_fct(ms, node);
 		if (status != -1)
-		{
-			if (node->fd_in != STDIN_FILENO)
-				dup2(node->save_in, STDIN_FILENO);
-			if (node->fd_out != STDOUT_FILENO)
-				dup2(node->save_out, STDOUT_FILENO);
-			ms->exit_code = status;
-			return ;
-		}
+			return (restore_std(node, status));
 		pid = fork();
 		if (pid == -1)
 			return ;

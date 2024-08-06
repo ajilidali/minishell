@@ -13,8 +13,6 @@ Cleaned utils
 Fixed SIGSEGV in calculate_output_length(ft_replace) : "ls \n"
 FOUND BUG, Invalid Free, cause : <<EOF | ls
 
-- Faire en sorte de modifier la valeur exit quand signal avec variable globale
-- Signal pour ctrl + \ ne marche pas bien dutout notament avec cat
 - Signal pour ctrl + z fait truc bizarre
 - here doc fonctionne mais pas a son prime
 - seg fault quand je fais echo $?

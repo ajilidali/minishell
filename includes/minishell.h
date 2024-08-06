@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/06 15:33:13 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/06 16:14:37 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,6 +236,7 @@ int			make_redirection(ASTNode *node);
 int			env_add_var(char *var, t_env *env);
 void		close_node_fd(ASTNode *node, int *pipefd);
 MS			*give_mini(MS *mini_cpy, int copy);
+int			if_is_local(ASTNode *node);
 
 //list for pwd
 t_list		*lnew_node(char *name_value);
