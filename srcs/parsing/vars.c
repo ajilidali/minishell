@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/06 15:36:49 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/06 17:37:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ MS	*ft_init_ms(MS *mini, char **envp)
 	mini->token.type = TOKEN_EOF;
 	mini->token.value = NULL;
 	mini->env = give_envp(envp, COPY);
+	if (!mini->env)
+		return (NULL);
 	mini->parser.lexer = mini->lexer;
 	mini->parser.current_token = mini->token;
 	mini->ast = NULL;

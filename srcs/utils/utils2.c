@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/01 16:30:57 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/06 17:25:20 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ t_env	*give_envp(char **envp, int flag)
 	if (flag == COPY && envp)
 	{
 		env = new_node("?", true);
+		if (!env)
+			return (NULL);
 		env->next = copy_env(envp);
 	}
 	return (env);

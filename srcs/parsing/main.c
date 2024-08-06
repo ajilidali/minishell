@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/06 15:46:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/06 17:39:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ int	main(int argc, char **argv, char **envp)
 
 	mini = NULL;
 	mini = ft_init_ms(mini, envp);
+	if (!mini)
+		exit(EXIT_FAILURE);
 	setup_signal_handler();
 	if (getpid() != 0)
 	{
 		(void)argc;
 		(void)argv;
-		while ((mini->line = rl_shell(mini->line)))
+		while (1)
 		{
+			mini->line = rl_shell(mini->line);
 			mini->lexer = lexer_init(mini->line);
 			mini->parser = parser_init(mini->line);
 			mini->ast = parse_pipeline(&mini->parser);
@@ -68,7 +71,7 @@ char	*rl_shell(char *line_read)
 	}
 	prompt = make_prompt();
 	if (!prompt)
-		return (NULL);
+		return (clear_history(), exit(EXIT_FAILURE), NULL);
 	line_read = readline(prompt);
 	if (line_read == NULL)
 	{
