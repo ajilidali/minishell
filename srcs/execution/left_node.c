@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   left_node.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:01:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/06 16:16:41 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/07 23:45:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 		return (1);
 	if (pid == 0)
 	{
+		reset_signal_handlers();
 		redir_left_node(pipefd, mini, node);
 		close(pipefd[0]);
 		close(pipefd[1]);
@@ -49,6 +50,6 @@ int	ft_fork_left(ASTNode *node, MS *mini, int pipefd[2])
 	}
 	// if le stdin est un here_doc faire un waitpid
 	// sinon ne pas attendre
-	waitpid(pid, &status, 0);
+	waitpid(pid, &status, WNOHANG);
 	return (WEXITSTATUS(status));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/06 16:03:02 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/07 21:53:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 	char	*path;
 	char	**envp;
 
+	fprintf(stderr, "\033[31;1mCMD : %s\033[m\n", node->args[0]);
 	envp = get_tabenv(ms->env);
 	if (!envp)
 		exit(1);
@@ -48,8 +49,8 @@ void	make_pipe(ASTNode *node, MS *ms)
 	if (pipe(pipefd) == -1)
 		return ;
 	ms->exit_code = ft_fork_left(node->left, ms, pipefd);
-	close(pipefd[1]);
 	ms->exit_code = ft_fork_right(node->right, ms, pipefd);
+	close(pipefd[1]);
 	close(pipefd[0]);
 }
 
@@ -62,6 +63,7 @@ void	exec_pipe(ASTNode *node, MS *mini)
 		return ;
 	if (node->type == AST_COMMAND)
 	{
+		reset_signal_handlers();
 		if (get_argc(node->args) < 1)
 			node->args = filter_argv(node->args, "");
 		exit = is_local_fct(mini, node);

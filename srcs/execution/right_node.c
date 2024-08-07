@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   right_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:01:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/06 16:10:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/07 21:50:57 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 		return (1);
 	if (pid == 0)
 	{
+		reset_signal_handlers();
 		redir_right_node(pipefd, mini, node);
 		close(pipefd[0]);
 		close(pipefd[1]);

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/06 17:39:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/07 21:53:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	main(int argc, char **argv, char **envp)
 	mini = ft_init_ms(mini, envp);
 	if (!mini)
 		exit(EXIT_FAILURE);
-	setup_signal_handler();
 	if (getpid() != 0)
 	{
 		(void)argc;
 		(void)argv;
 		while (1)
 		{
+			setup_signal_handler();
 			mini->line = rl_shell(mini->line);
 			mini->lexer = lexer_init(mini->line);
 			mini->parser = parser_init(mini->line);
@@ -77,6 +77,7 @@ char	*rl_shell(char *line_read)
 	{
 		free(prompt);
 		clear_history();
+		free_env(give_envp(NULL, 0));
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(EXIT_FAILURE);
 	}

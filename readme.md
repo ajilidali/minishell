@@ -15,6 +15,7 @@ FOUND BUG, Invalid Free, cause : <<EOF | ls
 
 - Signal pour ctrl + z fait truc bizarre
 - here doc fonctionne mais pas a son prime
+- peut etre en lien faut refaire la gestion des pid avec les wait en gros : Waitpid apres avoir executer toutes les commandes et waitpid un par un.
 - seg fault quand je fais echo $?
 ATTENTION CTRL+Z FAIT UN TRUC BIZARD
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 15:35:53 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/07 21:41:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 			if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
 					node->redirections[i].file,
 					ft_strlen(node->redirections[i].file)))
-				exit(0);
+				return (free(str), close(0), get_next_line(0), exit(0));
 			ft_putstr_fd(str, pipefd[1]);
 			free(str);
 		}
 		close(pipefd[1]);
 		close(pipefd[0]);
-		exit(0);
+		return (free(str), close(0), get_next_line(0), exit(0));
 	}
 	wait(NULL);
 }

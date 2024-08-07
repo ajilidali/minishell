@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:39:18 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/07 13:12:39 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/07 21:39:46 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_pwd(t_env *head)
 		if (!tmp->name_value)
 			return (free(pwd), 0);
 	}
-	return (1);
+	return (free(pwd), 1);
 }
 
 t_env	*copy_env(char **envp)
