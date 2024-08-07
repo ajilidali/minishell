@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:39:18 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 18:09:17 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/07 13:12:39 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,31 @@ t_env	*create_empty_env(void)
 		return (free_env(head), free(path), free(pwd), NULL);
 	return (free(path), free(pwd), head);
 }
+int	check_pwd(t_env *head)
+{
+	t_env	*tmp;
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		return (0);
+	tmp = find_envp("PWD", head);
+	if (!tmp)
+	{
+		if (!env_add_var("PWD=", head))
+			return (free(pwd), 0);
+	}
+	if (access(env_get_var("PWD", head), F_OK) != 0)
+	{
+		tmp = find_envp("PWD", head);
+		if (!tmp)
+			return (free(pwd), 0);
+		tmp->name_value = ft_strjoin("PWD=", pwd);
+		if (!tmp->name_value)
+			return (free(pwd), 0);
+	}
+	return (1);
+}
 
 t_env	*copy_env(char **envp)
 {
@@ -88,6 +113,8 @@ t_env	*copy_env(char **envp)
 			return (free_env(head), NULL);
 		env = env->next;
 	}
+	if (!check_pwd(head))
+		return (free_env(head), NULL);
 	if (!change_shlvl(head))
 		return (free_env(head), NULL);
 	return (head);
