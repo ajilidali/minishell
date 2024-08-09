@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   right_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:01:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/07 21:50:57 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/08 22:24:22 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 		exec_pipe(node, mini);
 		exit(1);
 	}
-	waitpid(pid, &status, 0);
+	waitpid(pid, &status, WNOHANG);
 	return (WEXITSTATUS(status));
 }

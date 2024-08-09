@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/07 21:52:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:50:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ void	exec_commands(ASTNode *node, MS *ms)
 
 	if (node->type == AST_COMMAND)
 	{
-		reset_signal_handlers();
+		setup_signal_handler(0);
 		ms->exit_code = setup_redirections(node);
 		if (ms->exit_code)
 			return (close_node_fd(node, NULL));

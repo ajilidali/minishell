@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/07 21:53:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/08 22:23:12 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	make_pipe(ASTNode *node, MS *ms)
 	if (pipe(pipefd) == -1)
 		return ;
 	ms->exit_code = ft_fork_left(node->left, ms, pipefd);
-	ms->exit_code = ft_fork_right(node->right, ms, pipefd);
 	close(pipefd[1]);
+	ms->exit_code = ft_fork_right(node->right, ms, pipefd);
 	close(pipefd[0]);
 }
 
@@ -63,7 +63,7 @@ void	exec_pipe(ASTNode *node, MS *mini)
 		return ;
 	if (node->type == AST_COMMAND)
 	{
-		reset_signal_handlers();
+		setup_signal_handler(0);
 		if (get_argc(node->args) < 1)
 			node->args = filter_argv(node->args, "");
 		exit = is_local_fct(mini, node);

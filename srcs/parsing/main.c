@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/07 21:53:23 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:49:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char **argv, char **envp)
 		(void)argv;
 		while (1)
 		{
-			setup_signal_handler();
+			setup_signal_handler(1);
 			mini->line = rl_shell(mini->line);
 			mini->lexer = lexer_init(mini->line);
 			mini->parser = parser_init(mini->line);
