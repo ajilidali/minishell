@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/08 16:51:15 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/09 15:47:55 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ typedef struct s_gc
 	void		*str;
 	struct s_gc	*next;
 }	t_gc;
+
+typedef struct s_pidl
+{
+	int				pid;
+	struct s_pidl	*next;
+}					t_pidl;
 
 //Redirection struct
 typedef struct s_redirection
@@ -244,5 +250,6 @@ t_list		*lnew_node(char *name_value);
 int			add_node(char *content, t_list *list);
 void		delete_last_node(t_list *list);
 void		free_list(t_list *env);
+void		wait_pids(int pid, int flag);
 
 #endif // MINISHELL_H

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/08 16:50:43 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/09 16:09:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,5 +128,9 @@ void	exec_commands(ASTNode *node, MS *ms)
 		ms->exit_code = WEXITSTATUS(status);
 	}
 	else if (node->type == AST_PIPELINE)
+	{
 		exec_pipe(node, ms);
+		ft_putendl_fd("ON VA ATTENDRE", STDERR_FILENO);
+		wait_pids(0, 0);
+	}
 }
