@@ -6,31 +6,31 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:52:46 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/06 16:14:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/09 22:31:57 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	if_is_local(ASTNode *node)
+int	if_is_local(char *cmd)
 {
-	if (!node->args[0])
+	if (!cmd)
 		return (1);
-	if (ft_strcmp(node->args[0], "alias") == 0)
+	if (ft_strcmp(cmd, "alias") == 0)
 		return (1);
-	if (ft_strcmp(node->args[0], "cd") == 0)
+	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
-	if (ft_strcmp(node->args[0], "env") == 0)
+	if (ft_strcmp(cmd, "env") == 0)
 		return (1);
-	if (ft_strcmp(node->args[0], "export") == 0)
+	if (ft_strcmp(cmd, "export") == 0)
 		return (1);
-	if (ft_strcmp(node->args[0], "echo") == 0)
+	if (ft_strcmp(cmd, "echo") == 0)
 		return (1);
-	if (ft_strcmp(node->args[0], "pwd") == 0)
+	if (ft_strcmp(cmd, "pwd") == 0)
 		return (1);
-	if (ft_strcmp(node->args[0], "unset") == 0)
+	if (ft_strcmp(cmd, "unset") == 0)
 		return (1);
-	if (ft_strcmp(node->args[0], "exit") == 0)
+	if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
 	return (0);
 }

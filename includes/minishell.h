@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/09 15:47:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/09 22:30:54 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,21 @@ typedef struct ASTNode {
 	size_t			redirections_capacity;
 	size_t			args_count;
 } ASTNode;
+
+typedef struct list_commands {
+	struct list_commands *next;
+	char **args;
+	int	fd_in;
+	int fd_out;
+	int save_in;
+	int save_out;
+	t_redirection 	*redirections;
+	size_t			redirections_count; // Number of redirections
+	size_t			args_capacity;
+	size_t			redirections_capacity;
+	size_t			args_count;
+
+} list_commands;
 
 // Parser Structs
 typedef struct {
@@ -242,7 +257,7 @@ int			make_redirection(ASTNode *node);
 int			env_add_var(char *var, t_env *env);
 void		close_node_fd(ASTNode *node, int *pipefd);
 MS			*give_mini(MS *mini_cpy, int copy);
-int			if_is_local(ASTNode *node);
+int			if_is_local(char *cmd);
 void reset_signal_handlers(void);
 
 //list for pwd
@@ -251,5 +266,7 @@ int			add_node(char *content, t_list *list);
 void		delete_last_node(t_list *list);
 void		free_list(t_list *env);
 void		wait_pids(int pid, int flag);
+
+void copy_ast_in_list(ASTNode *ast, list_commands **list);
 
 #endif // MINISHELL_H

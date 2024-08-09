@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   right_node.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/06 16:01:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/09 16:16:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/09 18:20:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,27 @@ int	ft_fork_right(ASTNode *node, MS *mini, int pipefd[2])
 	int	pid;
 	int	status;
 
-	pid = fork();
-	if (pid == -1)
-		return (1);
-	if (pid == 0)
-	{
-		reset_signal_handlers();
-		redir_right_node(pipefd, mini, node);
-		close(pipefd[0]);
-		close(pipefd[1]);
+	if (node->type == AST_PIPELINE)
 		exec_pipe(node, mini);
-		exit(1);
+	else
+	{
+		pid = fork();
+		if (pid == -1)
+			return (1);
+		if (pid == 0)
+		{
+			reset_signal_handlers();
+			redir_right_node(pipefd, mini, node);
+			close(pipefd[0]);
+			close(pipefd[1]);
+			exec_pipe(node, mini);
+			exit(1);
+		}
+		ft_putstr_fd("pid = ", 2);
+		ft_putendl_fd(ft_itoa(pid), 2);
+		wait_pids(pid, 1);
+		waitpid(pid, &status, WNOHANG);
+		return (WEXITSTATUS(status));
 	}
-	wait_pids(pid, 1);
-	waitpid(pid, &status, WNOHANG);
-	return (WEXITSTATUS(status));
+	return (0);
 }

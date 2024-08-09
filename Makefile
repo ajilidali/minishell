@@ -6,7 +6,7 @@
 #    By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/08/06 16:15:41 by hclaude          ###   ########.fr        #
+#    Updated: 2024/08/09 20:58:20 by hclaude          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ srcs/builtins/echo.c srcs/builtins/cd/cd.c srcs/builtins/pwd.c srcs/builtins/exp
 srcs/utils/utils.c srcs/builtins/exit.c srcs/execution/redirect.c srcs/parsing/parsecmd.c \
 srcs/utils/copy_env.c srcs/parsing/args.c srcs/execution/exec.c srcs/execution/exec_utils.c \
 srcs/utils/signals.c srcs/utils/utils2.c srcs/builtins/cd/cd2.c srcs/execution/exec_pipe.c srcs/utils/print_errors.c srcs/builtins/cd/list.c srcs/builtins/cd/get_pwd.c \
-srcs/execution/utils.c srcs/execution/right_node.c srcs/execution/left_node.c\
+srcs/execution/utils.c srcs/execution/right_node.c srcs/execution/left_node.c srcs/execution/nouveau_pan.c \
 
 OBJS	= $(patsubst %.c, $(OBJDIR)/%.o, $(SRCS))
 

@@ -1,40 +1,11 @@
-typedef struct ASTNode {
-	ASTNodeType		type;
-	char			**args; // For command nodes
-	int				fd_in;
-	int				fd_out;
-	int				save_in;
-	int				save_out;
-	struct ASTNode	*left; // For pipe nodes
-	struct ASTNode	*right; // For pipe nodes
-	t_redirection	*redirections; // Array containing redirections
-	size_t			redirections_count; // Number of redirections
-	size_t			args_capacity;
-	size_t			redirections_capacity;
-	size_t			args_count;
-} ASTNode;
-
-typedef struct list_commands {
-	struct list_commands next;
-	char **args;
-	int	fd_in;
-	int fd_out;
-	int save_in;
-	int save_out;
-	t_redirection 	*redirections;
-	size_t			redirections_count; // Number of redirections
-	size_t			args_capacity;
-	size_t			redirections_capacity;
-	size_t			args_count;
-
-} list_commands;
+#include "../../includes/minishell.h"
 
 list_commands *create_list_node(ASTNode *node)
 {
     list_commands *new_node = (list_commands *)malloc(sizeof(list_commands));
     if (!new_node)
         return NULL;
-    new_node->args = ft_strdup(node->args);
+    new_node->args = node->args;
 	new_node->fd_in = node->fd_in;
 	new_node->fd_out = node->fd_out;
 	new_node->redirections = node->redirections;
@@ -48,17 +19,16 @@ list_commands *create_list_node(ASTNode *node)
 void add_to_list(list_commands **head, ASTNode *node)
 {
     list_commands *new_node = create_list_node(node);
+	list_commands *temp;
 
     if (!new_node)
         return;
 
     if (*head == NULL)
-    {
         *head = new_node;
-    }
     else
     {
-        list_commands *temp = *head;
+		temp = *head;
         while (temp->next)
             temp = temp->next;
         temp->next = new_node;
@@ -66,15 +36,25 @@ void add_to_list(list_commands **head, ASTNode *node)
 }
 
 // Fonction pour copier l'AST dans une liste chaînée
-void copy_ast_in_list(ASTNode *ast, t_list **list)
-{
-    if (!ast)
-        return;
+void copy_ast_in_list(ASTNode *node, list_commands **head) {
+    if (!node) 
+		return;
+    if (node->type == AST_COMMAND) { // Supposons que COMMAND_NODE_TYPE représente un nœud de commande
+        list_commands *new_node = create_list_node(node);
 
-    // Ajouter le nœud actuel à la liste
-    add_to_list(list, ast);
+        // Ajouter le nouveau nœud à la fin de la liste chaînée
+        if (*head == NULL) {
+            *head = new_node;
+        } else {
+            list_commands *temp = *head;
+            while (temp->next) {
+                temp = temp->next;
+            }
+            temp->next = new_node;
+        }
+    }
 
-    // Parcourir récursivement les sous-arbres gauche et droit
-    copy_ast_in_list(ast->left, list);
-    copy_ast_in_list(ast->right, list);
+    // Récursion sur les sous-arbres gauche et droit pour les nœuds PIPE
+    copy_ast_in_list(node->left, head);
+    copy_ast_in_list(node->right, head);
 }
