@@ -9,6 +9,8 @@ list_commands *create_list_node(ASTNode *node)
 	new_node->fd_in = node->fd_in;
 	new_node->fd_out = node->fd_out;
 	new_node->redirections = node->redirections;
+	new_node->redirections_count = node->redirections_count;
+	new_node->redirections_capacity = node->redirections_capacity;
 	new_node->save_in = node->save_in;
 	new_node->save_out = node->save_out;
     new_node->next = NULL;

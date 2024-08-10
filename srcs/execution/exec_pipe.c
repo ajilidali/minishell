@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/09 23:53:19 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/10 01:57:42 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	setup_redirect_in_pipe(list_commands *list, size_t i)
+static int	setup_redirect_out_pipe(list_commands *list, size_t i)
 {
 	if (list->redirections[i].flag == FD_OUT)
 	{
@@ -70,7 +70,7 @@ void	make_here_doc_pipe(int *pipefd, list_commands *node, size_t i)
 	wait(NULL);
 }
 
-static int	setup_redirect_out_pipe(list_commands *node, size_t i)
+static int	setup_redirect_in_pipe(list_commands *node, size_t i)
 {
 	int	pipefd[2];
 
@@ -257,6 +257,7 @@ void exec_list(list_commands *list)
 			return ;
 		if (pid == 0)
 		{
+			setup_signal_handler(0);
 			exit_code = setup_redirections_pipe(list); // Fonction qui va ouvrir les fichiers relie a la commande et attribuer a fd_in et fd_out les fd des fichiers
 			if (exit_code)
 				exit(exit_code);
@@ -321,14 +322,6 @@ void	exec_pipe(ASTNode *node, MS *mini)
 	
 	list = NULL;
 	copy_ast_in_list(node, &list);
-	list_commands *tmp;
-
-	tmp = list;
-	while (tmp)
-	{
-		printf("Value = %s\n", tmp->args[0]);
-		tmp = tmp->next;
-	}
 	exec_list(list);
 	wait_pids(0, 0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/09 16:10:19 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/10 01:54:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	handler(int signal)
 void handler_reset(int signal)
 {
 	(void)signal;
+	exit(1);
 	//ft_putstr_fd("YO\n", 1);
 	return ;
 }
