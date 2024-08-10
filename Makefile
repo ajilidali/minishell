@@ -6,7 +6,7 @@
 #    By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/08/09 20:58:20 by hclaude          ###   ########.fr        #
+#    Updated: 2024/08/10 05:27:55 by hclaude          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/vars.c srcs/parsing
 srcs/builtins/echo.c srcs/builtins/cd/cd.c srcs/builtins/pwd.c srcs/builtins/export.c srcs/builtins/unset.c srcs/builtins/env.c \
 srcs/utils/utils.c srcs/builtins/exit.c srcs/execution/redirect.c srcs/parsing/parsecmd.c \
 srcs/utils/copy_env.c srcs/parsing/args.c srcs/execution/exec.c srcs/execution/exec_utils.c \
-srcs/utils/signals.c srcs/utils/utils2.c srcs/builtins/cd/cd2.c srcs/execution/exec_pipe.c srcs/utils/print_errors.c srcs/builtins/cd/list.c srcs/builtins/cd/get_pwd.c \
-srcs/execution/utils.c srcs/execution/right_node.c srcs/execution/left_node.c srcs/execution/nouveau_pan.c \
+srcs/utils/signals.c srcs/utils/utils2.c srcs/builtins/cd/cd2.c srcs/execution/exec_pipe/exec_pipe.c srcs/utils/print_errors.c srcs/builtins/cd/list.c srcs/builtins/cd/get_pwd.c \
+srcs/execution/utils.c srcs/execution/exec_pipe/manage_pid.c srcs/execution/exec_pipe/ast_to_list.c srcs/execution/exec_pipe/redirection_pipe.c srcs/execution/exec_pipe/utils_for_pipe.c \
 
 OBJS	= $(patsubst %.c, $(OBJDIR)/%.o, $(SRCS))
 

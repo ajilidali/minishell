@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/09 22:27:57 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/10 05:19:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	is_local_fct(MS *mini, ASTNode *node)
 		return (0);
 	exit_status = -1;
 	mini->env = give_envp(NULL, 0);
-	if (if_is_local(node))
+	if (if_is_local(node->args[0]))
 		make_redirection(node);
 	if (ft_strcmp(node->args[0], "alias") == 0)
 		exit_status = run_alias(mini, node);
@@ -129,8 +129,6 @@ void	exec_commands(ASTNode *node, MS *ms)
 	}
 	else if (node->type == AST_PIPELINE)
 	{
-		exec_pipe(node, ms);
-		ft_putendl_fd("ON VA ATTENDRE", STDERR_FILENO);
-		wait_pids(0, 0);
+		exec_pipe(node);
 	}
 }

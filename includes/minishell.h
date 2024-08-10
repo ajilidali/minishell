@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/09 22:30:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/10 05:43:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ char		*find_path(char *cmd, char **envp);
 int			init_pipex(int nargument, char **command, char **envp);
 char		*quote_master(char quote);
 int			char_counter(const char *str, char c);
-void		exec_pipe(ASTNode *node, MS *mini);
+void		exec_pipe(ASTNode *node);
 
 // Args Mgmt
 char		**filter_argv(char **argv, const char *target);
@@ -265,8 +265,15 @@ t_list		*lnew_node(char *name_value);
 int			add_node(char *content, t_list *list);
 void		delete_last_node(t_list *list);
 void		free_list(t_list *env);
-void		wait_pids(int pid, int flag);
 
-void copy_ast_in_list(ASTNode *ast, list_commands **list);
+//execution for pipe
+int			copy_ast_in_list(ASTNode *node, list_commands **head);
+int			setup_redirections_pipe(list_commands *list);
+int			make_redirection_pipe(list_commands *node);
+int			is_local_fct_pipe(MS *mini, list_commands *list);
+int			wait_pids(int pid, int flag);
+void		cls_fd_pipe(list_commands *list, int *pipefd);
+void		exec_command_pipe(list_commands *list, MS *ms);
+void		free_cmd_list(list_commands *list);
 
 #endif // MINISHELL_H
