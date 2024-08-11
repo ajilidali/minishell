@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/07 13:08:17 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 11:57:54 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 int	env_add_var(char *var, t_env *env)
 {
@@ -71,7 +71,7 @@ t_env	*give_envp(char **envp, int flag)
 
 	if (flag == COPY && envp)
 	{
-		env = new_node("?", true);
+		env = new_node("header", true);
 		if (!env)
 			return (NULL);
 		env->next = copy_env(envp);

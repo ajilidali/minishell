@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -35,7 +35,7 @@ int	main(int argc, char **argv, char **envp)
 			{
 				exec_commands(mini->ast, mini);
 				free_ast(mini->ast);
-				printf("status = %d\n", mini->exit_code);
+			//	printf("status = %d\n", mini->exit_code);
 			}
 		}
 	}

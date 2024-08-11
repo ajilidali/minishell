@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/16 16:32:35 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 12:08:47 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/minishell.h"
 #include <sys/types.h>
 
 Parser	parser_init(const char *input)
@@ -34,9 +34,11 @@ char	*parse_variable(char *value)
 {
 	char	*cpy;
 
+	if (ft_strcmp(++value, "?") == 0)
+		return (ft_itoa(give_mini(NULL, 0)->exit_code));
 	cpy = env_get_var(++value, give_envp(NULL, 0));
 	if (!cpy)
-		return ("");
+		return (ft_strdup(NULL));
 	return (ft_strdup(cpy)); // faut se calmer avec les strdup!!!!!
 }
 

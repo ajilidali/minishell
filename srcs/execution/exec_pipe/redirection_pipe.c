@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../../includes/minishell.h"
 
 static int	setup_redirect_out_pipe(list_commands *list, size_t i)
 {

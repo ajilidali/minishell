@@ -6,12 +6,12 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/29 17:01:43 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/11 12:09:37 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <ctype.h>
+#include "../../includes/minishell.h"
+#include <stdio.h>
 #include <string.h>
 
 int	is_pipe(char c)
@@ -62,13 +62,7 @@ Token lexer_dollar(Lexer *lexer)
 
 	start = lexer->pos;
 	lexer->pos++;
-	char c = lexer_peek(lexer);
-	if (c == '?')
-	{
-		printf("?");
-		return create_token(TOKEN_VARIABLE, ft_strdup("?"));
-	}
-	while (ft_isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_')
+	while (ft_isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_' || lexer_peek(lexer) == '?')
 		lexer->pos++;
 	length = lexer->pos - start;
     value = allocate_string(length + 1);
@@ -143,7 +137,7 @@ char *replace_variables(char *input)
 	if (i < (int)ft_strlen(input) && input[i] == '$')
 	{
 		i++;
-		while (i < (int)ft_strlen(input) && (input[i] == '_' || ft_isalnum(input[i])))
+		while (i < (int)ft_strlen(input) && (input[i] == '?' || input[i] == '_' || ft_isalnum(input[i])))
 			i++;
 		end = i;
 	} else
