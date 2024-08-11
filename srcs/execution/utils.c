@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:52:46 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:37:09 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:37:45 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	if_is_local(char *cmd)
 {
 	if (!cmd)
 		return (1);
-	if (ft_strcmp(cmd, "alias") == 0)
-		return (1);
+	//if (ft_strcmp(cmd, "alias") == 0)
+	//	return (1);
 	if (ft_strcmp(cmd, "cd") == 0)
 		return (1);
 	if (ft_strcmp(cmd, "env") == 0)

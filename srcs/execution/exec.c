@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:37:06 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:37:40 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	is_local_fct(MS *mini, ASTNode *node)
 	mini->env = give_envp(NULL, 0);
 	if (if_is_local(node->args[0]))
 		make_redirection(node);
-	if (ft_strcmp(node->args[0], "alias") == 0)
-		exit_status = run_alias(mini, node);
+	//if (ft_strcmp(node->args[0], "alias") == 0)
+	//	exit_status = run_alias(mini, node);
 	if (ft_strcmp(node->args[0], "cd") == 0)
 		exit_status = run_cd(node->args, mini->env);
 	if (ft_strcmp(node->args[0], "env") == 0)
