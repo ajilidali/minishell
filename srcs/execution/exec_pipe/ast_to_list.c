@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 04:39:11 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:36:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_cmd_list(t_lst_cmd *list)
 	}
 }
 
-t_lst_cmd	*create_list_node(ASTNode *node)
+t_lst_cmd	*create_list_node(t_astnode *node)
 {
 	t_lst_cmd	*new_node;
 
@@ -43,7 +43,7 @@ t_lst_cmd	*create_list_node(ASTNode *node)
 	return (new_node);
 }
 
-int	copy_ast_in_list(ASTNode *node, t_lst_cmd **head)
+int	copy_ast_in_list(t_astnode *node, t_lst_cmd **head)
 {
 	t_lst_cmd	*new_node;
 	t_lst_cmd	*temp;

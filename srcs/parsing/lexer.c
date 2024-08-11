@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 20:39:39 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 21:01:45 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	lexer_peek(Lexer *lexer)
 Token	create_token(TokenType type, char *value)
 {
 	Token	token;
+
 	token.type = type;
 	token.value = value;
 	return token;
@@ -72,9 +73,9 @@ Token lexer_dollar(Lexer *lexer)
 
 char* extract_value(const char *input, size_t start, size_t len)
 {
-	char *value;
-	size_t i;
-	size_t j;
+	char	*value;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	j = 0;
@@ -90,10 +91,10 @@ char* extract_value(const char *input, size_t start, size_t len)
 
 Token lexer_word(Lexer *lexer)
 {
-	size_t start;
-	int inside_quotes;
-	char current_quote;
-	char *value;
+	size_t	start;
+	int		inside_quotes;
+	char	current_quote;
+	char	*value;
 
 	start = lexer->pos;
 	inside_quotes = 0;
@@ -117,22 +118,21 @@ Token lexer_word(Lexer *lexer)
 	}
 	value = extract_value(lexer->input, start, lexer->pos - start);
 	if (current_quote != '\'')
-		return create_token(TOKEN_WORD, replace_variables(value));
-	return create_token(TOKEN_WORD, value);
+		return (create_token(TOKEN_WORD, replace_variables(value)));
+	return (create_token(TOKEN_WORD, value));
 }
 
-
-char *replace_variables(char *input)
+char	*replace_variables(char *input)
 {
-	char *result;
-	char *final;
-	int start;
-	int i = 0;
-	int end;
+	char	*result;
+	char	*final;
+	int		start;
+	int		i = 0;
+	int		end;
 
 	if (!input)
-		return NULL;
-	if (char_counter(input,'$') == 0)
+		return (NULL);
+	if (char_counter(input, '$') == 0)
 		return (input);
 	while (input[i] && input[i] != '$')
 		i++;
@@ -143,7 +143,8 @@ char *replace_variables(char *input)
 		while (i < (int)ft_strlen(input) && (input[i] == '?' || input[i] == '_' || ft_isalnum(input[i])))
 			i++;
 		end = i;
-	} else
+	}
+	else
 	{
 		start = 0;
 		end = ft_strlen(input);
@@ -151,9 +152,9 @@ char *replace_variables(char *input)
 	result = allocate_string((end - start) + 1);
 	ft_strncpy(result, &input[start], end - start);
 	if (!result)
-		return (ft_free(result),NULL);
-	final = ft_replace(input,result,parse_variable(result));
-	if (char_counter(input,'$') != 0)
+		return (ft_free(result), NULL);
+	final = ft_replace(input, result, parse_variable(result));
+	if (char_counter(input, '$') != 0)
 		return (replace_variables(final));
 	ft_free(input);
 	ft_free(result);
@@ -186,7 +187,7 @@ Token	lexer_string(Lexer *lexer)
 Token	lexer_operator(Lexer *lexer)
 {
 	char	current;
-	char    value[3];
+	char	value[3];
 
 	current = lexer_peek(lexer);
 	if (current == '<' || current == '>')
@@ -196,12 +197,12 @@ Token	lexer_operator(Lexer *lexer)
 			lexer->pos++;
 			ft_memcpy(value, (char[]){current, current, '\0'}, sizeof(value));
 			lexer->pos++;
-			return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
+			return (create_token(TOKEN_OPERATOR, ft_strdup(value)));
 		}
 	}
 	ft_memcpy(value, (char[]){current, '\0', '\0'}, sizeof(value));
 	lexer->pos++;
-	return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
+	return (create_token(TOKEN_OPERATOR, ft_strdup(value)));
 }
 
 Lexer	lexer_init(const char *input)
@@ -231,7 +232,7 @@ Token	lexer_next_token(Lexer *lexer)
 		lexer->pos++;
 	current = lexer_peek(lexer);
 	if (current == '\0')
-		return(create_token(TOKEN_EOF,NULL));
+		return (create_token(TOKEN_EOF, NULL));
 	if (is_dollar(current))
 		return (lexer_dollar(lexer));
 	else if (is_pipe(current))

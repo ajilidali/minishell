@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:43:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ char	*parse_variable(char *value)
 	return (ft_strdup(cpy));
 }
 
-ASTNode	*parse_pipeline(Parser *parser)
+t_astnode	*parse_pipeline(Parser *parser)
 {
-	ASTNode	*left;
-	ASTNode	*node;
+	t_astnode	*left;
+	t_astnode	*node;
 
 	left = parse_command(parser);
 	while (parser->current_token.type == TOKEN_PIPE
 		&& ft_strcmp(parser->current_token.value, "|") == 0)
 	{
-		node = (ASTNode *)ft_malloc(sizeof(ASTNode));
+		node = (t_astnode *)ft_malloc(sizeof(t_astnode));
 		node->type = AST_PIPELINE;
 		node->left = left;
 		parser_advance(parser);
@@ -62,7 +62,7 @@ ASTNode	*parse_pipeline(Parser *parser)
 }
 
 // Free AST
-void	free_ast(ASTNode *node)
+void	free_ast(t_astnode *node)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:51:27 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	valid_value(char *value)
 	return (1);
 }
 
-int	run_exit(char **command, MS *mini)
+int	run_exit(char **command, t_ms *mini)
 {
 	int	exit_value;
 

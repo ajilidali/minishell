@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 17:28:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	alias_finder(Alias *aliases, char *cmd, int alias_count)
 }
 
 // Attention fonction pas protege si erreur de malloc
-void	assign_alias(MS *mini, char *alias, char *cmd)
+void	assign_alias(t_ms *mini, char *alias, char *cmd)
 {
 	int	replace;
 
@@ -43,7 +43,7 @@ void	assign_alias(MS *mini, char *alias, char *cmd)
 	mini->alias_count++;
 }
 
-void	process_arguments(MS *mini, int argc)
+void	process_arguments(t_ms *mini, int argc)
 {
 	int		i;
 	char	*arg;
@@ -87,7 +87,7 @@ int	print_aliases(Alias *aliases, int alias_count)
 	return (0);
 }
 
-int	run_alias(MS *mini, ASTNode *node)
+int	run_alias(t_ms *mini, t_astnode *node)
 {
 	int	argc;
 

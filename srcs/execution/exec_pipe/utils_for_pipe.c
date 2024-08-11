@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:23:07 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:36:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	exec_command_pipe(t_lst_cmd *list, MS *ms)
+void	exec_command_pipe(t_lst_cmd *list, t_ms *ms)
 {
 	char	*path;
 	char	**envp;
@@ -41,7 +41,7 @@ void	exec_command_pipe(t_lst_cmd *list, MS *ms)
 	ft_exit(1);
 }
 
-int	is_local_fct_pipe(MS *mini, t_lst_cmd *list)
+int	is_local_fct_pipe(t_ms *mini, t_lst_cmd *list)
 {
 	int	exit_status;
 

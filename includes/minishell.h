@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 20:32:52 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 21:04:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <stdbool.h>
 
-# define COPY 10 // Flag for copying envp to global
+# define COPY 10
 
 # define FD_IN 0
 # define FD_HD 1
@@ -44,6 +44,7 @@
 # define MAX_ARGS 1024
 # define MAX_REDIRS 5
 
+//PID struct
 typedef struct s_pidl
 {
 	int				pid;
@@ -53,8 +54,8 @@ typedef struct s_pidl
 //Redirection struct
 typedef struct s_redirection
 {
-	int		flag; // ">" or ">>" or "<" or "<<"
-	char	*file; // the file name for redirection
+	int		flag;
+	char	*file;
 }	t_redirection;
 
 //Env struct
@@ -91,30 +92,31 @@ typedef struct {
 	const char	*input;
 	size_t		pos;
 	size_t		length;
-} Lexer;
+}	Lexer;
 
 //Abstract Syntax Tree Structs
 typedef enum {
 	AST_COMMAND,
 	AST_PIPELINE,
 	AST_ERR
-	} ASTNodeType;
+}	ASTNodeType;
 
-typedef struct ASTNode {
-	ASTNodeType		type;
-	char			**args; // For command nodes
-	int				fd_in;
-	int				fd_out;
-	int				save_in;
-	int				save_out;
-	struct ASTNode	*left; // For pipe nodes
-	struct ASTNode	*right; // For pipe nodes
-	t_redirection	*redirections; // Array containing redirections
-	size_t			redirections_count; // Number of redirections
-	size_t			args_capacity;
-	size_t			redirections_capacity;
-	size_t			args_count;
-} ASTNode;
+typedef struct s_astnode
+{
+	ASTNodeType			type;
+	char				**args; // For command nodes
+	int					fd_in;
+	int					fd_out;
+	int					save_in;
+	int					save_out;
+	struct s_astnode	*left; // For pipe nodes
+	struct s_astnode	*right; // For pipe nodes
+	t_redirection		*redirections; // Array containing redirections
+	size_t				redirections_count; // Number of redirections
+	size_t				args_capacity;
+	size_t				redirections_capacity;
+	size_t				args_count;
+}	t_astnode;
 
 typedef struct s_lst_cmd
 {
@@ -130,7 +132,7 @@ typedef struct s_lst_cmd
 	size_t				redirections_capacity;
 	size_t				args_count;
 
-} t_lst_cmd;
+}	t_lst_cmd;
 
 // Parser Structs
 typedef struct {
@@ -139,31 +141,32 @@ typedef struct {
 } Parser;
 
 // Minishell Structs
-typedef struct {
-	Alias	*aliases;
-	Lexer	lexer;
-	Token	token;
-	Parser	parser;
-	ASTNode	*ast;
-	size_t	alias_count;
-	t_env	*env;
-	char	*line;
-	int		exit_code;
-} MS;
+typedef struct s_ms
+{
+	Alias		*aliases;
+	Lexer		lexer;
+	Token		token;
+	Parser		parser;
+	t_astnode	*ast;
+	size_t		alias_count;
+	t_env		*env;
+	char		*line;
+	int			exit_code;
+}	t_ms;
 
 // Extern global variable
-//extern MS g_ms;
+//extern t_ms g_ms;
 
 // Built-in functions
-int			is_local_fct(MS *mini, ASTNode *node);
+int			is_local_fct(t_ms *mini, t_astnode *node);
 int			run_echo(char **command);
 int			run_cd(char **command, t_env *env);
 int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
-int			run_alias(MS *mini, ASTNode *node);
-int			run_exit(char **command, MS *mini);
+int			run_alias(t_ms *mini, t_astnode *node);
+int			run_exit(char **command, t_ms *mini);
 
 // Env functions
 void		free_env(t_env *env);
@@ -198,18 +201,18 @@ char		lexer_peek(Lexer *lexer);
 // AST & Parser functions
 Parser		parser_init(const char *input);
 void		parser_advance(Parser *parser);
-ASTNode		*parse_command(Parser *parser);
-ASTNode		*parse_pipeline(Parser *parser);
-void		free_ast(ASTNode *node);
-void		execute_ast(ASTNode *node, MS *mini);
-int			ft_fork_right(ASTNode *node, MS *mini,int pipefd[2]);
-int			ft_fork_left(ASTNode *node, MS *mini,int pipefd[2]);
-int 		check_ast_for_errors(ASTNode *node);
+t_astnode	*parse_command(Parser *parser);
+t_astnode	*parse_pipeline(Parser *parser);
+void		free_ast(t_astnode *node);
+void		execute_ast(t_astnode *node, t_ms *mini);
+int			ft_fork_right(t_astnode *node, t_ms *mini, int pipefd[2]);
+int			ft_fork_left(t_astnode *node, t_ms *mini, int pipefd[2]);
+int			check_ast_for_errors(t_astnode *node);
 
 // Main functions
 int			executor(char *line, char **envp);
 char		*rl_shell(char *line_read);
-MS			*ft_init_ms(MS *mini, char **envp);
+t_ms		*ft_init_ms(t_ms *mini, char **envp);
 
 // Other functions
 char		*parse_variable(char *value);
@@ -218,25 +221,25 @@ void		print_envp(char **envp);
 void		trim_whitespace(char *str);
 
 // Pipex functions
-void		exec_commands(ASTNode *node, MS *ms);
-int			execute(ASTNode *node, char **envp);
+void		exec_commands(t_astnode *node, t_ms *ms);
+int			execute(t_astnode *node, char **envp);
 char		*find_path(char *cmd, char **envp);
 int			init_pipex(int nargument, char **command, char **envp);
 char		*quote_master(char quote);
 int			char_counter(const char *str, char c);
-void		exec_pipe(ASTNode *node);
+void		exec_pipe(t_astnode *node);
 
 // Args Mgmt
 char		**filter_argv(char **argv, const char *target);
 int			get_argc(char *argv[]);
 
 //beta
-int			setup_redirections(ASTNode *node);
+int			setup_redirections(t_astnode *node);
 
 //utils
 t_env		*give_envp(char **envp, int flag);
 void		test_envp(t_env *env, char *str);
-void		update_envp(MS *mini);
+void		update_envp(t_ms *mini);
 t_env		*find_envp(char *variable, t_env *env);
 char		*copy_except_first_n_chars(const char *input, size_t n);
 void		setup_signal_handler(int flag);
@@ -247,10 +250,10 @@ char		*get_pwd(char *path, char *old_pwd);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
-int			make_redirection(ASTNode *node);
+int			make_redirection(t_astnode *node);
 int			env_add_var(char *var, t_env *env);
-void		close_node_fd(ASTNode *node, int *pipefd);
-MS			*give_mini(MS *mini_cpy, int copy);
+void		close_node_fd(t_astnode *node, int *pipefd);
+t_ms		*give_mini(t_ms *mini_cpy, int copy);
 int			if_is_local(char *cmd);
 void		reset_signal_handlers(void);
 
@@ -261,13 +264,13 @@ void		delete_last_node(t_list *list);
 void		free_list(t_list *env);
 
 //execution for pipe
-int			copy_ast_in_list(ASTNode *node, t_lst_cmd **head);
+int			copy_ast_in_list(t_astnode *node, t_lst_cmd **head);
 int			setup_redirections_pipe(t_lst_cmd *list);
 int			make_redirection_pipe(t_lst_cmd *node);
-int			is_local_fct_pipe(MS *mini, t_lst_cmd *list);
+int			is_local_fct_pipe(t_ms *mini, t_lst_cmd *list);
 int			wait_pids(int pid, int flag);
 void		cls_fd_pipe(t_lst_cmd *list, int *pipefd);
-void		exec_command_pipe(t_lst_cmd *list, MS *ms);
+void		exec_command_pipe(t_lst_cmd *list, t_ms *ms);
 void		free_cmd_list(t_lst_cmd *list);
 
 #endif // MINISHELL_H

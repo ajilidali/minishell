@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:41:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv, char **envp)
 {
-	MS	*mini;
+	t_ms	*mini;
 
 	mini = NULL;
 	mini = ft_init_ms(mini, envp);

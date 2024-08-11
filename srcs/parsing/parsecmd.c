@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 20:39:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_redirection(char c)
 	return (c == '<' || c == '>');
 }
 
-int check_ast_for_errors(ASTNode *node)
+int check_ast_for_errors(t_astnode *node)
 {
 	int left_error;
 	int right_error;
@@ -31,11 +31,11 @@ int check_ast_for_errors(ASTNode *node)
 	return (left_error || right_error);
 }
 
-static ASTNode	*initialize_ast_node()
+static t_astnode	*initialize_ast_node()
 {
-	ASTNode	*node;
+	t_astnode	*node;
 
-	node = (ASTNode *)ft_malloc(sizeof(ASTNode));
+	node = (t_astnode *)ft_malloc(sizeof(t_astnode));
 	node->type = AST_COMMAND;
 	node->left = node->right = NULL;
 	node->args = (char **)ft_malloc(MAX_ARGS * sizeof(char *));
@@ -58,7 +58,7 @@ int type_of_redirect(char *str)
 	return (FD_HD);
 }
 
-static void handle_redirection(Parser *parser, ASTNode *node)
+static void handle_redirection(Parser *parser, t_astnode *node)
 {
 	if (node->redirections_count >= node->redirections_capacity)
 	{
@@ -85,7 +85,7 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 	}
 }
 
-static void handle_argument(Parser *parser, ASTNode *node)
+static void handle_argument(Parser *parser, t_astnode *node)
 {
 	if (node->args_count >= node->args_capacity)
 	{
@@ -101,9 +101,9 @@ static void handle_argument(Parser *parser, ASTNode *node)
 	parser_advance(parser);
 }
 
-ASTNode *parse_command(Parser *parser)// Memory allocation failure
+t_astnode *parse_command(Parser *parser)// Memory allocation failure
 {
-	ASTNode *node;
+	t_astnode *node;
 
 	node = initialize_ast_node();
 	while (parser->current_token.type == TOKEN_WORD ||

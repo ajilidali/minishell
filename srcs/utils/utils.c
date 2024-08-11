@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:14:13 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:55:38 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,9 @@ char	*copy_except_first_n_chars(const char *input, size_t n)
 	return (result);
 }
 
-MS	*give_mini(MS *mini_cpy, int copy)
+t_ms	*give_mini(t_ms *mini_cpy, int copy)
 {
-	static MS	*mini = NULL;
+	static t_ms	*mini = NULL;
 
 	if (copy)
 	{

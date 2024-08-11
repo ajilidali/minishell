@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 18:29:18 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	setup_redirect_in(ASTNode *node, size_t i)
+static int	setup_redirect_in(t_astnode *node, size_t i)
 {
 	if (node->redirections[i].flag == FD_OUT)
 	{
@@ -41,7 +41,7 @@ static int	setup_redirect_in(ASTNode *node, size_t i)
 	return (0);
 }
 
-void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
+void	make_here_doc(int *pipefd, t_astnode *node, size_t i)
 {
 	int		pid;
 	char	*str;
@@ -70,7 +70,7 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 	wait(NULL);
 }
 
-static int	setup_redirect_out(ASTNode *node, size_t i)
+static int	setup_redirect_out(t_astnode *node, size_t i)
 {
 	int	pipefd[2];
 
@@ -96,7 +96,7 @@ static int	setup_redirect_out(ASTNode *node, size_t i)
 	return (0);
 }
 
-int	setup_redirections(ASTNode *node)
+int	setup_redirections(t_astnode *node)
 {
 	size_t	i;
 

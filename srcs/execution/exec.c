@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:37:40 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_local_fct(MS *mini, ASTNode *node)
+int	is_local_fct(t_ms *mini, t_astnode *node)
 {
 	int	exit_status;
 
@@ -41,7 +41,7 @@ int	is_local_fct(MS *mini, ASTNode *node)
 	return (exit_status);
 }
 
-int	make_redirection(ASTNode *node)
+int	make_redirection(t_astnode *node)
 {
 	if (node->fd_in != STDIN_FILENO)
 	{
@@ -68,7 +68,7 @@ int	make_redirection(ASTNode *node)
 	return (1);
 }
 
-static void	exec_command(ASTNode *node, MS *ms)
+static void	exec_command(t_astnode *node, t_ms *ms)
 {
 	char	*path;
 	char	**envp;
@@ -95,7 +95,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 	ft_exit(1);
 }
 
-void	restore_std(ASTNode *node, int status)
+void	restore_std(t_astnode *node, int status)
 {
 	if (node->fd_in != STDIN_FILENO)
 		dup2(node->save_in, STDIN_FILENO);
@@ -105,7 +105,7 @@ void	restore_std(ASTNode *node, int status)
 	return ;
 }
 
-void	exec_commands(ASTNode *node, MS *ms)
+void	exec_commands(t_astnode *node, t_ms *ms)
 {
 	int	pid;
 	int	status;

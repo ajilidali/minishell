@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 17:54:27 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ Alias	*ft_init_alias(void)
 	return (aliases);
 }
 
-MS	*ft_init_ms(MS *mini, char **envp)
+t_ms	*ft_init_ms(t_ms *mini, char **envp)
 {
-	mini = ft_malloc(sizeof(MS));
+	mini = ft_malloc(sizeof(t_ms));
 	if (mini == NULL)
 		return (NULL);
 	mini->lexer.input = NULL;

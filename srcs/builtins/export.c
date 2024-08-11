@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:29:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:47:54 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,70 +49,10 @@ t_env	*find_envp(char *variable, t_env *env)
 	return (NULL);
 }
 
-/*t_env	*split_list(t_env *head)
-{
-	t_env	*slow;
-	t_env	*fast;
-	t_env	*prev;
-
-	if (!head || !head->next)
-		return (head);
-	slow = head;
-	fast = head;
-	prev = NULL;
-	while (fast && fast->next)
-	{
-		prev = slow;
-		slow = slow->next;
-		fast = fast->next->next;
-	}
-	prev->next = NULL;
-	return (slow);
-}
-
-t_env	*merge_sorted_lists(t_env *a, t_env *b)
-{
-	t_env	*result;
-
-	if (!a)
-		return (b);
-	if (!b)
-		return (a);
-	result = NULL;
-	if (strcmp(a->name_value, b->name_value) <= 0)
-	{
-		result = a;
-		result->next = merge_sorted_lists(a->next, b);
-	}
-	else
-	{
-		result = b;
-		result->next = merge_sorted_lists(a, b->next);
-	}
-	return (result);
-}
-
-t_env	*merge_sort(t_env *head)
-{
-	t_env	*middle;
-	t_env	*left;
-	t_env	*right;
-
-	if (!head || !head->next)
-		return (head);
-	middle = split_list(head);
-	left = merge_sort(head);
-	right = merge_sort(middle);
-	return (merge_sorted_lists(left, right));
-}*/
-
 int	print_env(t_env *env)
 {
-	//t_env	*tmp;
-
 	if (!env)
 		return (EXIT_SUCCESS);
-	//tmp = merge_sort(env);
 	while (env)
 	{
 		ft_putstr_fd("declare -x ", STDOUT_FILENO);

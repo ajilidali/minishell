@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:36:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	exec_list(t_lst_cmd *list)
 	}
 }
 
-void	exec_pipe(ASTNode *node)
+void	exec_pipe(t_astnode *node)
 {
 	t_lst_cmd	*list;
 
