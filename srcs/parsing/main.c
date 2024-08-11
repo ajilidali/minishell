@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/09 15:13:43 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 13:30:59 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	main(int argc, char **argv, char **envp)
 			{
 				exec_commands(mini->ast, mini);
 				free_ast(mini->ast);
-			//	printf("status = %d\n", mini->exit_code);
 			}
 		}
 	}
