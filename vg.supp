@@ -1,0 +1,14 @@
+#valgrind --leak-check=full --show-leak-kinds=all --suppressions=vg.supp --trace-children=yes ./minishell
+
+{
+   leak readline
+   Memcheck:Leak
+   ...
+   fun:readline
+}
+{
+   leak add_history
+   Memcheck:Leak
+   ...
+   fun:add_history
+}
