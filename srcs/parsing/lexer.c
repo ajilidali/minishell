@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 17:46:46 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 19:05:38 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,11 @@ char* extract_value(const char *input, size_t start, size_t len)
 	j = 0;
 	value = allocate_string(len + 1);
     while (i < len)
+	{
         if (input[start + i] != '\'' && input[start + i] != '\"')
-            value[j++] = input[start + i++];
+            value[j++] = input[start + i];
+		i++;
+	}
     return value;
 }
 

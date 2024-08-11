@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:54:17 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:51:23 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ int	main(int argc, char **argv, char **envp)
 			mini->ast = parse_pipeline(&mini->parser);
 			if (mini->ast)
 			{
-				exec_commands(mini->ast, mini);
+				if (check_ast_for_errors(mini->ast) != 1)
+					exec_commands(mini->ast, mini);
 				free_ast(mini->ast);
 			}
 		}

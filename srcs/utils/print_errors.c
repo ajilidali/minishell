@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_errors.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/04 17:52:49 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:54:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:09:22 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	print_errors_first(char *str, int flag)
 	else if (flag == ER_QUOTE_ERROR)
 		ft_putendl_fd("DEDSEC: unexpected EOF", STDERR_FILENO);
 	else if (flag == ER_REDIRECT_ERROR)
-		ft_putstr_fd("DEDSEC: syntax error: expected file after redirection",
+		ft_putstr_fd("DEDSEC: syntax error: expected file after redirection\n",
 			STDERR_FILENO);
 	else if (flag == ER_CMD_NOT_FOUND)
 	{

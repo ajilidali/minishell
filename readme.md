@@ -6,7 +6,7 @@ ERREURS :
 
 < ./readme.md cat OK
 echo bla > test.txt bla2 OK
-ec''ho blabla KO
+ec''ho blabla OK
 fct parse_command broken in smaller fcts
 ~ Moved to parsecmd
 Cleaned utils
