@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/10 05:43:24 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:23:30 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 # include <sys/stat.h>
 # include <stdbool.h>
 
-# define FREE_GB 1
 # define COPY 10 // Flag for copying envp to global
 
 # define FD_IN 0
@@ -45,12 +44,6 @@
 # define MAX_ARGS 1024
 # define MAX_REDIRS 5
 
-//Garbage collector struct
-typedef struct s_gc
-{
-	void		*str;
-	struct s_gc	*next;
-}	t_gc;
 
 typedef struct s_pidl
 {
@@ -258,7 +251,7 @@ int			env_add_var(char *var, t_env *env);
 void		close_node_fd(ASTNode *node, int *pipefd);
 MS			*give_mini(MS *mini_cpy, int copy);
 int			if_is_local(char *cmd);
-void reset_signal_handlers(void);
+void		reset_signal_handlers(void);
 
 //list for pwd
 t_list		*lnew_node(char *name_value);

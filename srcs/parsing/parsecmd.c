@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 12:09:19 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:47:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	is_redirection(char c)
 
 static ASTNode	*initialize_ast_node()
 {
-	ASTNode	*node = (ASTNode *)malloc(sizeof(ASTNode));
+	ASTNode	*node = (ASTNode *)ft_malloc(sizeof(ASTNode));
 
 	node->type = AST_COMMAND;
 	node->left = node->right = NULL;
-	node->args = (char **)malloc(MAX_ARGS * sizeof(char *));
-	node->redirections = (t_redirection *)malloc(MAX_REDIRS * sizeof(t_redirection));
+	node->args = (char **)ft_malloc(MAX_ARGS * sizeof(char *));
+	node->redirections = (t_redirection *)ft_malloc(MAX_REDIRS * sizeof(t_redirection));
 	node->args_capacity = MAX_ARGS;
 	node->redirections_capacity = MAX_REDIRS;
 	node->args_count = 0;
@@ -49,8 +49,8 @@ static void handle_redirection(Parser *parser, ASTNode *node)
 	{
 		node->redirections_capacity *= 2;
 		if (node->redirections)
-			free(node->redirections);
-		node->redirections = (t_redirection *)malloc(node->redirections_capacity * sizeof(t_redirection));
+			ft_free(node->redirections);
+		node->redirections = (t_redirection *)ft_malloc(node->redirections_capacity * sizeof(t_redirection));
 	}
 	node->redirections[node->redirections_count].flag = type_of_redirect(parser->current_token.value);
 	parser_advance(parser);
@@ -76,8 +76,8 @@ static void handle_argument(Parser *parser, ASTNode *node)
 	{
 		node->args_capacity *= 2;
 		if (node->args)
-			free(node->args);
-		node->args = (char **)malloc(node->args_capacity * sizeof(char *));
+			ft_free(node->args);
+		node->args = (char **)ft_malloc(node->args_capacity * sizeof(char *));
 	}
 	if (parser->current_token.type == TOKEN_VARIABLE)
 		node->args[node->args_count++] = parse_variable(parser->current_token.value);
@@ -89,7 +89,7 @@ static void handle_argument(Parser *parser, ASTNode *node)
 ASTNode *parse_command(Parser *parser)// Memory allocation failure
 {
 	ASTNode *node;
-	
+
 	node = initialize_ast_node();
 	while (parser->current_token.type == TOKEN_WORD ||
 			parser->current_token.type == TOKEN_VARIABLE ||

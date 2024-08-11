@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_to_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 04:39:11 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/10 05:43:39 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:31:47 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_cmd_list(list_commands *list)
 	while (list)
 	{
 		tmp = list->next;
-		free(list);
+		ft_free(list);
 		list = tmp;
 	}
 }
@@ -28,7 +28,7 @@ list_commands	*create_list_node(ASTNode *node)
 {
 	list_commands	*new_node;
 
-	new_node = (list_commands *)malloc(sizeof(list_commands));
+	new_node = (list_commands *)ft_malloc(sizeof(list_commands));
 	if (!new_node)
 		return (NULL);
 	new_node->args = node->args;

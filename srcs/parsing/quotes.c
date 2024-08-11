@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/26 21:57:17 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:33:17 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char	*quote_closer(char quote)
 		result = allocate_string(total_len);
 		ft_strcpy(result, closer);
 		ft_strcat(result, recursive_result);
-		free(closer);
-		free(recursive_result);
+		ft_free(closer);
+		ft_free(recursive_result);
 		return (result);
 	}
 	return (closer);

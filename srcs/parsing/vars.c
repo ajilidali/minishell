@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/06 17:37:27 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:25:40 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ Alias	*ft_init_alias(void)
 	Alias	*aliases;
 
 	i = 0;
-	aliases = (Alias *)malloc(sizeof(Alias) * 1024);
+	aliases = (Alias *)ft_malloc(sizeof(Alias) * 1024);
 	if (!aliases)
 	{
 		ft_putendl_fd("Memory allocation error", STDERR_FILENO);
@@ -35,10 +35,9 @@ Alias	*ft_init_alias(void)
 
 MS	*ft_init_ms(MS *mini, char **envp)
 {
-	mini = malloc(sizeof(MS));
+	mini = ft_malloc(sizeof(MS));
 	if (mini == NULL)
 		return (NULL);
-	mini->aliases = ft_init_alias();
 	mini->lexer.input = NULL;
 	mini->lexer.pos = 0;
 	mini->lexer.length = 0;

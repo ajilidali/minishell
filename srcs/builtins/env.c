@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 15:55:12 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 18:10:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:30:33 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	run_env(t_env *env)
 	}
 	else
 	{
-		free(temp->name_value);
+		ft_free(temp->name_value);
 		temp->name_value = ft_strdup("_=/usr/bin/env");
 		if (!temp->name_value)
 			return (EXIT_FAILURE);

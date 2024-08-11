@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 12:09:37 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:46:46 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ Token lexer_word(Lexer *lexer)
     int inside_quotes;
     char current_quote;
 	char *value;
-	
+
 	start = lexer->pos;
 	inside_quotes = 0;
 	current_quote = '\0';
@@ -126,7 +126,7 @@ char *replace_variables(char *input)
 	int start;
 	int i = 0;
 	int end;
-	
+
 	if (!input)
 		return NULL;
 	if (char_counter(input,'$') == 0)
@@ -148,12 +148,12 @@ char *replace_variables(char *input)
     result = allocate_string((end - start) + 1);
 	ft_strncpy(result, &input[start], end - start);
 	if (!result)
-		return (free(result),NULL);
+		return (ft_free(result),NULL);
 	final = ft_replace(input,result,parse_variable(result));
 	if (char_counter(input,'$') != 0)
 		return (replace_variables(final));
-	free(input);
-	free(result);
+	ft_free(input);
+	ft_free(result);
 	return (final);
 }
 

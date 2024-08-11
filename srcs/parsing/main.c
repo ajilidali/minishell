@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 13:30:59 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:46:55 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ char	*make_prompt(void)
 		return (NULL);
 	prompt = ft_strjoin("\033[0;32mDEDSEC ❋ ", path);
 	if (!prompt)
-		return (free(path), NULL);
-	return (free(path), prompt);
+		return (ft_free(path), NULL);
+	return (ft_free(path), prompt);
 }
 
 char	*rl_shell(char *line_read)
@@ -65,7 +65,7 @@ char	*rl_shell(char *line_read)
 
 	if (line_read)
 	{
-		free(line_read);
+		ft_free(line_read);
 		line_read = NULL;
 	}
 	prompt = make_prompt();
@@ -74,13 +74,14 @@ char	*rl_shell(char *line_read)
 	line_read = readline(prompt);
 	if (line_read == NULL)
 	{
-		free(prompt);
+		ft_free(prompt);
 		clear_history();
-		free_env(give_envp(NULL, 0));
+		//free_env(give_envp(NULL, 0));
+		ft_free_gb();
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		exit(EXIT_FAILURE);
 	}
 	if (line_read && *line_read)
 		add_history(line_read);
-	return (free(prompt), line_read);
+	return (ft_free(prompt), line_read);
 }

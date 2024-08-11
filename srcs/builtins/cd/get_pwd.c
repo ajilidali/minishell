@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_pwd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/11 13:47:03 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/16 16:17:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:30:12 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*convert_list_pwd(t_list **list)
 	while (temp_list)
 	{
 		temp_pwd = ft_strjoin(pwd, (char *)temp_list->content);
-		free(pwd);
+		ft_free(pwd);
 		if (!temp_pwd)
 			return (free_list(*list), NULL);
 		pwd = temp_pwd;

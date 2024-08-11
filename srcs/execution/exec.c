@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/10 05:19:01 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:31:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 	char	*path;
 	char	**envp;
 
+	setup_signal_handler(0);
 	make_redirection(node);
 	envp = get_tabenv(ms->env);
 	if (!envp)
@@ -90,7 +91,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 		exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
-		return (print_errors(path, ER_PERM_DENIED), free(path),
+		return (print_errors(path, ER_PERM_DENIED), ft_free(path),
 			freetab(envp), exit(1));
 	exit(1);
 }
@@ -112,7 +113,7 @@ void	exec_commands(ASTNode *node, MS *ms)
 
 	if (node->type == AST_COMMAND)
 	{
-		setup_signal_handler(0);
+		setup_signal_handler(2);
 		ms->exit_code = setup_redirections(node);
 		if (ms->exit_code)
 			return (close_node_fd(node, NULL));

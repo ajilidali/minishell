@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   args.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:35:38 by sakaido           #+#    #+#             */
-/*   Updated: 2024/07/26 22:56:21 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:25:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**filter_argv(char **argv, const char *target)
 	while (argv[i] != NULL)
 		if (!is_similar(argv[i++], target))
 			count++;
-	new_argv = (char **)malloc((count + 1) * sizeof(char *));
+	new_argv = (char **)ft_malloc((count + 1) * sizeof(char *));
 	if (new_argv == NULL)
 		return (perror("Failed to allocate memory"), exit(EXIT_FAILURE), NULL);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/01 16:44:30 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:29:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int	add_node_env(char *command, t_env *env)
 	}
 	else
 	{
-		free(node->name_value);
+		ft_free(node->name_value);
 		node->name_value = ft_strdup(command);
 		if (!node->name_value)
 			return (EXIT_FAILURE);

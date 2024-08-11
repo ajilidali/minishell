@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:20:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/12 11:14:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:31:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ char	*find_path(char *cmd, char **envp)
 		paths = ft_strjoin(split_path[i], "/");
 		path = ft_strjoin(paths, cmd);
 		if (!path)
-			return (free(paths), free(path), freetab(split_path), NULL);
-		free(paths);
+			return (ft_free(paths), ft_free(path), freetab(split_path), NULL);
+		ft_free(paths);
 		if (!access(path, X_OK))
 			return (freetab(split_path), path);
-		free(path);
+		ft_free(path);
 		i++;
 	}
 	return (freetab(split_path), NULL);

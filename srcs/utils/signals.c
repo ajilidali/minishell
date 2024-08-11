@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/10 01:54:56 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 12:48:55 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handler(int signal)
 void handler_reset(int signal)
 {
 	(void)signal;
-	exit(1);
+	exit(0);
 	//ft_putstr_fd("YO\n", 1);
 	return ;
 }
@@ -50,6 +50,11 @@ void reset_signal_handlers(void)
     sigaction(SIGQUIT, &act, NULL);
 }
 
+void handler_sleep(int signal)
+{
+	(void)signal;
+}
+
 void	setup_signal_handler(int flag)
 {
 	struct sigaction	act;
@@ -60,11 +65,16 @@ void	setup_signal_handler(int flag)
 		//ft_putendl_fd("CREATE", STDERR_FILENO);
 		act.sa_handler = handler;
 	}
-	else
+	else if (!flag)
 	{
 		sigemptyset(&act.sa_mask);
 		//ft_putendl_fd("RESET", STDERR_FILENO);
     	act.sa_handler = handler_reset; // Reset to default handler
+	}
+	else if (flag == 2)
+	{
+		sigemptyset(&act.sa_mask);
+		act.sa_handler = handler_sleep;
 	}
     act.sa_flags = 0;
     sigaction(SIGINT, &act, NULL);

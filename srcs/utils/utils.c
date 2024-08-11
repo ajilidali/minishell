@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:14:13 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/06 15:49:09 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:25:55 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*copy_except_first_n_chars(const char *input, size_t n)
 
 	if (input == NULL)
 	{
-		result = (char *)malloc(1);
+		result = (char *)ft_malloc(1);
 		if (result)
 			result[0] = '\0';
 		return (result);
@@ -54,12 +54,12 @@ char	*copy_except_first_n_chars(const char *input, size_t n)
 	len = ft_strlen(input);
 	if (len <= n)
 	{
-		result = (char *)malloc(1);
+		result = (char *)ft_malloc(1);
 		if (result)
 			result[0] = '\0';
 		return (result);
 	}
-	result = (char *)malloc(len - n + 1);
+	result = (char *)ft_malloc(len - n + 1);
 	if (result == NULL)
 		return (NULL);
 	ft_strcpy(result, input + n);

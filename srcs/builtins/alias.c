@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/11 13:50:51 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:28:50 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	process_arguments(MS *mini, int argc)
 			trim_whitespace(right_part);
 			if (*right_part != '\0' && *left_part != '\0')
 				assign_alias(mini, left_part, right_part);
-			free(left_part);
-			free(right_part);
+			ft_free(left_part);
+			ft_free(right_part);
 		}
 		i++;
 	}

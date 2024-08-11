@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/07 21:29:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 16:53:37 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,10 @@ int	run_exit(char **command, MS *mini)
 {
 	int	exit_value;
 
+	exit_value = mini->exit_code;
 	clear_history();
 	if (!command[1])
-		return (free_env(give_envp(NULL, 0)), exit(mini->exit_code), mini->exit_code);
+		return (free_env(give_envp(NULL, 0)), exit(exit_value), exit_value);
 	if (command[2])
 	{
 		ft_putendl_fd("DEDSEC: exit: too many arguments", STDERR_FILENO);

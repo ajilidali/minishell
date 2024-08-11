@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:08:11 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/25 18:12:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:26:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	freetab(char **str)
 
 	i = 0;
 	while (str[i])
-		free(str[i++]);
-	free(str);
+		ft_free(str[i++]);
+	ft_free(str);
 	str = NULL;
 }

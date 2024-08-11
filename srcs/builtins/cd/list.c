@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/08 19:01:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/11 13:46:47 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:30:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	free_list(t_list *env)
 	{
 		tmp = env;
 		env = env->next;
-		free(tmp->content);
-		free(tmp);
+		ft_free(tmp->content);
+		ft_free(tmp);
 	}
 }
 
@@ -34,14 +34,14 @@ t_list	*lnew_node(char *name_value)
 
 	if (!name_value)
 		return (NULL);
-	node = malloc(sizeof(t_list));
+	node = ft_malloc(sizeof(t_list));
 	if (!node)
 		return (NULL);
 	folder = ft_strjoin("/", name_value);
 	node->content = folder;
 	if (!node->content)
 	{
-		free(node);
+		ft_free(node);
 		return (NULL);
 	}
 	node->next = NULL;
@@ -73,6 +73,6 @@ void	delete_last_node(t_list *list)
 		temp = temp->next;
 	}
 	list->next = NULL;
-	free(temp->content);
-	free(temp);
+	ft_free(temp->content);
+	ft_free(temp);
 }

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 13:02:06 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/01 16:49:36 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:29:34 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	find_variable(char *variable, t_env **env)
 			ft_strlen(variable)) && cur->name_value[ft_strlen(variable)] == '=')
 	{
 		*env = cur->next;
-		return (free(cur->name_value), free(cur), 1);
+		return (ft_free(cur->name_value), ft_free(cur), 1);
 	}
 	while (cur)
 	{
@@ -44,7 +44,7 @@ static int	find_variable(char *variable, t_env **env)
 					variable)) && cur->name_value[ft_strlen(variable)] == '=')
 		{
 			prev->next = cur->next;
-			return (free(cur->name_value), free(cur), 1);
+			return (ft_free(cur->name_value), ft_free(cur), 1);
 		}
 		prev = cur;
 		cur = cur->next;

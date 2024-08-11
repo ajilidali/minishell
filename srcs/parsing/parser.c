@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 12:08:47 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:47:08 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ Parser	parser_init(const char *input)
 void	parser_advance(Parser *parser)
 {
 	if (parser->current_token.value)
-		free(parser->current_token.value);
+		ft_free(parser->current_token.value);
 	parser->current_token = lexer_next_token(&parser->lexer);
 }
 
@@ -51,7 +51,7 @@ ASTNode	*parse_pipeline(Parser *parser)
 	while (parser->current_token.type == TOKEN_PIPE
 		&& ft_strcmp(parser->current_token.value, "|") == 0)
 	{
-		node = (ASTNode *)malloc(sizeof(ASTNode));
+		node = (ASTNode *)ft_malloc(sizeof(ASTNode));
 		node->type = AST_PIPELINE;
 		node->left = left;
 		parser_advance(parser);
@@ -71,14 +71,14 @@ void	free_ast(ASTNode *node)
 	i = 0;
 	if (node->type == AST_COMMAND)
 	{
-        while (i <= node->args_count-1  && node->args_count > 0)
-            free(node->args[i++]);
-        free(node->args);
+		while (i <= node->args_count-1  && node->args_count > 0)
+			ft_free(node->args[i++]);
+		ft_free(node->args);
 	}
 	else if (node->type == AST_PIPELINE)
 	{
 		free_ast(node->left);
 		free_ast(node->right);
 	}
-	free(node);
+	ft_free(node);
 }

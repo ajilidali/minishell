@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:24:01 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/26 22:12:12 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:23:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2024
 # endif
+
+
+# define FREE_GB 1
+# define FREE_PTR 2
+
+//Garbage collector struct
+typedef struct s_gc
+{
+	void		*str;
+	struct s_gc	*next;
+}	t_gc;
 
 typedef struct s_list
 {
@@ -63,7 +74,10 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_malloc(size_t size);
 char	*ft_strndup(const char *s, size_t n);
+void	ft_free(void *ptr);
+void	ft_free_gb(void);
 void	ft_putchar_fd(char c, int fd);
 void	freetab(char **str);
 void	ft_putstr_fd(char *s, int fd);

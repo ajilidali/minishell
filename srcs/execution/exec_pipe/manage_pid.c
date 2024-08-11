@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_pid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:14:09 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/10 05:38:18 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:31:57 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_pidl	*ft_pidnew(int pid)
 {
 	t_pidl	*tab;
 
-	tab = ft_calloc(1, sizeof(t_pidl));
+	tab = (t_pidl *)ft_malloc(sizeof(t_pidl));
 	if (!tab)
 		return (NULL);
 	tab->pid = pid;
@@ -29,13 +29,13 @@ int	add_node_to_list(t_pidl **head, int pid)
 	t_pidl	*new_node;
 	t_pidl	*tmp;
 
-	new_node = ft_pidnew(pid);
+	new_node = (t_pidl *)ft_malloc(sizeof(t_pidl));
 	if (!new_node)
 		return (1);
+	new_node->pid = pid;
+	new_node->next = NULL;
 	if (*head == NULL)
-	{
 		*head = new_node;
-	}
 	else
 	{
 		tmp = *head;
@@ -46,40 +46,42 @@ int	add_node_to_list(t_pidl **head, int pid)
 	return (0);
 }
 
-void	free_pidl(t_pidl *list_pid)
+void	free_pidl(t_pidl **list_pid)
 {
 	t_pidl	*tmp;
 
-	while (list_pid)
+	tmp = NULL;
+	while (*list_pid)
 	{
-		tmp = list_pid->next;
-		free(list_pid);
-		list_pid = tmp;
+		tmp = (*list_pid)->next;
+		ft_free(*list_pid);
+		*list_pid = tmp;
 	}
+	*list_pid = NULL;
 }
 
 int	wait_pids(int pid, int flag)
 {
 	static t_pidl	*list_pid = NULL;
+	t_pidl			*current;
 	int				status;
 
+	current = NULL;
 	if (flag)
 	{
 		if (add_node_to_list(&list_pid, pid))
-		{
-			free_pidl(list_pid);
-			return (1);
-		}
+			return (free_pidl(&list_pid), 1);
 		return (0);
 	}
 	else
 	{
-		while (list_pid)
+		current = list_pid;
+		while (current)
 		{
-			waitpid((int)list_pid->pid, &status, 0);
+			waitpid((int)current->pid, &status, 0);
 			give_mini(NULL, 0)->exit_code = WEXITSTATUS(status);
-			list_pid = list_pid->next;
+			current = current->next;
 		}
-		return (0);
+		return (free_pidl(&list_pid), 0);
 	}
 }

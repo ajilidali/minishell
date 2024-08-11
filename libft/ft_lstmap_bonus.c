@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 02:58:08 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:26:32 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		if (!new_elem)
 		{
 			del(temp);
-			free(new_elem);
+			ft_free(new_elem);
 			ft_lstclear(&new_lst, del);
 			return (NULL);
 		}
