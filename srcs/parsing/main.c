@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:54:17 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:31:17 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ char	*rl_shell(char *line_read)
 	{
 		ft_free(prompt);
 		clear_history();
-		//free_env(give_envp(NULL, 0));
 		ft_free_gb();
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
 		ft_exit(EXIT_FAILURE);

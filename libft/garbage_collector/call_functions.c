@@ -1,27 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_alloc.c                                         :+:      :+:    :+:   */
+/*   call_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/06/06 22:35:38 by sakaido           #+#    #+#             */
-/*   Updated: 2024/08/11 18:32:55 by hclaude          ###   ########.fr       */
+/*   Created: 2024/08/11 18:43:54 by hclaude           #+#    #+#             */
+/*   Updated: 2024/08/11 18:47:15 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../libft.h"
 
-char	*allocate_string(size_t length)
+void	ft_exit(int status)
 {
-	char	*str;
+	ft_free_gb();
+	exit(status);
+}
 
-	str = ft_calloc(length + 1, 1);
-	if (!str)
+void	ft_free_gb(void)
+{
+	ft_garbage(FREE_GB, NULL);
+}
+
+void	ft_free(void *ptr)
+{
+	ft_garbage(FREE_PTR, ptr);
+}
+
+void	*ft_malloc(size_t size)
+{
+	void	*result;
+
+	result = malloc(size);
+	if (!result)
+		return (NULL);
+	else
 	{
-		ft_putstr_fd("malloc", STDERR_FILENO);
-		ft_exit(EXIT_FAILURE);
+		if (!ft_garbage(3, result))
+			return (free(result), NULL);
+		return (result);
 	}
-	str[length] = '\0';
-	return (str);
 }

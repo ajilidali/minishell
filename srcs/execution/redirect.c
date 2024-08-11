@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 17:53:02 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:29:18 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,16 @@ void	make_here_doc(int *pipefd, ASTNode *node, size_t i)
 		while (1)
 		{
 			str = get_next_line(STDIN_FILENO);
-			if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
-					node->redirections[i].file,
-					ft_strlen(node->redirections[i].file)))
-				return (ft_free(str), close(0), get_next_line(0), ft_exit(0));
+			if (str == NULL || ((ft_strlen(str)) > 1 && !ft_strncmp(str,
+						node->redirections[i].file,
+						ft_strlen(node->redirections[i].file))))
+				return (ft_free(str), close(0), close(pipefd[1]),
+					close(pipefd[0]), get_next_line(0), ft_exit(0));
 			ft_putstr_fd(str, pipefd[1]);
 			ft_free(str);
 		}
-		close(pipefd[1]);
-		close(pipefd[0]);
-		return (ft_free(str), close(0), get_next_line(0), ft_exit(0));
+		return (ft_free(str), close(0), close(pipefd[1]),
+			close(pipefd[0]), get_next_line(0), ft_exit(0));
 	}
 	wait(NULL);
 }

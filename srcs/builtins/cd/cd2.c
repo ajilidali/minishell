@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:08:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:51:46 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:47:07 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,10 @@ void	add_pwd(t_env *env)
 		env->next = new_node("OLDPWD=", false);
 }
 
-void	update_pwd(char *old_pwd, char *path, t_env *env)
+void	change_pwd(t_env *env, char *new_path, char *old_pwd)
 {
-	char	*new_path;
 	t_env	*tmp_env;
 
-	if (!old_pwd)
-		old_pwd = "";
-	add_pwd(env);
-	new_path = get_pwd(path, old_pwd);
-	if (!new_path)
-		new_path = getcwd(NULL, 0);
-	if (!new_path)
-		ft_exit(EXIT_FAILURE);
 	tmp_env = find_envp("PWD", env);
 	if (tmp_env)
 	{
@@ -80,4 +71,19 @@ void	update_pwd(char *old_pwd, char *path, t_env *env)
 			ft_exit(EXIT_FAILURE);
 	}
 	ft_free(new_path);
+}
+
+void	update_pwd(char *old_pwd, char *path, t_env *env)
+{
+	char	*new_path;
+
+	if (!old_pwd)
+		old_pwd = "";
+	add_pwd(env);
+	new_path = get_pwd(path, old_pwd);
+	if (!new_path)
+		new_path = getcwd(NULL, 0);
+	if (!new_path)
+		ft_exit(EXIT_FAILURE);
+	change_pwd(env, new_path, old_pwd);
 }

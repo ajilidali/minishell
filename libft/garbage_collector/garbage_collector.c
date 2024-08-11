@@ -6,25 +6,18 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:23:43 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:56:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:45:59 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 #include <stdio.h>
 
-void	ft_exit(int status)
-{
-	ft_free_gb();
-	exit(status);
-}
-
 int	ft_add_gb(t_gc *gc, void *str)
 {
 	t_gc	*new;
 
 	new = malloc(sizeof(t_gc));
-	printf("ADDRESS = %p\n", str);
 	if (!new)
 		return (0);
 	new->str = str;
@@ -111,29 +104,4 @@ int	ft_garbage(int flag, void *result)
 	if (flag == FREE_GB)
 		return (ft_free_gc(&gc), 1);
 	return (1);
-}
-
-void	ft_free_gb(void)
-{
-	ft_garbage(FREE_GB, NULL);
-}
-
-void	ft_free(void *ptr)
-{
-	ft_garbage(FREE_PTR, ptr);
-}
-
-void	*ft_malloc(size_t size)
-{
-	void	*result;
-
-	result = malloc(size);
-	if (!result)
-		return (NULL);
-	else
-	{
-		if (!ft_garbage(3, result))
-			return (free(result), NULL);
-		return (result);
-	}
 }

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:52:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:28:52 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ static void	exec_command(ASTNode *node, MS *ms)
 		path = ft_strdup(node->args[0]);
 	else
 		path = find_path(node->args[0], envp);
-	ft_putendl_fd(path, STDERR_FILENO);//a effacer
 	if (!path)
 	{
 		check_path(node->args[0]);
