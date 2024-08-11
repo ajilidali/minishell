@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 21:50:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	make_here_doc(int *pipefd, t_astnode *node, size_t i)
 		while (1)
 		{
 			str = get_next_line(STDIN_FILENO);
+			printf("return = %p\n", str);
 			if (str == NULL || ((ft_strlen(str)) > 1 && !ft_strncmp(str,
 						node->redirections[i].file,
 						ft_strlen(node->redirections[i].file))))

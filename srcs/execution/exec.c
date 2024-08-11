@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 21:29:22 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ static void	exec_command(t_astnode *node, t_ms *ms)
 	char	*path;
 	char	**envp;
 
-	setup_signal_handler(0);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	make_redirection(node);
 	envp = get_tabenv(ms->env);
 	if (!envp)
@@ -112,7 +113,9 @@ void	exec_commands(t_astnode *node, t_ms *ms)
 
 	if (node->type == AST_COMMAND)
 	{
-		setup_signal_handler(2);
+		//setup_signal_handler(2);
+		signal(SIGINT, SIG_IGN);
+		signal(SIGQUIT, SIG_IGN);
 		ms->exit_code = setup_redirections(node);
 		if (ms->exit_code)
 			return (close_node_fd(node, NULL));
