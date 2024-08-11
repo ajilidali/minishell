@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 19:06:53 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:32:52 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@
 # define MAX_ARGS 1024
 # define MAX_REDIRS 5
 
-
 typedef struct s_pidl
 {
 	int				pid;
@@ -54,7 +53,7 @@ typedef struct s_pidl
 //Redirection struct
 typedef struct s_redirection
 {
-	int		flag;  // ">" or ">>" or "<" or "<<"
+	int		flag; // ">" or ">>" or "<" or "<<"
 	char	*file; // the file name for redirection
 }	t_redirection;
 
@@ -117,20 +116,21 @@ typedef struct ASTNode {
 	size_t			args_count;
 } ASTNode;
 
-typedef struct list_commands {
-	struct list_commands *next;
-	char **args;
-	int	fd_in;
-	int fd_out;
-	int save_in;
-	int save_out;
-	t_redirection 	*redirections;
-	size_t			redirections_count; // Number of redirections
-	size_t			args_capacity;
-	size_t			redirections_capacity;
-	size_t			args_count;
+typedef struct s_lst_cmd
+{
+	struct s_lst_cmd	*next;
+	char				**args;
+	int					fd_in;
+	int					fd_out;
+	int					save_in;
+	int					save_out;
+	t_redirection		*redirections;
+	size_t				redirections_count; // Number of redirections
+	size_t				args_capacity;
+	size_t				redirections_capacity;
+	size_t				args_count;
 
-} list_commands;
+} t_lst_cmd;
 
 // Parser Structs
 typedef struct {
@@ -261,13 +261,13 @@ void		delete_last_node(t_list *list);
 void		free_list(t_list *env);
 
 //execution for pipe
-int			copy_ast_in_list(ASTNode *node, list_commands **head);
-int			setup_redirections_pipe(list_commands *list);
-int			make_redirection_pipe(list_commands *node);
-int			is_local_fct_pipe(MS *mini, list_commands *list);
+int			copy_ast_in_list(ASTNode *node, t_lst_cmd **head);
+int			setup_redirections_pipe(t_lst_cmd *list);
+int			make_redirection_pipe(t_lst_cmd *node);
+int			is_local_fct_pipe(MS *mini, t_lst_cmd *list);
 int			wait_pids(int pid, int flag);
-void		cls_fd_pipe(list_commands *list, int *pipefd);
-void		exec_command_pipe(list_commands *list, MS *ms);
-void		free_cmd_list(list_commands *list);
+void		cls_fd_pipe(t_lst_cmd *list, int *pipefd);
+void		exec_command_pipe(t_lst_cmd *list, MS *ms);
+void		free_cmd_list(t_lst_cmd *list);
 
 #endif // MINISHELL_H

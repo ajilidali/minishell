@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:24:01 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:55:58 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:45:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 2024
 # endif
-
 
 # define FREE_GB 1
 # define FREE_PTR 2
@@ -74,11 +73,7 @@ void	*ft_memcpy(void *dst, const void *src, size_t n);
 void	*ft_memchr(const void *s, int c, size_t n);
 void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
-void	*ft_malloc(size_t size);
 char	*ft_strndup(const char *s, size_t n);
-void	ft_free(void *ptr);
-void	ft_free_gb(void);
-void	ft_exit(int status);
 void	ft_putchar_fd(char c, int fd);
 void	freetab(char **str);
 void	ft_putstr_fd(char *s, int fd);
@@ -99,5 +94,13 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstlast(t_list *lst);
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *),
 			void (*del)(void *));
+
+//garbage collector
+
+int		ft_garbage(int flag, void *result);
+void	*ft_malloc(size_t size);
+void	ft_free(void *ptr);
+void	ft_free_gb(void);
+void	ft_exit(int status);
 
 #endif

@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:53:18 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:36:50 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	make_pipe(int *pipefd, list_commands *node, int *pipe_in)
+void	make_pipe(int *pipefd, t_lst_cmd *node, int *pipe_in)
 {
 	if (node->next)
 	{
@@ -36,7 +36,7 @@ void	make_pipe(int *pipefd, list_commands *node, int *pipe_in)
 	}
 }
 
-void	child_process(list_commands *node, int *pipefd)
+void	child_process(t_lst_cmd *node, int *pipefd)
 {
 	int	exit_code;
 
@@ -61,7 +61,7 @@ void	child_process(list_commands *node, int *pipefd)
 	ft_exit(EXIT_FAILURE);
 }
 
-int	parent_process(list_commands *node, int *pipefd, int pid)
+int	parent_process(t_lst_cmd *node, int *pipefd, int pid)
 {
 	close(pipefd[1]);
 	if (!node->next)
@@ -78,7 +78,7 @@ int	parent_process(list_commands *node, int *pipefd, int pid)
 	return (0);
 }
 
-void	exec_list(list_commands *list)
+void	exec_list(t_lst_cmd *list)
 {
 	int	pipefd[2];
 	int	pid;
@@ -109,7 +109,7 @@ void	exec_list(list_commands *list)
 
 void	exec_pipe(ASTNode *node)
 {
-	list_commands	*list;
+	t_lst_cmd	*list;
 
 	list = NULL;
 	if (copy_ast_in_list(node, &list))

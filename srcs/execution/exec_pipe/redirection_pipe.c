@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:53:38 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:36:50 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static int	setup_redirect_out_pipe(list_commands *list, size_t i)
+static int	setup_redirect_out_pipe(t_lst_cmd *list, size_t i)
 {
 	if (list->redirections[i].flag == FD_OUT)
 	{
@@ -41,7 +41,7 @@ static int	setup_redirect_out_pipe(list_commands *list, size_t i)
 	return (0);
 }
 
-void	make_here_doc_pipe(int *pipefd, list_commands *node, size_t i)
+void	make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i)
 {
 	int		pid;
 	char	*str;
@@ -56,9 +56,9 @@ void	make_here_doc_pipe(int *pipefd, list_commands *node, size_t i)
 		while (1)
 		{
 			str = get_next_line(STDIN_FILENO);
-			if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
-					node->redirections[i].file,
-					ft_strlen(node->redirections[i].file)))
+			if (str == NULL || ((ft_strlen(str)) > 1 && !ft_strncmp(str,
+						node->redirections[i].file,
+						ft_strlen(node->redirections[i].file))))
 				return (ft_free(str), close(0), get_next_line(0), ft_exit(0));
 			ft_putstr_fd(str, pipefd[1]);
 			ft_free(str);
@@ -70,7 +70,7 @@ void	make_here_doc_pipe(int *pipefd, list_commands *node, size_t i)
 	wait(NULL);
 }
 
-static int	setup_redirect_in_pipe(list_commands *node, size_t i)
+static int	setup_redirect_in_pipe(t_lst_cmd *node, size_t i)
 {
 	int	pipefd[2];
 
@@ -96,7 +96,7 @@ static int	setup_redirect_in_pipe(list_commands *node, size_t i)
 	return (0);
 }
 
-int	setup_redirections_pipe(list_commands *list)
+int	setup_redirections_pipe(t_lst_cmd *list)
 {
 	size_t	i;
 
@@ -112,7 +112,7 @@ int	setup_redirections_pipe(list_commands *list)
 	return (0);
 }
 
-int	make_redirection_pipe(list_commands *node)
+int	make_redirection_pipe(t_lst_cmd *node)
 {
 	if (node->fd_in != STDIN_FILENO)
 	{

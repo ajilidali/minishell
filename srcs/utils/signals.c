@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:54:38 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:31:05 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,28 @@ void	handler(int signal)
 	}
 }
 
-void handler_reset(int signal)
+void	handler_reset(int signal)
 {
 	(void)signal;
 	ft_exit(0);
-	//ft_putstr_fd("YO\n", 1);
 	return ;
 }
 
-void reset_signal_handlers(void)
+void	reset_signal_handlers(void)
 {
-    struct sigaction act;
+	struct sigaction	act;
 
-    sigemptyset(&act.sa_mask);
-	//ft_putendl_fd("RESET", STDERR_FILENO);
-    act.sa_handler = handler_reset; // Reset to default handler
-    act.sa_flags = 0;
-    sigaction(SIGINT, &act, NULL);
-    sigaction(SIGQUIT, &act, NULL);
+	sigemptyset(&act.sa_mask);
+	act.sa_handler = handler_reset;
+	act.sa_flags = 0;
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
 }
 
-void handler_sleep(int signal)
+void	handler_sleep(int signal)
 {
+	ft_putchar_fd('\n', STDOUT_FILENO);
+	rl_on_new_line();
 	(void)signal;
 }
 
@@ -62,21 +62,19 @@ void	setup_signal_handler(int flag)
 	sigemptyset(&act.sa_mask);
 	if (flag == 1)
 	{
-		//ft_putendl_fd("CREATE", STDERR_FILENO);
 		act.sa_handler = handler;
 	}
 	else if (!flag)
 	{
 		sigemptyset(&act.sa_mask);
-		//ft_putendl_fd("RESET", STDERR_FILENO);
-    	act.sa_handler = handler_reset; // Reset to default handler
+		act.sa_handler = handler_reset;
 	}
 	else if (flag == 2)
 	{
 		sigemptyset(&act.sa_mask);
 		act.sa_handler = handler_sleep;
 	}
-    act.sa_flags = 0;
-    sigaction(SIGINT, &act, NULL);
-    sigaction(SIGQUIT, &act, NULL);
+	act.sa_flags = 0;
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
 }

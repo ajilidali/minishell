@@ -6,15 +6,15 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 04:39:11 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:31:47 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:36:50 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	free_cmd_list(list_commands *list)
+void	free_cmd_list(t_lst_cmd *list)
 {
-	list_commands	*tmp;
+	t_lst_cmd	*tmp;
 
 	while (list)
 	{
@@ -24,11 +24,11 @@ void	free_cmd_list(list_commands *list)
 	}
 }
 
-list_commands	*create_list_node(ASTNode *node)
+t_lst_cmd	*create_list_node(ASTNode *node)
 {
-	list_commands	*new_node;
+	t_lst_cmd	*new_node;
 
-	new_node = (list_commands *)ft_malloc(sizeof(list_commands));
+	new_node = (t_lst_cmd *)ft_malloc(sizeof(t_lst_cmd));
 	if (!new_node)
 		return (NULL);
 	new_node->args = node->args;
@@ -43,10 +43,10 @@ list_commands	*create_list_node(ASTNode *node)
 	return (new_node);
 }
 
-int	copy_ast_in_list(ASTNode *node, list_commands **head)
+int	copy_ast_in_list(ASTNode *node, t_lst_cmd **head)
 {
-	list_commands	*new_node;
-	list_commands	*temp;
+	t_lst_cmd	*new_node;
+	t_lst_cmd	*temp;
 
 	if (!node)
 		return (1);

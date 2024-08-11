@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:39:18 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:33:52 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 18:29:34 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ t_env	*create_empty_env(void)
 		return (free_env(head), ft_free(path), ft_free(pwd), NULL);
 	return (ft_free(path), ft_free(pwd), head);
 }
+
 int	check_pwd(t_env *head)
 {
 	t_env	*tmp;
