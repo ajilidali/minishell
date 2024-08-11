@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:35:38 by sakaido           #+#    #+#             */
-/*   Updated: 2024/08/11 17:25:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:54:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ char	**filter_argv(char **argv, const char *target)
 			count++;
 	new_argv = (char **)ft_malloc((count + 1) * sizeof(char *));
 	if (new_argv == NULL)
-		return (perror("Failed to allocate memory"), exit(EXIT_FAILURE), NULL);
+		return (perror("Failed to allocate memory"), ft_exit(EXIT_FAILURE), NULL);
 	i = 0;
 	while (argv[i++] && !is_similar(argv[i], target))
 	{
 			new_argv[j] = argv[i];
 			if (new_argv[j++] == NULL)
-				return (perror("Failed to allocate memory"), exit(EXIT_FAILURE), NULL);
+				return (perror("Failed to allocate memory"), ft_exit(EXIT_FAILURE), NULL);
 	}
 	new_argv[j] = NULL;
 	return (new_argv);

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:31:24 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:52:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void	exec_command(ASTNode *node, MS *ms)
 	make_redirection(node);
 	envp = get_tabenv(ms->env);
 	if (!envp)
-		exit(1);
+		ft_exit(1);
 	if (!access(node->args[0], X_OK))
 		path = ft_strdup(node->args[0]);
 	else
@@ -88,12 +88,12 @@ static void	exec_command(ASTNode *node, MS *ms)
 		check_path(node->args[0]);
 		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
-		exit(1);
+		ft_exit(1);
 	}
 	if (execve(path, node->args, envp) == -1)
 		return (print_errors(path, ER_PERM_DENIED), ft_free(path),
-			freetab(envp), exit(1));
-	exit(1);
+			freetab(envp), ft_exit(1));
+	ft_exit(1);
 }
 
 void	restore_std(ASTNode *node, int status)

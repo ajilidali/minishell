@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_for_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:23:07 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/10 05:28:27 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:53:48 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ void	exec_command_pipe(list_commands *list, MS *ms)
 
 	envp = get_tabenv(ms->env);
 	if (!envp)
-		exit(1);
+		ft_exit(1);
 	if (!list->args[0])
-		exit(0);
+		ft_exit(0);
 	if (!access(list->args[0], X_OK))
 		path = ft_strdup(list->args[0]);
 	else
@@ -31,14 +31,14 @@ void	exec_command_pipe(list_commands *list, MS *ms)
 		check_path(list->args[0]);
 		print_errors(list->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
-		exit(127);
+		ft_exit(127);
 	}
 	if (execve(path, list->args, envp) == -1)
 	{
 		free(path);
 		freetab(envp);
 	}
-	exit(1);
+	ft_exit(1);
 }
 
 int	is_local_fct_pipe(MS *mini, list_commands *list)

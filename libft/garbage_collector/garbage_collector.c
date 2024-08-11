@@ -6,12 +6,18 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:23:43 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:41:10 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:56:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
 #include <stdio.h>
+
+void	ft_exit(int status)
+{
+	ft_free_gb();
+	exit(status);
+}
 
 int	ft_add_gb(t_gc *gc, void *str)
 {

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 15:24:01 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:23:24 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:55:58 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	*ft_malloc(size_t size);
 char	*ft_strndup(const char *s, size_t n);
 void	ft_free(void *ptr);
 void	ft_free_gb(void);
+void	ft_exit(int status);
 void	ft_putchar_fd(char c, int fd);
 void	freetab(char **str);
 void	ft_putstr_fd(char *s, int fd);

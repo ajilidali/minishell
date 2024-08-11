@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:32:06 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:53:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	make_here_doc_pipe(int *pipefd, list_commands *node, size_t i)
 
 	pid = fork();
 	if (pid == -1)
-		exit(EXIT_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
 		if (node->fd_in != STDIN_FILENO)
@@ -59,13 +59,13 @@ void	make_here_doc_pipe(int *pipefd, list_commands *node, size_t i)
 			if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
 					node->redirections[i].file,
 					ft_strlen(node->redirections[i].file)))
-				return (ft_free(str), close(0), get_next_line(0), exit(0));
+				return (ft_free(str), close(0), get_next_line(0), ft_exit(0));
 			ft_putstr_fd(str, pipefd[1]);
 			ft_free(str);
 		}
 		close(pipefd[1]);
 		close(pipefd[0]);
-		return (ft_free(str), close(0), get_next_line(0), exit(0));
+		return (ft_free(str), close(0), get_next_line(0), ft_exit(0));
 	}
 	wait(NULL);
 }
@@ -77,7 +77,7 @@ static int	setup_redirect_in_pipe(list_commands *node, size_t i)
 	if (node->redirections[i].flag == FD_HD)
 	{
 		if (pipe(pipefd) == -1)
-			exit(EXIT_FAILURE);
+			ft_exit(EXIT_FAILURE);
 		make_here_doc_pipe(pipefd, node, i);
 		close(pipefd[1]);
 		node->fd_in = pipefd[0];

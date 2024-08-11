@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:46:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:54:17 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	mini = NULL;
 	mini = ft_init_ms(mini, envp);
 	if (!mini)
-		exit(EXIT_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	if (getpid() != 0)
 	{
 		(void)argc;
@@ -70,7 +70,7 @@ char	*rl_shell(char *line_read)
 	}
 	prompt = make_prompt();
 	if (!prompt)
-		return (clear_history(), exit(EXIT_FAILURE), NULL);
+		return (clear_history(), ft_exit(EXIT_FAILURE), NULL);
 	line_read = readline(prompt);
 	if (line_read == NULL)
 	{
@@ -79,7 +79,7 @@ char	*rl_shell(char *line_read)
 		//free_env(give_envp(NULL, 0));
 		ft_free_gb();
 		ft_putstr_fd("exit\n", STDOUT_FILENO);
-		exit(EXIT_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	}
 	if (line_read && *line_read)
 		add_history(line_read);

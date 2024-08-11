@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 17:25:40 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:54:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ Alias	*ft_init_alias(void)
 	if (!aliases)
 	{
 		ft_putendl_fd("Memory allocation error", STDERR_FILENO);
-		exit(EXIT_FAILURE);
+		ft_exit(EXIT_FAILURE);
 	}
 	while (i < 1024)
 	{

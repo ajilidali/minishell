@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 17:20:40 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:31:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:52:18 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,22 +31,22 @@ void	check_path(char *path)
 	if (stat(path, &path_info) == -1)
 	{
 		perror(path);
-		exit(127);
+		ft_exit(127);
 	}
 	if (S_ISDIR(path_info.st_mode))
 	{
 		print_errors(path, ER_IS_DIR);
-		exit(126);
+		ft_exit(126);
 	}
 	else if (!S_ISREG(path_info.st_mode))
 	{
 		print_errors(path, ER_NO_FILE_DIR);
-		exit(127);
+		ft_exit(127);
 	}
 	else if (S_ISREG(path_info.st_mode) && !(path_info.st_mode & S_IXUSR))
 	{
 		print_errors(path, ER_PERM_DENIED);
-		exit(126);
+		ft_exit(126);
 	}
 }
 

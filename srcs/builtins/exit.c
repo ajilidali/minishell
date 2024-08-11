@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 16:53:37 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:51:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	run_exit(char **command, MS *mini)
 	exit_value = mini->exit_code;
 	clear_history();
 	if (!command[1])
-		return (free_env(give_envp(NULL, 0)), exit(exit_value), exit_value);
+		return (free_env(give_envp(NULL, 0)), ft_exit(exit_value), exit_value);
 	if (command[2])
 	{
 		ft_putendl_fd("DEDSEC: exit: too many arguments", STDERR_FILENO);
@@ -55,10 +55,10 @@ int	run_exit(char **command, MS *mini)
 		ft_putstr_fd("DEDSEC: exit: ", STDERR_FILENO);
 		ft_putstr_fd(command[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		return (exit(2), 2);
+		return (ft_exit(2), 2);
 	}
 	exit_value = ft_atoi(command[1]);
 	if (exit_value > 255)
-		return (exit(exit_value % 256), exit_value % 256);
-	return (exit(exit_value), exit_value);
+		return (ft_exit(exit_value % 256), exit_value % 256);
+	return (ft_exit(exit_value), exit_value);
 }

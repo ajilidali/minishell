@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/10 05:42:34 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:53:18 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	child_process(list_commands *node, int *pipefd)
 	setup_signal_handler(0);
 	exit_code = setup_redirections_pipe(node);
 	if (exit_code)
-		return (cls_fd_pipe(node, pipefd), exit(exit_code));
+		return (cls_fd_pipe(node, pipefd), ft_exit(exit_code));
 	if (!make_redirection_pipe(node))
-		return (cls_fd_pipe(node, pipefd), exit(1));
+		return (cls_fd_pipe(node, pipefd), ft_exit(1));
 	if (node->next)
 	{
 		close(pipefd[0]);
@@ -55,10 +55,10 @@ void	child_process(list_commands *node, int *pipefd)
 	if (exit_code != -1)
 	{
 		cls_fd_pipe(node, pipefd);
-		exit(exit_code);
+		ft_exit(exit_code);
 	}
 	exec_command_pipe(node, give_mini(NULL, 0));
-	exit(EXIT_FAILURE);
+	ft_exit(EXIT_FAILURE);
 }
 
 int	parent_process(list_commands *node, int *pipefd, int pid)

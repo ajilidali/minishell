@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 12:48:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 17:54:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	handler(int signal)
 void handler_reset(int signal)
 {
 	(void)signal;
-	exit(0);
+	ft_exit(0);
 	//ft_putstr_fd("YO\n", 1);
 	return ;
 }
