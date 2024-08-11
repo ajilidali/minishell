@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 19:07:43 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:39:54 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ int check_ast_for_errors(ASTNode *node)
 {
 	int left_error;
 	int right_error;
-	
-    if (node == NULL)
-        return (0);
-    if (node->type == AST_ERR) 
-        return (1); 
-    left_error = check_ast_for_errors(node->left);
-    right_error = check_ast_for_errors(node->right);
-    return (left_error || right_error);
+
+	if (node == NULL)
+		return (0);
+	if (node->type == AST_ERR)
+		return (1);
+	left_error = check_ast_for_errors(node->left);
+	right_error = check_ast_for_errors(node->right);
+	return (left_error || right_error);
 }
 
 static ASTNode	*initialize_ast_node()
 {
 	ASTNode	*node;
-	
+
 	node = (ASTNode *)ft_malloc(sizeof(ASTNode));
 	node->type = AST_COMMAND;
 	node->left = node->right = NULL;

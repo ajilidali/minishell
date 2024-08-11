@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:47:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:43:35 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ char	*parse_variable(char *value)
 	cpy = env_get_var(++value, give_envp(NULL, 0));
 	if (!cpy)
 		return (ft_strdup(NULL));
-	return (ft_strdup(cpy)); // faut se calmer avec les strdup!!!!!
+	return (ft_strdup(cpy));
 }
 
 ASTNode	*parse_pipeline(Parser *parser)
@@ -71,7 +71,7 @@ void	free_ast(ASTNode *node)
 	i = 0;
 	if (node->type == AST_COMMAND)
 	{
-		while (i <= node->args_count-1  && node->args_count > 0)
+		while (i <= node->args_count - 1 && node->args_count > 0)
 			ft_free(node->args[i++]);
 		ft_free(node->args);
 	}

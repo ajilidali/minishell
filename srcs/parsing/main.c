@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:59:26 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:31:34 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:41:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_exit(EXIT_FAILURE);
 	if (getpid() != 0)
 	{
-		(void)argc;
-		(void)argv;
+		(void)argv[argc];
 		while (1)
 		{
 			setup_signal_handler(1);
@@ -39,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 		}
 	}
-	return (0);
+	return (ft_exit(EXIT_FAILURE), 0);
 }
 
 char	*make_prompt(void)

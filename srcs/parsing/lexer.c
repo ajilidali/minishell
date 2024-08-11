@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 19:05:38 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/11 20:39:39 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,60 +65,60 @@ Token lexer_dollar(Lexer *lexer)
 	while (ft_isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_' || lexer_peek(lexer) == '?')
 		lexer->pos++;
 	length = lexer->pos - start;
-    value = allocate_string(length + 1);
+	value = allocate_string(length + 1);
 	ft_strncpy(value, lexer->input + start, length);
-    return create_token(TOKEN_VARIABLE, value);
+	return create_token(TOKEN_VARIABLE, value);
 }
 
 char* extract_value(const char *input, size_t start, size_t len)
 {
-    char *value;
-    size_t i;
+	char *value;
+	size_t i;
 	size_t j;
 
 	i = 0;
 	j = 0;
 	value = allocate_string(len + 1);
-    while (i < len)
+	while (i < len)
 	{
-        if (input[start + i] != '\'' && input[start + i] != '\"')
-            value[j++] = input[start + i];
+		if (input[start + i] != '\'' && input[start + i] != '\"')
+			value[j++] = input[start + i];
 		i++;
 	}
-    return value;
+	return value;
 }
 
 Token lexer_word(Lexer *lexer)
 {
-    size_t start;
-    int inside_quotes;
-    char current_quote;
+	size_t start;
+	int inside_quotes;
+	char current_quote;
 	char *value;
 
 	start = lexer->pos;
 	inside_quotes = 0;
 	current_quote = '\0';
-    while (lexer_peek(lexer) != '\0' && (inside_quotes || !is_whitespace(lexer_peek(lexer))))
-    {
-        if (lexer_peek(lexer) == '\'' || lexer_peek(lexer) == '\"')
-        {
-            if (inside_quotes && lexer_peek(lexer) == current_quote)
-            {
-                inside_quotes = 0;
-                current_quote = '\0';
-            }
-            else if (!inside_quotes)
-            {
-                inside_quotes = 1;
-                current_quote = lexer_peek(lexer);
-            }
-        }
-        lexer->pos++;
-    }
-    value = extract_value(lexer->input, start, lexer->pos - start);
-    if (current_quote != '\'')
-        return create_token(TOKEN_WORD, replace_variables(value));
-    return create_token(TOKEN_WORD, value);
+	while (lexer_peek(lexer) != '\0' && (inside_quotes || !is_whitespace(lexer_peek(lexer))))
+	{
+		if (lexer_peek(lexer) == '\'' || lexer_peek(lexer) == '\"')
+		{
+			if (inside_quotes && lexer_peek(lexer) == current_quote)
+			{
+				inside_quotes = 0;
+				current_quote = '\0';
+			}
+			else if (!inside_quotes)
+			{
+				inside_quotes = 1;
+				current_quote = lexer_peek(lexer);
+			}
+		}
+		lexer->pos++;
+	}
+	value = extract_value(lexer->input, start, lexer->pos - start);
+	if (current_quote != '\'')
+		return create_token(TOKEN_WORD, replace_variables(value));
+	return create_token(TOKEN_WORD, value);
 }
 
 
@@ -144,11 +144,11 @@ char *replace_variables(char *input)
 			i++;
 		end = i;
 	} else
-    {
+	{
 		start = 0;
 		end = ft_strlen(input);
 	}
-    result = allocate_string((end - start) + 1);
+	result = allocate_string((end - start) + 1);
 	ft_strncpy(result, &input[start], end - start);
 	if (!result)
 		return (ft_free(result),NULL);
@@ -173,20 +173,20 @@ Token	lexer_string(Lexer *lexer)
 		lexer->pos++;
 	if (char_counter(lexer->input, quote_type) % 2 == 0)
 	{
-        value = allocate_string(lexer->pos - start + 1);
+		value = allocate_string(lexer->pos - start + 1);
 		ft_strncpy(value, lexer->input + start, lexer->pos - start);
 	}
 	else
-        return (print_errors(NULL, ER_SYNTAX_ERROR),create_token(TOKEN_EMPTY, NULL));
-    if (quote_type != '\'')
-        return(create_token(TOKEN_WORD, replace_variables(value)));
-    return (create_token(TOKEN_WORD,value));
+		return (print_errors(NULL, ER_SYNTAX_ERROR),create_token(TOKEN_EMPTY, NULL));
+	if (quote_type != '\'')
+		return(create_token(TOKEN_WORD, replace_variables(value)));
+	return (create_token(TOKEN_WORD,value));
 }
 
 Token	lexer_operator(Lexer *lexer)
 {
 	char	current;
-    char    value[3];
+	char    value[3];
 
 	current = lexer_peek(lexer);
 	if (current == '<' || current == '>')
@@ -194,14 +194,14 @@ Token	lexer_operator(Lexer *lexer)
 		if (lexer->input[lexer->pos+1] == current) // Check for << or >>
 		{
 			lexer->pos++;
-            ft_memcpy(value, (char[]){current, current, '\0'}, sizeof(value));
+			ft_memcpy(value, (char[]){current, current, '\0'}, sizeof(value));
 			lexer->pos++;
-            return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
+			return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
 		}
 	}
-    ft_memcpy(value, (char[]){current, '\0', '\0'}, sizeof(value));
+	ft_memcpy(value, (char[]){current, '\0', '\0'}, sizeof(value));
 	lexer->pos++;
-    return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
+	return(create_token(TOKEN_OPERATOR,ft_strdup(value)));
 }
 
 Lexer	lexer_init(const char *input)
@@ -218,9 +218,9 @@ Token	lexer_pipe(Lexer *lexer)
 {
 	char	value[2];
 
-    ft_memcpy(value, (char[]){lexer_peek(lexer), '\0'}, sizeof(value));
+	ft_memcpy(value, (char[]){lexer_peek(lexer), '\0'}, sizeof(value));
 	lexer->pos++;
-    return(create_token(TOKEN_PIPE, ft_strdup(value)));
+	return(create_token(TOKEN_PIPE, ft_strdup(value)));
 }
 
 Token	lexer_next_token(Lexer *lexer)
@@ -231,7 +231,7 @@ Token	lexer_next_token(Lexer *lexer)
 		lexer->pos++;
 	current = lexer_peek(lexer);
 	if (current == '\0')
-        return(create_token(TOKEN_EOF,NULL));
+		return(create_token(TOKEN_EOF,NULL));
 	if (is_dollar(current))
 		return (lexer_dollar(lexer));
 	else if (is_pipe(current))
