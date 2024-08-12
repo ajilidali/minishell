@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:38:31 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*parse_variable(char *value)
 
 	if (ft_strcmp(++value, "?") == 0)
 		return (ft_itoa(give_mini(NULL, 0)->exit_code));
-	cpy = env_get_var(++value, give_envp(NULL, 0));
+	cpy = env_get_var(value, give_envp(NULL, 0));
 	if (!cpy)
 		return (ft_strdup(NULL));
 	return (ft_strdup(cpy));

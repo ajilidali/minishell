@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 16:16:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:41:40 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,6 @@ char	*replace_variables(char *input)
 	char	*final;
 	int		start;
 	int		i = 0;
-	int		end;
 
 	if (!input)
 		return (NULL);
@@ -164,15 +163,14 @@ char	*replace_variables(char *input)
 		i++;
 		while (i < (int)ft_strlen(input) && (input[i] == '?' || input[i] == '_' || ft_isalnum(input[i])))
 			i++;
-		end = i;
 	}
 	else
 	{
 		start = 0;
-		end = ft_strlen(input);
+		i = ft_strlen(input);
 	}
-	result = allocate_string((end - start) + 1);
-	ft_strncpy(result, &input[start], end - start);
+	result = allocate_string((i - start) + 1);
+	ft_strncpy(result, &input[start], i - start);
 	if (!result)
 		return (ft_free(result), NULL);
 	final = ft_replace(input, result, parse_variable(result));
@@ -213,7 +211,7 @@ Token	lexer_string(Lexer *lexer)
 		lexer->pos++;
 	if (char_counter(lexer->input, quote_type) % 2 == 0)
 	{
-		value = (char *)malloc(lexer->pos - start + 1);
+		value = (char *)ft_malloc(lexer->pos - start + 1);
 		ft_strncpy(value, lexer->input + start, lexer->pos - start);
 		value[lexer->pos++ - start] = '\0';
 	}else
