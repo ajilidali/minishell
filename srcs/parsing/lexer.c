@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 14:20:30 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 14:57:33 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,12 +183,28 @@ char	*replace_variables(char *input)
 	return (final);
 }
 
+int is_all_spaces(const char *str)
+{
+    int i;
+    if (str[0] == '\0')
+    {
+		return 1;
+	}
+	i = 0;
+    while (str[i] != '\0')
+	{
+        if (str[i] != ' ' && str[i] != '\t')
+            return 0;
+        i++;
+    }
+    return 1;
+}
+
 Token	lexer_string(Lexer *lexer)
 {
 	char	quote_type;
 	size_t	start;
 	char	*value;
-	Token	token;
 
 	quote_type = lexer_peek(lexer);
 	lexer->pos++;
@@ -200,24 +216,20 @@ Token	lexer_string(Lexer *lexer)
 		value = (char *)malloc(lexer->pos - start + 1);
 		ft_strncpy(value, lexer->input + start, lexer->pos - start);
 		value[lexer->pos++ - start] = '\0';
-		token.type = TOKEN_WORD;
-	}
-	else
+	}else
 	{
 		print_errors("Quotes must be terminated", ER_SYNTAX_ERROR);
-		value = NULL;
-		token.type = TOKEN_EMPTY;
+		return create_token(TOKEN_EMPTY,NULL);
 	}
-	if (quote_type != '\'')
-		token.value = replace_variables(value);
-	else
-		token.value = value;
-	return (token);
+	if (is_all_spaces(value))
+		return create_token(TOKEN_EMPTY,NULL);
+	else if (quote_type != '\'')
+		return create_token(TOKEN_WORD,replace_variables(value));
+	return create_token(TOKEN_WORD,value);
 }
 
 Token	lexer_operator(Lexer *lexer)
 {
-//	Token	token;
 	char	current;
 	char	value[3];
 
