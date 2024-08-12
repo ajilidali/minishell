@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 15:35:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:38:59 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,9 +126,7 @@ void	exec_commands(t_astnode *node, t_ms *ms)
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
-		if (WTERMSIG(status) == SIGINT)
-			ms->exit_code = 130;
-		else
+		if (!WTERMSIG(status))
 			ms->exit_code = WEXITSTATUS(status);
 	}
 	else if (node->type == AST_PIPELINE)

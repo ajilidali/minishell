@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 15:36:03 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:40:15 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,14 @@ void	handler_backslash(int sig)
 void	handler_ctrlc(int sig)
 {
 	write(1, "\n", 1);
-	// give_mini(NULL, 0)->exit_code = 127;
+	give_mini(NULL, 0)->exit_code = 130;
 	(void)sig;
 }
 
 void	handler_sleep(int signal_quit)
 {
 	signal(SIGINT, handler_ctrlc);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, handler_backslash);
 	(void)signal_quit;
 }
 

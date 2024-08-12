@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:14:09 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 15:33:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:41:34 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ int	wait_pids(int pid, int flag)
 		while (current)
 		{
 			waitpid((int)current->pid, &status, 0);
-			if (WTERMSIG(status) == SIGINT)
-				give_mini(NULL, 0)->exit_code = 130;
-			else
+			if (!WTERMSIG(status))
 				give_mini(NULL, 0)->exit_code = WEXITSTATUS(status);
 			current = current->next;
 		}
