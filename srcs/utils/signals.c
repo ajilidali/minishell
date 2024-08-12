@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 03:33:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:36:03 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,33 +26,29 @@ void	handler(int signal)
 	{
 		rl_on_new_line();
 		rl_redisplay();
-		give_mini(NULL, 0)->exit_code = 0;
+		ft_putstr_fd("  \b\b", STDOUT_FILENO);
 	}
 }
 
-void	handler_reset(int signal)
+void	handler_backslash(int sig)
 {
-	(void)signal;
-	ft_putchar_fd('\n', STDOUT_FILENO);
-	return ;
+	printf("Quit: 3\n");
+	give_mini(NULL, 0)->exit_code = 131;
+	(void)sig;
 }
 
-void	reset_signal_handlers(void)
+void	handler_ctrlc(int sig)
 {
-	struct sigaction	act;
-
-	sigemptyset(&act.sa_mask);
-	act.sa_handler = handler_reset;
-	act.sa_flags = 0;
-	sigaction(SIGINT, &act, NULL);
-	sigaction(SIGQUIT, &act, NULL);
+	write(1, "\n", 1);
+	// give_mini(NULL, 0)->exit_code = 127;
+	(void)sig;
 }
 
 void	handler_sleep(int signal_quit)
 {
+	signal(SIGINT, handler_ctrlc);
+	signal(SIGQUIT, SIG_DFL);
 	(void)signal_quit;
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 }
 
 void	setup_signal_handler(int flag)
@@ -63,18 +59,13 @@ void	setup_signal_handler(int flag)
 	if (flag == 1)
 	{
 		act.sa_handler = handler;
-	}
-	else if (!flag)
-	{
-		sigemptyset(&act.sa_mask);
-		act.sa_handler = handler_reset;
+		act.sa_flags = 0;
+		sigaction(SIGINT, &act, NULL);
+		sigaction(SIGQUIT, &act, NULL);
 	}
 	else if (flag == 2)
 	{
 		handler_sleep(0);
 		return ;
 	}
-	act.sa_flags = 0;
-	sigaction(SIGINT, &act, NULL);
-	sigaction(SIGQUIT, &act, NULL);
 }

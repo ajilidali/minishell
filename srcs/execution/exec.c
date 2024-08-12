@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 03:14:56 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:35:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static void	exec_command(t_astnode *node, t_ms *ms)
 	char	*path;
 	char	**envp;
 
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
+	// signal(SIGINT, SIG_DFL);
+	// signal(SIGQUIT, SIG_DFL);
 	make_redirection(node);
 	envp = get_tabenv(ms->env);
 	if (!envp)
@@ -126,7 +126,10 @@ void	exec_commands(t_astnode *node, t_ms *ms)
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);
-		ms->exit_code = WEXITSTATUS(status);
+		if (WTERMSIG(status) == SIGINT)
+			ms->exit_code = 130;
+		else
+			ms->exit_code = WEXITSTATUS(status);
 	}
 	else if (node->type == AST_PIPELINE)
 		exec_pipe(node);

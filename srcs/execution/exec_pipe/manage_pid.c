@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   manage_pid.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:14:09 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:31:57 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 15:33:54 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,10 @@ int	wait_pids(int pid, int flag)
 		while (current)
 		{
 			waitpid((int)current->pid, &status, 0);
-			give_mini(NULL, 0)->exit_code = WEXITSTATUS(status);
+			if (WTERMSIG(status) == SIGINT)
+				give_mini(NULL, 0)->exit_code = 130;
+			else
+				give_mini(NULL, 0)->exit_code = WEXITSTATUS(status);
 			current = current->next;
 		}
 		return (free_pidl(&list_pid), 0);
