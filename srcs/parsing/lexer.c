@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 21:00:05 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 21:02:58 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ Token	lexer_string(Lexer *lexer)
 	}
 	else
 	{
+		//unite print error and return
 		print_errors("Quotes must be terminated", ER_SYNTAX_ERROR);
 		return (create_token(TOKEN_EMPTY, NULL));
 	}
