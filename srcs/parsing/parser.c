@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 16:38:31 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 19:13:45 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char	*parse_variable(char *value)
 {
 	char	*cpy;
 
+	if (ft_strcmp(value,"$") == 0)
+		return (ft_strdup("$"));
 	if (ft_strcmp(++value, "?") == 0)
 		return (ft_itoa(give_mini(NULL, 0)->exit_code));
 	cpy = env_get_var(value, give_envp(NULL, 0));

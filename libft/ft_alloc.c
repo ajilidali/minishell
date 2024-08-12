@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_alloc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 22:35:38 by sakaido           #+#    #+#             */
-/*   Updated: 2024/08/11 18:32:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:59:53 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ char	*allocate_string(size_t length)
 	if (!str)
 	{
 		ft_putstr_fd("malloc", STDERR_FILENO);
-		ft_exit(EXIT_FAILURE);
+		return (NULL);
 	}
-	str[length] = '\0';
 	return (str);
 }

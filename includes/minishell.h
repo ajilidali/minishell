@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 03:39:18 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 17:40:19 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,9 +154,6 @@ typedef struct s_ms
 	int			exit_code;
 }	t_ms;
 
-// Extern global variable
-//extern t_ms g_ms;
-
 // Built-in functions
 int			is_local_fct(t_ms *mini, t_astnode *node);
 int			run_echo(char **command);
@@ -180,7 +177,6 @@ t_env		*create_empty_env(void);
 // have to make sure can run fcts from structs
 
 // Is functions
-int			is_quote(char c);
 int			is_whitespace(char c);
 int			is_operator(char c);
 
@@ -194,8 +190,6 @@ Token		create_token(TokenType type, char *value);
 // Lexer functions
 Token		lexer_next_token(Lexer *lexer);
 Lexer		lexer_init(const char *input);
-void		lexer_skip_whitespace(Lexer *lexer);
-void		lexer_advance(Lexer *lexer);
 char		lexer_peek(Lexer *lexer);
 
 // AST & Parser functions
@@ -204,27 +198,20 @@ void		parser_advance(Parser *parser);
 t_astnode	*parse_command(Parser *parser);
 t_astnode	*parse_pipeline(Parser *parser);
 void		free_ast(t_astnode *node);
-void		execute_ast(t_astnode *node, t_ms *mini);
-int			ft_fork_right(t_astnode *node, t_ms *mini, int pipefd[2]);
-int			ft_fork_left(t_astnode *node, t_ms *mini, int pipefd[2]);
 int			check_ast_for_errors(t_astnode *node);
 
 // Main functions
-int			executor(char *line, char **envp);
 char		*rl_shell(char *line_read);
 t_ms		*ft_init_ms(t_ms *mini, char **envp);
+void	setup_signal_handler(int flag);
 
 // Other functions
 char		*parse_variable(char *value);
-void		print_envp(char **envp);
-//void		process_arguments(int argc, char *argv[]);
 void		trim_whitespace(char *str);
 
 // Pipex functions
 void		exec_commands(t_astnode *node, t_ms *ms);
-int			execute(t_astnode *node, char **envp);
 char		*find_path(char *cmd, char **envp);
-int			init_pipex(int nargument, char **command, char **envp);
 char		*quote_master(char quote);
 int			char_counter(const char *str, char c);
 void		exec_pipe(t_astnode *node);
@@ -238,11 +225,8 @@ int			setup_redirections(t_astnode *node);
 
 //utils
 t_env		*give_envp(char **envp, int flag);
-void		test_envp(t_env *env, char *str);
-void		update_envp(t_ms *mini);
 t_env		*find_envp(char *variable, t_env *env);
-char		*copy_except_first_n_chars(const char *input, size_t n);
-void		setup_signal_handler(int flag);
+
 //void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
 void		update_pwd(char *old_pwd, char *path, t_env *env);
@@ -255,7 +239,6 @@ int			env_add_var(char *var, t_env *env);
 void		close_node_fd(t_astnode *node, int *pipefd);
 t_ms		*give_mini(t_ms *mini_cpy, int copy);
 int			if_is_local(char *cmd);
-void		reset_signal_handlers(void);
 void		handle_sigint_heredoc(int sig);
 int			monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i);
 void		make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i);
