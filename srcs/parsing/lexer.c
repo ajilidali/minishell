@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 14:57:33 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:16:25 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ Token lexer_word(Lexer *lexer)
 		}
 		lexer->pos++;
 	}
-	value = (char *)malloc((lexer->pos - start) + 1);
+	value = (char *)ft_malloc((lexer->pos - start) + 1);
 	if (!value)
 	{
 		token.type = TOKEN_EMPTY;

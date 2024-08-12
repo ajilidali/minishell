@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:43:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:47:15 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:11:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	*ft_malloc(size_t size)
 	else
 	{
 		if (!ft_garbage(3, result))
-			return (free(result), NULL);
+			return (NULL);
 		return (result);
 	}
 }

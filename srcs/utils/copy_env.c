@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:39:18 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:29:34 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:17:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,18 @@ int	check_pwd(t_env *head)
 	if (!tmp)
 	{
 		if (!env_add_var("PWD=", head))
-			return (ft_free(pwd), 0);
+			return (free(pwd), 0);
 	}
 	if (access(env_get_var("PWD", head), F_OK) != 0)
 	{
 		tmp = find_envp("PWD", head);
 		if (!tmp)
-			return (ft_free(pwd), 0);
+			return (free(pwd), 0);
 		tmp->name_value = ft_strjoin("PWD=", pwd);
 		if (!tmp->name_value)
-			return (ft_free(pwd), 0);
+			return (free(pwd), 0);
 	}
-	return (ft_free(pwd), 1);
+	return (free(pwd), 1);
 }
 
 t_env	*copy_env(char **envp)

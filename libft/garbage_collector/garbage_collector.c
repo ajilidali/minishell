@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:23:43 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:45:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:15:26 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ void	ft_free_gc(t_gc **gc)
 	return ;
 }
 
-int	ft_free_node(t_gc *gc, void *ptr)
+int	ft_free_node(t_gc **gc, void *ptr)
 {
 	t_gc	*prev;
 	t_gc	*current;
 
-	if (!gc)
+	if (!gc || *gc)
 		return (0);
 	prev = NULL;
-	current = gc;
+	current = *gc;
 	while (current)
 	{
 		if (current->str == ptr)
@@ -71,7 +71,7 @@ int	ft_free_node(t_gc *gc, void *ptr)
 			if (prev)
 				prev->next = current->next;
 			else
-				gc = current->next;
+				*gc = current->next;
 			free(current->str);
 			free(current);
 			return (1);
@@ -93,14 +93,14 @@ int	ft_garbage(int flag, void *result)
 		{
 			gc = ft_init_gc();
 			if (!gc)
-				return (0);
+				return (free(result), 0);
 		}
 		if (!ft_add_gb(gc, result))
-			return (0);
+			return (free(result), 0);
 		return (1);
 	}
 	if (flag == FREE_PTR)
-		return (ft_free_node(gc, result));
+		return (ft_free_node(&gc, result));
 	if (flag == FREE_GB)
 		return (ft_free_gc(&gc), 1);
 	return (1);
