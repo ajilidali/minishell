@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 21:02:58 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 22:14:47 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ Token	lexer_dollar(Lexer *lexer)
 	start = lexer->pos;
 	lexer->pos++;
 	while ((ft_isalnum(lexer_peek(lexer)) || lexer_peek(lexer) == '_'
-		|| lexer_peek(lexer) == '?') && (lexer_peek(lexer) != ' '))
+			|| lexer_peek(lexer) == '?') && (lexer_peek(lexer) != ' '))
 		lexer->pos++;
 	length = lexer->pos - start;
 	value = allocate_string(length + 1);
@@ -103,7 +103,7 @@ Token	lexer_word(Lexer *lexer)
 		}
 		lexer->pos++;
 	}
-	return (create_token(TOKEN_WORD, extract_value(lexer->input,start,lexer->pos - start)));
+	return (create_token(TOKEN_WORD, extract_value(lexer->input, start, lexer->pos - start)));
 }
 
 char	*replace_variables(char *input)
@@ -123,7 +123,7 @@ char	*replace_variables(char *input)
 	start = i;
 	if (i < (int)ft_strlen(input) && input[i] == '$')
 	{
-		if (input[i+1] == ' ' || input[i+1] == '\0')
+		if (input[i + 1] == ' ' || input[i + 1] == '\0')
 			return (input);
 		i++;
 		while (i < (int)ft_strlen(input) && (input[i] == '?' || input[i] == '_'
@@ -202,7 +202,7 @@ Token	lexer_operator(Lexer *lexer)
 	current = lexer_peek(lexer);
 	if (current == '<' || current == '>')
 	{
-		if (lexer->input[lexer->pos+1] == current)
+		if (lexer->input[lexer->pos + 1] == current)
 		{
 			lexer->pos++;
 			ft_memcpy(value, (char[]){current, current, '\0'}, sizeof(value));

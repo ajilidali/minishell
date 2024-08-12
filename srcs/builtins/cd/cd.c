@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 20:33:09 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 22:09:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int	run_cd(char **command, t_env *env)
 	char	*home;
 	char	*old_pwd;
 
+	if (command[1] && command[2])
+		return (ft_putendl_fd("dedsec: cd: too many arguments",
+				STDERR_FILENO), 1);
 	old_pwd = env_get_var("PWD=", env);
 	if (!command[1])
 	{
@@ -57,6 +60,6 @@ int	run_cd(char **command, t_env *env)
 	if (!ft_strncmp(command[1], "-", 1))
 		return (get_back(env, old_pwd));
 	if (chdir(command[1]) == -1)
-		return (printf("DEDSEC: cd: %s: %s\n", command[1], strerror(errno)),1);
+		return (printf("DEDSEC: cd: %s: %s\n", command[1], strerror(errno)), 1);
 	return (update_pwd(ft_strdup(old_pwd), command[1], env), 0);
 }

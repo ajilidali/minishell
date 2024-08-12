@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_pipe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 20:51:53 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 23:17:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i)
 		ft_putstr_fd("> ", STDERR_FILENO);
 		str = get_next_line(STDIN_FILENO);
 		if (!str || ft_strlen(str) == 0)
-			return (close(pipefd[0]), close(pipefd[1]), ft_exit(0));
+			return (close(pipefd[0]), close(pipefd[1]),
+				write(2, "\b\b\b", 4), write(2, "\n", 1), ft_exit(0));
 		if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
 				node->redirections[i].file,
 				ft_strlen(node->redirections[i].file)))
@@ -70,6 +71,8 @@ static int	setup_redirect_in_pipe(t_lst_cmd *node, size_t i)
 
 	if (node->redirections[i].flag == FD_HD)
 	{
+		if (node->fd_in != STDIN_FILENO)
+			close(node->fd_in);
 		if (pipe(pipefd) == -1)
 			ft_exit(EXIT_FAILURE);
 		if (monitoring_hd_pipe(pipefd, node, i))
@@ -94,6 +97,8 @@ int	setup_redirections_pipe(t_lst_cmd *list)
 	size_t	i;
 
 	i = 0;
+	list->fd_in = STDIN_FILENO;
+	list->fd_out = STDOUT_FILENO;
 	while (i < list->redirections_count)
 	{
 		if (setup_redirect_in_pipe(list, i))

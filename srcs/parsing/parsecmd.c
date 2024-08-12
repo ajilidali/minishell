@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 22:13:13 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ int	is_redirection(char c)
 	return (c == '<' || c == '>');
 }
 
-int check_ast_for_errors(t_astnode *node)
+int	check_ast_for_errors(t_astnode *node)
 {
-	int left_error;
-	int right_error;
+	int	left_error;
+	int	right_error;
 
 	if (node == NULL)
 		return (0);
@@ -31,7 +31,7 @@ int check_ast_for_errors(t_astnode *node)
 	return (left_error || right_error);
 }
 
-static t_astnode	*initialize_ast_node()
+static t_astnode	*initialize_ast_node(void)
 {
 	t_astnode	*node;
 
@@ -44,10 +44,10 @@ static t_astnode	*initialize_ast_node()
 	node->redirections_capacity = MAX_REDIRS;
 	node->args_count = 0;
 	node->redirections_count = 0;
-	return node;
+	return (node);
 }
 
-int type_of_redirect(char *str)
+int	type_of_redirect(char *str)
 {
 	if (!ft_strcmp(str, ">"))
 		return (FD_OUT);
@@ -58,7 +58,7 @@ int type_of_redirect(char *str)
 	return (FD_HD);
 }
 
-static void handle_redirection(Parser *parser, t_astnode *node)
+static void	handle_redirection(Parser *parser, t_astnode *node)
 {
 	if (node->redirections_count >= node->redirections_capacity)
 	{
@@ -81,11 +81,11 @@ static void handle_redirection(Parser *parser, t_astnode *node)
 	{
 		print_errors(NULL, ER_REDIRECT_ERROR); // Proubleme ici
 		node->type = AST_ERR;
-		give_mini(NULL,0)->exit_code = 1;
+		give_mini(NULL, 0)->exit_code = 1;
 	}
 }
 
-static void handle_argument(Parser *parser, t_astnode *node)
+static void	handle_argument(Parser *parser, t_astnode *node)
 {
 	if (node->args_count >= node->args_capacity)
 	{
@@ -101,9 +101,9 @@ static void handle_argument(Parser *parser, t_astnode *node)
 	parser_advance(parser);
 }
 
-t_astnode *parse_command(Parser *parser)// Memory allocation failure
+t_astnode	*parse_command(Parser *parser)// Memory allocation failure
 {
-	t_astnode *node;
+	t_astnode	*node;
 
 	node = initialize_ast_node();
 	while (parser->current_token.type == TOKEN_WORD ||

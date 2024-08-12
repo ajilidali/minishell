@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 17:40:19 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 22:31:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ typedef struct s_lst_cmd
 	int					fd_out;
 	int					save_in;
 	int					save_out;
-	int					is_hd;
 	t_redirection		*redirections;
 	size_t				redirections_count; // Number of redirections
 	size_t				args_capacity;

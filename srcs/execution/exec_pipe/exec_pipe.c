@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 03:31:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 23:14:31 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@ void	make_pipe(int *pipefd, t_lst_cmd *node, int *pipe_in)
 {
 	if (node->next)
 	{
-		node->fd_out = pipefd[1];
-		if (*pipe_in != -1)
+		if (node->fd_out == STDOUT_FILENO)
+			node->fd_out = pipefd[1];
+		else
+			close(pipefd[1]);
+		if (node->fd_in == STDIN_FILENO && *pipe_in != -1)
 			node->fd_in = *pipe_in;
 		else
-			node->fd_in = STDIN_FILENO;
+			close(*pipe_in);
 		*pipe_in = pipefd[0];
 	}
 	else
 	{
-		if (*pipe_in != -1)
+		if (node->fd_in == STDIN_FILENO && *pipe_in != -1)
 			node->fd_in = *pipe_in;
 		else
-			node->fd_in = STDIN_FILENO;
-		node->fd_out = STDOUT_FILENO;
+			close(*pipe_in);
 		*pipe_in = -1;
 		close(pipefd[0]);
 		close(pipefd[1]);
@@ -42,9 +44,6 @@ void	child_process(t_lst_cmd *node, int *pipefd)
 
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_IGN);
-	exit_code = setup_redirections_pipe(node);
-	if (exit_code)
-		return (cls_fd_pipe(node, pipefd), ft_exit(exit_code));
 	if (!make_redirection_pipe(node))
 		return (cls_fd_pipe(node, pipefd), ft_exit(1));
 	if (node->next)
@@ -64,8 +63,6 @@ void	child_process(t_lst_cmd *node, int *pipefd)
 
 int	parent_process(t_lst_cmd *node, int *pipefd, int pid)
 {
-	if (node->is_hd)
-		waitpid(pid, NULL, 0);
 	close(pipefd[1]);
 	if (!node->next)
 		close(pipefd[0]);
@@ -113,14 +110,25 @@ void	exec_list(t_lst_cmd *list)
 void	exec_pipe(t_astnode *node)
 {
 	t_lst_cmd	*list;
+	t_lst_cmd	*tmp;
 
 	list = NULL;
 	if (copy_ast_in_list(node, &list))
 	{
 		give_mini(NULL, 0)->exit_code = 1;
-		return ;
+		ft_exit(1);
 	}
 	setup_signal_handler(2);
+	tmp = list;
+	while (tmp)
+	{
+		if (setup_redirections_pipe(tmp))
+		{
+			give_mini(NULL, 0)->exit_code = 1;
+			return ;
+		}
+		tmp = tmp->next;
+	}
 	exec_list(list);
 	free_cmd_list(list);
 	wait_pids(0, 0);

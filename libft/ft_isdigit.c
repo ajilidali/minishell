@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:44:10 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 20:49:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 22:10:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ int	ft_isdigit(int a)
 	return ((a >= 48 && a <= 57));
 }
 
-int ft_strnum(char *str)
+int	ft_strnum(char *str)
 {
-	int i;
-	size_t num;
+	int		i;
+	size_t	num;
 
 	if (!str)
 		return (0);
