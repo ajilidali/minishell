@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_for_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:23:07 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 03:38:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_command_pipe(t_lst_cmd *list, t_ms *ms)
 	}
 	if (execve(path, list->args, envp) == -1)
 	{
-		free(path);
+		ft_free(path);
 		freetab(envp);
 	}
 	ft_exit(1);
@@ -79,4 +79,29 @@ void	cls_fd_pipe(t_lst_cmd *list, int *pipefd)
 		close(pipefd[1]);
 		close(pipefd[0]);
 	}
+}
+
+int	monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i)
+{
+	int	status;
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (1);
+	if (pid == 0)
+		make_here_doc_pipe(pipefd, node, i);
+	else if (pid != 0)
+	{
+		waitpid(pid, &status, 0);
+		close(pipefd[1]);
+		give_mini(NULL, 0)->exit_code = WEXITSTATUS(status);
+		if (WEXITSTATUS(status))
+			return (1);
+		node->fd_in = dup(pipefd[0]);
+		close(pipefd[0]);
+		if (node->fd_in == -1)
+			return (1);
+	}
+	return (0);
 }

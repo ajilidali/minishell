@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 21:29:22 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 03:14:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,15 +113,13 @@ void	exec_commands(t_astnode *node, t_ms *ms)
 
 	if (node->type == AST_COMMAND)
 	{
-		//setup_signal_handler(2);
-		signal(SIGINT, SIG_IGN);
-		signal(SIGQUIT, SIG_IGN);
 		ms->exit_code = setup_redirections(node);
 		if (ms->exit_code)
 			return (close_node_fd(node, NULL));
 		status = is_local_fct(ms, node);
 		if (status != -1)
 			return (restore_std(node, status));
+		setup_signal_handler(2);
 		pid = fork();
 		if (pid == -1)
 			return ;
@@ -131,7 +129,5 @@ void	exec_commands(t_astnode *node, t_ms *ms)
 		ms->exit_code = WEXITSTATUS(status);
 	}
 	else if (node->type == AST_PIPELINE)
-	{
 		exec_pipe(node);
-	}
 }

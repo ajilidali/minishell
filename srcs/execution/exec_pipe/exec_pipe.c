@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipe.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 03:31:55 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ void	child_process(t_lst_cmd *node, int *pipefd)
 {
 	int	exit_code;
 
-	setup_signal_handler(0);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	exit_code = setup_redirections_pipe(node);
 	if (exit_code)
 		return (cls_fd_pipe(node, pipefd), ft_exit(exit_code));
@@ -63,6 +64,8 @@ void	child_process(t_lst_cmd *node, int *pipefd)
 
 int	parent_process(t_lst_cmd *node, int *pipefd, int pid)
 {
+	if (node->is_hd)
+		waitpid(pid, NULL, 0);
 	close(pipefd[1]);
 	if (!node->next)
 		close(pipefd[0]);
@@ -117,6 +120,7 @@ void	exec_pipe(t_astnode *node)
 		give_mini(NULL, 0)->exit_code = 1;
 		return ;
 	}
+	setup_signal_handler(2);
 	exec_list(list);
 	free_cmd_list(list);
 	wait_pids(0, 0);

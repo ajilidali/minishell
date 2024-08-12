@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:52:46 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 03:38:50 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@ int	if_is_local(char *cmd)
 	if (ft_strcmp(cmd, "exit") == 0)
 		return (1);
 	return (0);
+}
+
+void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	ft_exit(1);
 }
 
 void	close_node_fd(t_astnode *node, int *pipefd)

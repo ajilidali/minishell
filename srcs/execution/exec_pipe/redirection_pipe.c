@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_pipe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:36:50 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 03:39:30 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,31 +43,23 @@ static int	setup_redirect_out_pipe(t_lst_cmd *list, size_t i)
 
 void	make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i)
 {
-	int		pid;
 	char	*str;
 
-	pid = fork();
-	if (pid == -1)
-		ft_exit(EXIT_FAILURE);
-	if (pid == 0)
+	signal(SIGINT, handle_sigint_heredoc);
+	if (node->fd_in != STDIN_FILENO)
+		close(node->fd_in);
+	while (1)
 	{
-		if (node->fd_in != STDIN_FILENO)
-			close(node->fd_in);
-		while (1)
-		{
-			str = get_next_line(STDIN_FILENO);
-			if (str == NULL || ((ft_strlen(str)) > 1 && !ft_strncmp(str,
-						node->redirections[i].file,
-						ft_strlen(node->redirections[i].file))))
-				return (ft_free(str), close(0), get_next_line(0), ft_exit(0));
-			ft_putstr_fd(str, pipefd[1]);
-			ft_free(str);
-		}
-		close(pipefd[1]);
-		close(pipefd[0]);
-		return (ft_free(str), close(0), get_next_line(0), ft_exit(0));
+		str = get_next_line(STDIN_FILENO);
+		if (!str || ft_strlen(str) == 0)
+			return (close(pipefd[0]), close(pipefd[1]), ft_exit(0));
+		if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
+				node->redirections[i].file,
+				ft_strlen(node->redirections[i].file)))
+			return (close(pipefd[0]), close(pipefd[1]), ft_exit(0));
+		ft_putstr_fd(str, pipefd[1]);
+		ft_free(str);
 	}
-	wait(NULL);
 }
 
 static int	setup_redirect_in_pipe(t_lst_cmd *node, size_t i)
@@ -78,9 +70,8 @@ static int	setup_redirect_in_pipe(t_lst_cmd *node, size_t i)
 	{
 		if (pipe(pipefd) == -1)
 			ft_exit(EXIT_FAILURE);
-		make_here_doc_pipe(pipefd, node, i);
-		close(pipefd[1]);
-		node->fd_in = pipefd[0];
+		if (monitoring_hd_pipe(pipefd, node, i))
+			return (1);
 	}
 	else if (node->redirections[i].flag == FD_IN)
 	{

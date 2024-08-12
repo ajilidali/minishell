@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/12 14:09:13 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 17:27:21 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 00:34:38 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	read_and_get(int fd, char **buffer)
 		else if (n_read == 0)
 			return (ft_free(new_str), 1);
 		new_buffer = ft_strjoin(*buffer, new_str);
-		free(*buffer);
+		ft_free(*buffer);
 		*buffer = new_buffer;
 		if (!*buffer)
 			return (ft_free(new_str), -1);

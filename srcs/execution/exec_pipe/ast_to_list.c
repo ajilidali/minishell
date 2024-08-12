@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_to_list.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 04:39:11 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:51:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 02:15:06 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,24 @@ void	free_cmd_list(t_lst_cmd *list)
 		ft_free(list);
 		list = tmp;
 	}
+}
+
+int	ft_is_hd(t_astnode *node)
+{
+	size_t	i;
+	int		is_hd;
+
+	i = 0;
+	is_hd = 0;
+	while (i < node->redirections_count)
+	{
+		if (node->redirections[i].flag == FD_HD)
+			is_hd = 1;
+		else if (node->redirections[i].flag == FD_IN)
+			is_hd = 0;
+		i++;
+	}
+	return (is_hd);
 }
 
 t_lst_cmd	*create_list_node(t_astnode *node)
@@ -40,6 +58,7 @@ t_lst_cmd	*create_list_node(t_astnode *node)
 	new_node->save_in = node->save_in;
 	new_node->save_out = node->save_out;
 	new_node->next = NULL;
+	new_node->is_hd = ft_is_hd(node);
 	return (new_node);
 }
 

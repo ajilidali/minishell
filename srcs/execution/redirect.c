@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 21:50:43 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 03:37:05 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,34 +41,51 @@ static int	setup_redirect_in(t_astnode *node, size_t i)
 	return (0);
 }
 
-void	make_here_doc(int *pipefd, t_astnode *node, size_t i)
+static void	make_here_doc(int *pipefd, t_astnode *node, size_t i)
 {
-	int		pid;
 	char	*str;
+
+	signal(SIGINT, handle_sigint_heredoc);
+	if (node->fd_in != STDIN_FILENO)
+		close(node->fd_in);
+	while (1)
+	{
+		str = get_next_line(STDIN_FILENO);
+		if (!str || ft_strlen(str) == 0)
+			return (close(pipefd[0]), close(pipefd[1]), ft_exit(0));
+		if ((ft_strlen(str)) > 1 && !ft_strncmp(str,
+				node->redirections[i].file,
+				ft_strlen(node->redirections[i].file)))
+			return (close(pipefd[0]), close(pipefd[1]), ft_exit(0));
+		ft_putstr_fd(str, pipefd[1]);
+		ft_free(str);
+	}
+}
+
+static int	monitoring_hd(int *pipefd, t_astnode *node, size_t	i)
+{
+	int	status;
+	int	pid;
 
 	pid = fork();
 	if (pid == -1)
-		ft_exit(EXIT_FAILURE);
+		return (1);
 	if (pid == 0)
+		make_here_doc(pipefd, node, i);
+	else
 	{
-		if (node->fd_in != STDIN_FILENO)
-			close(node->fd_in);
-		while (1)
-		{
-			str = get_next_line(STDIN_FILENO);
-			printf("return = %p\n", str);
-			if (str == NULL || ((ft_strlen(str)) > 1 && !ft_strncmp(str,
-						node->redirections[i].file,
-						ft_strlen(node->redirections[i].file))))
-				return (ft_free(str), close(0), close(pipefd[1]),
-					close(pipefd[0]), get_next_line(0), ft_exit(0));
-			ft_putstr_fd(str, pipefd[1]);
-			ft_free(str);
-		}
-		return (ft_free(str), close(0), close(pipefd[1]),
-			close(pipefd[0]), get_next_line(0), ft_exit(0));
+		setup_signal_handler(2);
+		waitpid(pid, &status, 0);
+		close(pipefd[1]);
+		give_mini(NULL, 0)->exit_code = WEXITSTATUS(status);
+		if (WEXITSTATUS(status))
+			return (1);
+		node->fd_in = dup(pipefd[0]);
+		close(pipefd[0]);
+		if (node->fd_in == -1)
+			return (1);
 	}
-	wait(NULL);
+	return (0);
 }
 
 static int	setup_redirect_out(t_astnode *node, size_t i)
@@ -79,9 +96,8 @@ static int	setup_redirect_out(t_astnode *node, size_t i)
 	{
 		if (pipe(pipefd) == -1)
 			ft_exit(EXIT_FAILURE);
-		make_here_doc(pipefd, node, i);
-		close(pipefd[1]);
-		node->fd_in = pipefd[0];
+		if (monitoring_hd(pipefd, node, i))
+			return (1);
 	}
 	else if (node->redirections[i].flag == FD_IN)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 21:04:24 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 03:39:18 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,12 +126,12 @@ typedef struct s_lst_cmd
 	int					fd_out;
 	int					save_in;
 	int					save_out;
+	int					is_hd;
 	t_redirection		*redirections;
 	size_t				redirections_count; // Number of redirections
 	size_t				args_capacity;
 	size_t				redirections_capacity;
 	size_t				args_count;
-
 }	t_lst_cmd;
 
 // Parser Structs
@@ -256,6 +256,9 @@ void		close_node_fd(t_astnode *node, int *pipefd);
 t_ms		*give_mini(t_ms *mini_cpy, int copy);
 int			if_is_local(char *cmd);
 void		reset_signal_handlers(void);
+void		handle_sigint_heredoc(int sig);
+int			monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i);
+void		make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i);
 
 //list for pwd
 t_list		*lnew_node(char *name_value);

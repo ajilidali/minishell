@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/04 02:14:01 by hclaude           #+#    #+#             */
-/*   Updated: 2024/06/03 18:12:11 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 00:34:31 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,6 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*))
 	if (lst && (*del))
 	{
 		del(lst->content);
-		free(lst);
+		ft_free(lst);
 	}
 }
