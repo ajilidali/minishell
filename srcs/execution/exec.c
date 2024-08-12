@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 18:38:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 19:58:01 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,11 @@ static void	exec_command(t_astnode *node, t_ms *ms)
 		check_path(node->args[0]);
 		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
-		ft_exit(1);
+		ft_exit(127);
 	}
 	if (execve(path, node->args, envp) == -1)
 		return (print_errors(path, ER_PERM_DENIED), ft_free(path),
-			freetab(envp), ft_exit(1));
+			freetab(envp), ft_exit(126));
 	ft_exit(1);
 }
 
