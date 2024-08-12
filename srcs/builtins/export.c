@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:47:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 19:09:41 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,10 @@ int	run_export(char **command, t_env **env)
 			if (verify_export(command[i]) == 1)
 				return (EXIT_SUCCESS);
 			else
+			{
+				ft_putendl_fd("dedsec: export: `=': not a valid identifier", STDERR_FILENO);
 				return (EXIT_FAILURE);
+			}
 		}
 		if (add_node_env(command[i], *env))
 			return (EXIT_FAILURE);
