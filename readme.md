@@ -14,3 +14,12 @@ Arbre AST pour comprendre comment c'est fait :
 
 ![alt text](<Screenshot from 2024-06-19 19-27-15.png>)
 
+
+
+
+
+"ls"
+valeur de retour ctrl c
+ls ""
+env -i add /usr/bin/
+cacher header
