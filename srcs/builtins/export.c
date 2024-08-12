@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 20:44:54 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/12 20:46:36 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	verify_export(char *command)
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(command[0]))
+	if (!ft_isalpha(command[0]))
 		return (2);
 	while (command[i])
 	{
