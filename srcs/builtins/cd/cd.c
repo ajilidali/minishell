@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/07/29 18:36:42 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 20:33:09 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,6 @@ int	run_cd(char **command, t_env *env)
 	if (!ft_strncmp(command[1], "-", 1))
 		return (get_back(env, old_pwd));
 	if (chdir(command[1]) == -1)
-	{
-		printf("DEDSEC: cd: %s: %s\n", command[1], strerror(errno));
-		return (1);
-	}
+		return (printf("DEDSEC: cd: %s: %s\n", command[1], strerror(errno)),1);
 	return (update_pwd(ft_strdup(old_pwd), command[1], env), 0);
 }

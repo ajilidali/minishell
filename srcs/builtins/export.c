@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 19:40:13 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 20:44:54 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	verify_export(char *command)
 	int	i;
 
 	i = 0;
-	if (!ft_isalnum(command[0]))
+	if (ft_isalpha(command[0]))
 		return (2);
 	while (command[i])
 	{
@@ -102,15 +102,14 @@ int	run_export(char **command, t_env **env)
 	{
 		if (verify_export(command[i]))
 		{
-			if (verify_export(command[i]) == 1)
-				return (EXIT_SUCCESS);
-			else
+			if (verify_export(command[i]) != 1)
 			{
 				ft_putstr_fd("DEDSEC: export: `", STDERR_FILENO);
 				ft_putstr_fd(command[i], STDERR_FILENO);
 				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
 				return (EXIT_FAILURE);
-			}
+			}else
+				return (EXIT_SUCCESS);
 		}
 		if (add_node_env(command[i], *env))
 			return (EXIT_FAILURE);

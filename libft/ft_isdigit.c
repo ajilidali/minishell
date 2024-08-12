@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 12:44:10 by hclaude           #+#    #+#             */
-/*   Updated: 2024/04/19 23:06:22 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 20:13:22 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "libft.h"
 
 /* 
  * Checks if the passed character is a digit.
@@ -18,4 +20,25 @@
 int	ft_isdigit(int a)
 {
 	return ((a >= 48 && a <= 57));
+}
+
+
+int ft_strnum(char *str)
+{
+	int i;
+	size_t num;
+	
+	if (!str)
+		return (0);
+	i = 0;
+	num = 0;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]))
+			num++;
+		i++;
+	}
+	if (num == ft_strlen(str))
+		return (1);
+	return (0);
 }
