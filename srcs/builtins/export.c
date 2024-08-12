@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 19:09:41 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 19:23:11 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	run_export(char **command, t_env **env)
 				return (EXIT_SUCCESS);
 			else
 			{
-				ft_putendl_fd("dedsec: export: `=': not a valid identifier", STDERR_FILENO);
+				ft_putendl_fd("DEDSEC: export: `=': not a valid identifier", STDERR_FILENO);
 				return (EXIT_FAILURE);
 			}
 		}
