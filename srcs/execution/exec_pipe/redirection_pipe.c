@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 23:17:28 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 23:22:09 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,6 @@ int	make_redirection_pipe(t_lst_cmd *node)
 {
 	if (node->fd_in != STDIN_FILENO)
 	{
-		node->save_in = dup(STDIN_FILENO);
 		if (dup2(node->fd_in, STDIN_FILENO) == -1)
 		{
 			close(node->fd_in);
@@ -125,7 +124,6 @@ int	make_redirection_pipe(t_lst_cmd *node)
 	}
 	if (node->fd_out != STDOUT_FILENO)
 	{
-		node->save_out = dup(STDOUT_FILENO);
 		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
 		{
 			close(node->fd_in);
