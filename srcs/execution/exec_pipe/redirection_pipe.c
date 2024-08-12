@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 03:39:30 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:47:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i)
 	char	*str;
 
 	signal(SIGINT, handle_sigint_heredoc);
+	signal(SIGQUIT, handle_sigint_heredoc);
 	if (node->fd_in != STDIN_FILENO)
 		close(node->fd_in);
 	while (1)

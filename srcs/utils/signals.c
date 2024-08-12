@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 15:41:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 18:40:15 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:44:53 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	handler(int signal)
 
 void	handler_backslash(int sig)
 {
-	printf("Quit: 3\n");
+	ft_putendl_fd("Quit: 3\n", STDOUT_FILENO);
 	give_mini(NULL, 0)->exit_code = 131;
 	(void)sig;
 }

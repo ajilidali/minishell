@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 03:37:05 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/12 18:46:34 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ static void	make_here_doc(int *pipefd, t_astnode *node, size_t i)
 	char	*str;
 
 	signal(SIGINT, handle_sigint_heredoc);
+	signal(SIGQUIT, handle_sigint_heredoc);
 	if (node->fd_in != STDIN_FILENO)
 		close(node->fd_in);
 	while (1)
