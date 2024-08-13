@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 14:45:44 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 23:14:31 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 14:08:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	child_process(t_lst_cmd *node, int *pipefd)
 	int	exit_code;
 
 	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_DFL);
 	if (!make_redirection_pipe(node))
 		return (cls_fd_pipe(node, pipefd), ft_exit(1));
 	if (node->next)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   call_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/11 18:43:54 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 16:11:28 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 14:19:54 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 void	ft_exit(int status)
 {
+	int	fd;
+
+	fd = 3;
 	ft_free_gb();
+	while (fd < 1000)
+		close(fd++);
 	exit(status);
 }
 
