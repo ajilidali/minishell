@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 23:22:09 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 20:35:18 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@ static int	setup_redirect_out_pipe(t_lst_cmd *list, size_t i)
 		list->fd_out = open(list->redirections[i].file, O_WRONLY
 				| O_CREAT | O_TRUNC, 0644);
 		if (list->fd_out == -1)
-		{
-			perror("DEDSEC");
-			return (1);
-		}
+			return (perror("DEDSEC"), 1);
 	}
 	else if (list->redirections[i].flag == FD_ADDOUT)
 	{
@@ -33,10 +30,7 @@ static int	setup_redirect_out_pipe(t_lst_cmd *list, size_t i)
 		list->fd_out = open(list->redirections[i].file, O_WRONLY
 				| O_CREAT | O_APPEND, 0644);
 		if (list->fd_out == -1)
-		{
-			perror("DEDSEC");
-			return (1);
-		}
+			return (perror("DEDSEC"), 1);
 	}
 	return (0);
 }
@@ -76,7 +70,8 @@ static int	setup_redirect_in_pipe(t_lst_cmd *node, size_t i)
 		if (pipe(pipefd) == -1)
 			ft_exit(EXIT_FAILURE);
 		if (monitoring_hd_pipe(pipefd, node, i))
-			return (1);
+			return (ft_putendl_fd("Heredoc fail",
+					STDERR_FILENO), 1);
 	}
 	else if (node->redirections[i].flag == FD_IN)
 	{
@@ -84,10 +79,7 @@ static int	setup_redirect_in_pipe(t_lst_cmd *node, size_t i)
 			close(node->fd_in);
 		node->fd_in = open(node->redirections[i].file, O_RDONLY);
 		if (node->fd_in == -1)
-		{
-			perror("DEDSEC");
-			return (1);
-		}
+			return (perror("DEDSEC"), 1);
 	}
 	return (0);
 }
@@ -97,8 +89,6 @@ int	setup_redirections_pipe(t_lst_cmd *list)
 	size_t	i;
 
 	i = 0;
-	list->fd_in = STDIN_FILENO;
-	list->fd_out = STDOUT_FILENO;
 	while (i < list->redirections_count)
 	{
 		if (setup_redirect_in_pipe(list, i))
@@ -114,23 +104,17 @@ int	make_redirection_pipe(t_lst_cmd *node)
 {
 	if (node->fd_in != STDIN_FILENO)
 	{
-		if (dup2(node->fd_in, STDIN_FILENO) == -1)
-		{
-			close(node->fd_in);
-			close(node->fd_out);
+		if (node->fd_in < 0)
 			return (0);
-		}
-		close(node->fd_in);
+		if (dup2(node->fd_in, STDIN_FILENO) == -1)
+			return (0);
 	}
 	if (node->fd_out != STDOUT_FILENO)
 	{
-		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
-		{
-			close(node->fd_in);
-			close(node->fd_out);
+		if (node->fd_out < 0)
 			return (0);
-		}
-		close(node->fd_out);
+		if (dup2(node->fd_out, STDOUT_FILENO) == -1)
+			return (0);
 	}
 	return (1);
 }
