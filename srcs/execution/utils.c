@@ -6,34 +6,11 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:52:46 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 18:46:52 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 21:23:28 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	if_is_local(char *cmd)
-{
-	if (!cmd)
-		return (1);
-	//if (ft_strcmp(cmd, "alias") == 0)
-	//	return (1);
-	if (ft_strcmp(cmd, "cd") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "env") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "export") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "echo") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "pwd") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "unset") == 0)
-		return (1);
-	if (ft_strcmp(cmd, "exit") == 0)
-		return (1);
-	return (0);
-}
 
 void	handle_sigint_heredoc(int sig)
 {

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 23:21:55 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 21:29:23 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,15 @@ typedef struct s_env
 }	t_env;
 
 //Alias Structs
-typedef struct {
+typedef struct
+{
 	char	*cmd;
 	char	*value;
 } Alias;
 
 //Lexer Structs
-typedef enum {
+typedef enum
+{
 	TOKEN_WORD,
 	TOKEN_EMPTY,
 	TOKEN_STRING,
@@ -83,19 +85,22 @@ typedef enum {
 	TOKEN_EOF
 } TokenType;
 
-typedef struct {
+typedef struct
+{
 	TokenType	type;
 	char		*value;
 } Token;
 
-typedef struct {
+typedef struct
+{
 	const char	*input;
 	size_t		pos;
 	size_t		length;
 }	Lexer;
 
 //Abstract Syntax Tree Structs
-typedef enum {
+typedef enum
+{
 	AST_COMMAND,
 	AST_PIPELINE,
 	AST_ERR
@@ -132,7 +137,8 @@ typedef struct s_lst_cmd
 }	t_lst_cmd;
 
 // Parser Structs
-typedef struct {
+typedef struct
+{
 	Lexer	lexer;
 	Token	current_token;
 } Parser;
@@ -200,7 +206,7 @@ int			check_ast_for_errors(t_astnode *node);
 // Main functions
 char		*rl_shell(char *line_read);
 t_ms		*ft_init_ms(t_ms *mini, char **envp);
-void	setup_signal_handler(int flag);
+void		setup_signal_handler(int flag);
 
 // Other functions
 char		*parse_variable(char *value);
@@ -235,7 +241,7 @@ int			make_redirection(t_astnode *node);
 int			env_add_var(char *var, t_env *env);
 void		close_node_fd(t_astnode *node, int *pipefd);
 t_ms		*give_mini(t_ms *mini_cpy, int copy);
-int			if_is_local(char *cmd);
+// int			if_is_local(char *cmd);
 void		handle_sigint_heredoc(int sig);
 int			monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i);
 void		make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i);

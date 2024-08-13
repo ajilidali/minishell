@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:23:07 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/13 14:13:22 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 21:03:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ int	is_local_fct_pipe(t_ms *mini, t_lst_cmd *list)
 		return (0);
 	exit_status = -1;
 	mini->env = give_envp(NULL, 0);
-	if (if_is_local(list->args[0]))
-		make_redirection_pipe(list);
 	if (ft_strcmp(list->args[0], "cd") == 0)
 		exit_status = run_cd(list->args, mini->env);
 	if (ft_strcmp(list->args[0], "env") == 0)

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 22:09:01 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 20:43:56 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,12 @@ int	run_cd(char **command, t_env *env)
 		if (!home)
 			return (ft_putendl_fd("DEDSEC: cd: HOME not set", 2), 1);
 		if (chdir(home) == -1)
-		{
-			printf("DEDSEC: cd: %s: %s\n", home, strerror(errno));
-			return (1);
-		}
+			return (perror("DEDSEC: cd:"), 1);
 		return (update_pwd(ft_strdup(old_pwd), home, env), 0);
 	}
 	if (!ft_strncmp(command[1], "-", 1))
 		return (get_back(env, old_pwd));
 	if (chdir(command[1]) == -1)
-		return (printf("DEDSEC: cd: %s: %s\n", command[1], strerror(errno)), 1);
+		return (perror("DEDSEC: cd:"), 1);
 	return (update_pwd(ft_strdup(old_pwd), command[1], env), 0);
 }
