@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/05 08:46:34 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/13 01:07:43 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/13 12:12:50 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	run_exit(char **command, t_ms *mini)
 		ft_putstr_fd("DEDSEC: exit: ", STDERR_FILENO);
 		ft_putstr_fd(command[1], STDERR_FILENO);
 		ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-		return (ft_exit(255), 255);
+		return (ft_exit(2), 2);
 	}
 	exit_value = ft_atoi(command[1]);
 	if (exit_value > 255)
