@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 21:31:33 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 21:34:24 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ char	*ext_val(const char *input, size_t start, size_t len)
 	i = 0;
 	j = 0;
 	value = allocate_string(len + 1);
+	// pas protect
 	while (i < len)
 	{
 		if (input[start + i] != '\'' && input[start + i] != '\"')
@@ -205,12 +206,12 @@ t_token	lexer_operator(t_lexer *lexer)
 		if (lexer->input[lexer->pos + 1] == current)
 		{
 			lexer->pos++;
-			ft_memcpy(value, (char[]){current, current, '\0'}, sizeof(value));
+			ft_memcpy(value, (char []){current, current, '\0'}, sizeof(value));
 			lexer->pos++;
 			return (crt_tkn(TOKEN_OPERATOR, ft_strdup(value)));
 		}
 	}
-	ft_memcpy(value, (char[]){current, '\0'}, sizeof(value));
+	ft_memcpy(value, (char []){current, '\0'}, sizeof(value));
 	lexer->pos++;
 	return (crt_tkn(TOKEN_OPERATOR, ft_strdup(value)));
 }
