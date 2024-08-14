@@ -3,34 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 15:50:46 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 17:27:25 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:10:20 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strstr(const char *str, const char *to_find)
+const char	*ft_strstr(const char *str, const char *to_find)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	*anchor;
 
+	if (!(*to_find))
+		return (str);
 	i = -1;
-	j = 0;
-	if (to_find[0] == '\0')
-		return ((char *)str);
 	while (str[++i])
 	{
-		if (str[i] == to_find[j])
+		if (str[i] == to_find[0])
 		{
-			while (str[i + j] == to_find[j])
-			{
-				if (to_find[j++] == '\0')
-					return ((char *)&str[i]);
-			}
 			j = 0;
+			anchor = ((char *)str + i);
+			while (str[i] && to_find[j] && str[i] == to_find[j])
+			{
+				if (to_find[j + 1] == '\0')
+					return (anchor);
+				i++;
+				j++;
+			}
+			if (!str[i])
+				return (0);
 		}
 	}
 	return (0);

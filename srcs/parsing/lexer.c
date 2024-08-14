@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 16:42:52 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:13:06 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,43 +104,50 @@ Token	lexer_word(Lexer *lex)
 	return (crt_tkn(TOKEN_WORD, ext_val(lex->input, start, lex->pos - start)));
 }
 
-char	*replace_variables(char *in)
+char	*extract_variable(char *in, size_t *end_pos)
 {
-	char	*result;
-	char	*final;
-	int		start;
-	size_t		i;
-
+	size_t	start;
+	size_t	i;
+	char	*variable;
+	
 	i = 0;
-	if (!in)
+	if (!in || char_counter(in, '$') == 0)
 		return (NULL);
-	if (char_counter(in, '$') == 0)
-		return (in);
 	while (in[i] && in[i] != '$')
 		i++;
 	start = i;
 	if (i < ft_strlen(in) && in[i] == '$')
 	{
 		if (in[i + 1] == ' ' || in[i + 1] == '\0')
-			return (in);
+			return (NULL);
 		i++;
 		while (i < ft_strlen(in) && (in[i] == '?' || in[i] == '_'
 				|| ft_isalnum(in[i])))
 			i++;
 	}
 	else
-	{
-		start = 0;
-		i = ft_strlen(in);
-	}
-	result = allocate_string((i - start) + 1);
-	ft_strncpy(result, &in[start], i - start);
-	if (!result)
-		return (ft_free(result), NULL);
-	final = ft_replace(in, result, parse_variable(result));
-	if (char_counter(in, '$') != 0)
-		return (replace_variables(final));
-	return (ft_free(in), ft_free(result), final);	
+		return (NULL);
+	variable = allocate_string((i - start) + 1);
+	ft_strncpy(variable, &in[start], i - start);
+	*end_pos = i;
+	return (variable);
+}
+
+char	*replace_variables(char *in)
+{
+	char	*variable;
+	char	*final;
+	size_t	end_pos;
+
+	if (!in)
+		return (NULL);
+	variable = extract_variable(in, &end_pos);
+	if (!variable)
+		return (in);
+	final = ft_replace(in, variable, parse_variable(variable));
+	if (char_counter(final, '$') != 0)
+		final = replace_variables(final);
+	return (ft_free(variable), final);
 }
 
 int	is_all_spaces(const char *str)
@@ -225,7 +232,7 @@ Token	lexer_pipe(Lexer *lexer)
 	value[0] = lp(lexer);
 	value[1] = '\0';
 	lexer->pos++;
-	return (crt_tkn(TOKEN_PIPE,	ft_strdup(value)));
+	return (crt_tkn(TOKEN_PIPE, ft_strdup(value)));
 }
 
 Token	lexer_next_token(Lexer *lexer)

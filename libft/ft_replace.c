@@ -6,11 +6,12 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:46:33 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 17:18:57 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:06:49 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 size_t	calculate_output_length(const char *in, const char *replacee,
 		const char *replaced)
@@ -26,10 +27,12 @@ size_t	calculate_output_length(const char *in, const char *replacee,
 	if (replacee_len == 0)
 		return (ft_strlen(in));
 	count = 0;
-	while ((tmp = ft_strstr(tmp, replacee)) != NULL)
+	tmp = ft_strstr(tmp, replacee);
+	while (tmp != NULL)
 	{
 		count++;
 		tmp += replacee_len;
+		tmp = ft_strstr(tmp, replacee);
 	}
 	return (ft_strlen(in) + count * (replaced_len - replacee_len));
 }
@@ -65,8 +68,10 @@ char	*ft_replace(char *in, const char *replacee, const char *replaced)
 	size_t	replacee_len;
 	size_t	out_len;
 
-	if (in == NULL || replacee == NULL || replaced == NULL)
+	if (in == NULL || replacee == NULL)
 		return (NULL);
+	if (replaced == NULL)
+		replaced = "";
 	replacee_len = ft_strlen(replacee);
 	if (replacee_len == 0)
 		return (ft_strdup(in));

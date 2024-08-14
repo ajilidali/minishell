@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 17:20:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:34:01 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,21 +20,19 @@ int	is_local_fct(t_ms *mini, t_astnode *node)
 		return (0);
 	exit_status = -1;
 	mini->env = give_envp(NULL, 0);
-	//if (ft_strcmp(node->args[0], "alias") == 0)
-	//	exit_status = run_alias(mini, node);
 	if (ft_strcmp(node->args[0], "cd") == 0)
 		exit_status = run_cd(node->args, mini->env);
-	if (ft_strcmp(node->args[0], "env") == 0)
+	else if (ft_strcmp(node->args[0], "env") == 0)
 		exit_status = run_env(mini->env);
-	if (ft_strcmp(node->args[0], "export") == 0)
+	else if (ft_strcmp(node->args[0], "export") == 0)
 		exit_status = run_export(node->args, &mini->env);
-	if (ft_strcmp(node->args[0], "echo") == 0)
+	else if (ft_strcmp(node->args[0], "echo") == 0)
 		exit_status = run_echo(node->args);
-	if (ft_strcmp(node->args[0], "pwd") == 0)
+	else if (ft_strcmp(node->args[0], "pwd") == 0)
 		exit_status = run_pwd();
-	if (ft_strcmp(node->args[0], "unset") == 0)
+	else if (ft_strcmp(node->args[0], "unset") == 0)
 		exit_status = run_unset(node->args, &mini->env);
-	if (ft_strcmp(node->args[0], "exit") == 0)
+	else if (ft_strcmp(node->args[0], "exit") == 0)
 		exit_status = run_exit(node->args, mini);
 	return (exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/12 22:13:13 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:38:57 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,6 @@ int	check_ast_for_errors(t_astnode *node)
 	left_error = check_ast_for_errors(node->left);
 	right_error = check_ast_for_errors(node->right);
 	return (left_error || right_error);
-}
-
-static t_astnode	*initialize_ast_node(void)
-{
-	t_astnode	*node;
-
-	node = (t_astnode *)ft_malloc(sizeof(t_astnode));
-	node->type = AST_COMMAND;
-	node->left = node->right = NULL;
-	node->args = (char **)ft_malloc(MAX_ARGS * sizeof(char *));
-	node->redirections = (t_redirection *)ft_malloc(MAX_REDIRS * sizeof(t_redirection));
-	node->args_capacity = MAX_ARGS;
-	node->redirections_capacity = MAX_REDIRS;
-	node->args_count = 0;
-	node->redirections_count = 0;
-	return (node);
 }
 
 int	type_of_redirect(char *str)
@@ -110,7 +94,7 @@ t_astnode	*parse_command(Parser *parser)// Memory allocation failure
 			parser->current_token.type == TOKEN_VARIABLE ||
 			parser->current_token.type == TOKEN_OPERATOR)
 	{
-		if (parser->current_token.type == TOKEN_OPERATOR && is_redirection(parser->current_token.value[0]))
+		if (parser->current_token.type == TOKEN_OPERATOR && (parser->current_token.value[0] == '<' || parser->current_token.value[0] == '>'))
 			handle_redirection(parser, node);
 		else
 			handle_argument(parser, node);
@@ -118,3 +102,4 @@ t_astnode	*parse_command(Parser *parser)// Memory allocation failure
 	node->args[node->args_count] = NULL;
 	return (node);
 }
+

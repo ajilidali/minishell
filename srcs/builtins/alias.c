@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:41:19 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,19 @@ int	alias_finder(Alias *aliases, char *cmd, int alias_count)
 		i++;
 	}
 	return (-1);
+}
+
+
+void	trim_whitespace(char *str)
+{
+	char	*end;
+
+	while (*str == ' ')
+		str++;
+	end = str + ft_strlen(str) - 1;
+	while (end > str && *end == ' ')
+		end--;
+	*(end + 1) = '\0';
 }
 
 // Attention fonction pas protege si erreur de malloc

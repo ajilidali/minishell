@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:21:14 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,20 @@ t_ms	*ft_init_ms(t_ms *mini, char **envp)
 	mini->exit_code = 0;
 	give_mini(mini, 1);
 	return (mini);
+}
+
+t_astnode	*initialize_ast_node(void)
+{
+	t_astnode	*node;
+
+	node = (t_astnode *)ft_malloc(sizeof(t_astnode));
+	node->type = AST_COMMAND;
+	node->left = node->right = NULL;
+	node->args = (char **)ft_malloc(MAX_ARGS * sizeof(char *));
+	node->redirections = (t_redirection *)ft_malloc(MAX_REDIRS * sizeof(t_redirection));
+	node->args_capacity = MAX_ARGS;
+	node->redirections_capacity = MAX_REDIRS;
+	node->args_count = 0;
+	node->redirections_count = 0;
+	return (node);
 }

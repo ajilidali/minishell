@@ -26,3 +26,12 @@ cacher header
 strstr in ft_replace
 Decompress ENV vars in heredoc
 Space issue with quotes
+
+
+
+mkdir test
+cd test
+rm -rf test
+crash
+
+

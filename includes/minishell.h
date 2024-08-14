@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 17:52:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:36:18 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,7 +210,6 @@ void		setup_signal_handler(int flag);
 
 // Other functions
 char		*parse_variable(char *value);
-void		trim_whitespace(char *str);
 
 // Pipex functions
 void		exec_commands(t_astnode *node, t_ms *ms);
@@ -222,7 +221,7 @@ void		exec_pipe(t_astnode *node);
 // Args Mgmt
 char		**filter_argv(char **argv, const char *target);
 int			get_argc(char *argv[]);
-
+t_astnode	*initialize_ast_node(void);
 //beta
 int			setup_redirections(t_astnode *node);
 
