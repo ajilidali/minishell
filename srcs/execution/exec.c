@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 12:39:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 16:49:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ static void	exec_command(t_astnode *node, t_ms *ms)
 		path = ft_strdup(node->args[0]);
 	else
 		path = find_path(node->args[0], envp);
+	check_path(node->args[0]);
 	if (!path)
 	{
-		check_path(node->args[0]);
 		print_errors(node->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
 		ft_exit(127);

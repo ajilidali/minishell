@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_for_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:23:07 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/13 21:03:24 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 16:50:21 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	exec_command_pipe(t_lst_cmd *list, t_ms *ms)
 		path = ft_strdup(list->args[0]);
 	else
 		path = find_path(list->args[0], envp);
+	check_path(list->args[0]);
 	if (!path)
 	{
-		check_path(list->args[0]);
 		print_errors(list->args[0], ER_CMD_NOT_FOUND);
 		freetab(envp);
 		ft_exit(127);
