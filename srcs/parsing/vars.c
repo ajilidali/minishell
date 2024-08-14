@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 21:07:27 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 21:30:43 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,11 @@ t_astnode	*initialize_ast_node(void)
 
 	node = (t_astnode *)ft_malloc(sizeof(t_astnode));
 	node->type = AST_COMMAND;
-	node->left = node->right = NULL;
+	node->left = NULL;
+	node->right = NULL;
 	node->args = (char **)ft_malloc(MAX_ARGS * sizeof(char *));
-	node->redirections = (t_redirection *)ft_malloc(MAX_REDIRS * sizeof(t_redirection));
+	node->redirections = (t_redirection *)ft_malloc(
+			MAX_REDIRS * sizeof(t_redirection));
 	node->args_capacity = MAX_ARGS;
 	node->redirections_capacity = MAX_REDIRS;
 	node->args_count = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:56:14 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 21:29:42 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,23 @@ static void	handle_redirection(t_parser *parser, t_astnode *node)
 		node->redirections_capacity *= 2;
 		if (node->redirections)
 			ft_free(node->redirections);
-		node->redirections = (t_redirection *)ft_malloc(node->redirections_capacity * sizeof(t_redirection));
+		node->redirections = (t_redirection *)ft_malloc(
+				node->redirections_capacity * sizeof(t_redirection));
 	}
-	node->redirections[node->redirections_count].flag = type_of_redirect(parser->current_token.value);
+	node->redirections[node->redirections_count].flag = \
+		type_of_redirect(parser->current_token.value);
 	parser_advance(parser);
 	if (parser->current_token.type == TOKEN_EMPTY)
 		parser_advance(parser);
 	else if (parser->current_token.type == TOKEN_WORD)
 	{
-		node->redirections[node->redirections_count].file = ft_strdup(parser->current_token.value);
-		node->redirections_count++;
+		node->redirections[node->redirections_count++].file = \
+			ft_strdup(parser->current_token.value);
 		parser_advance(parser);
 	}
 	else
 	{
-		print_errors(NULL, ER_REDIRECT_ERROR); // Proubleme ici
+		print_errors(NULL, ER_REDIRECT_ERROR);
 		node->type = AST_ERR;
 		give_mini(NULL, 0)->exit_code = 1;
 	}
@@ -79,22 +81,25 @@ static void	handle_argument(t_parser *parser, t_astnode *node)
 		node->args = (char **)ft_malloc(node->args_capacity * sizeof(char *));
 	}
 	if (parser->current_token.type == TOKEN_VARIABLE)
-		node->args[node->args_count++] = parse_variable(parser->current_token.value);
+		node->args[node->args_count++] = \
+			parse_variable(parser->current_token.value);
 	else
 		node->args[node->args_count++] = ft_strdup(parser->current_token.value);
 	parser_advance(parser);
 }
 
-t_astnode	*parse_command(t_parser *parser)// Memory allocation failure
+t_astnode	*parse_command(t_parser *parser)
 {
 	t_astnode	*node;
 
 	node = initialize_ast_node();
-	while (parser->current_token.type == TOKEN_WORD ||
-			parser->current_token.type == TOKEN_VARIABLE ||
-			parser->current_token.type == TOKEN_OPERATOR)
+	while (parser->current_token.type == TOKEN_WORD
+		|| parser->current_token.type == TOKEN_VARIABLE
+		|| parser->current_token.type == TOKEN_OPERATOR)
 	{
-		if (parser->current_token.type == TOKEN_OPERATOR && (parser->current_token.value[0] == '<' || parser->current_token.value[0] == '>'))
+		if (parser->current_token.type == TOKEN_OPERATOR
+			&& (parser->current_token.value[0] == '<'
+				|| parser->current_token.value[0] == '>'))
 			handle_redirection(parser, node);
 		else
 			handle_argument(parser, node);
@@ -102,4 +107,3 @@ t_astnode	*parse_command(t_parser *parser)// Memory allocation failure
 	node->args[node->args_count] = NULL;
 	return (node);
 }
-
