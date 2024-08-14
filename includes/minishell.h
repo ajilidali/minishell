@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 10:42:37 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/14 16:40:13 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ int			is_operator(char c);
 Token		lexer_operator(Lexer *lexer);
 Token		lexer_word(Lexer *lexer);
 Token		lexer_string(Lexer *lexer);
-char		*replace_variables(char *input);
+char		*replace_variables(char *in);
 Token		crt_tkn(TokenType type, char *value);
 
 // Lexer functions

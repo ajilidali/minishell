@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 12:06:12 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/14 16:42:52 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,14 +135,11 @@ char	*replace_variables(char *in)
 	}
 	result = allocate_string((i - start) + 1);
 	ft_strncpy(result, &in[start], i - start);
-	if (in[start-1] != '\'' && in[i - start+1] != '\'')
-	{
-		if (!result)
-			return (ft_free(result), NULL);
-		final = ft_replace(in, result, parse_variable(result));
-		if (char_counter(in, '$') != 0)
-			return (replace_variables(final));
-	}
+	if (!result)
+		return (ft_free(result), NULL);
+	final = ft_replace(in, result, parse_variable(result));
+	if (char_counter(in, '$') != 0)
+		return (replace_variables(final));
 	return (ft_free(in), ft_free(result), final);	
 }
 
