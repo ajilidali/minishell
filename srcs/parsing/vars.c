@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 21:30:43 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 22:04:39 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,32 @@ t_astnode	*initialize_ast_node(void)
 	node->args_count = 0;
 	node->redirections_count = 0;
 	return (node);
+}
+
+t_parser	parser_init(const char *input)
+{
+	t_parser	parser;
+
+	parser.lexer = lexer_init(input);
+	parser.current_token = lexer_next_token(&parser.lexer);
+	return (parser);
+}
+
+t_lexer	lexer_init(const char *input)
+{
+	t_lexer	lexer;
+
+	lexer.input = input;
+	lexer.pos = 0;
+	lexer.length = ft_strlen(input);
+	return (lexer);
+}
+
+t_token	token_init(t_token_type type, char *value)
+{
+	t_token	token;
+
+	token.type = type;
+	token.value = value;
+	return (token);
 }

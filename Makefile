@@ -6,7 +6,7 @@
 #    By: moajili <moajili@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/08 11:07:37 by moajili           #+#    #+#              #
-#    Updated: 2024/08/14 21:21:35 by moajili          ###   ########.fr        #
+#    Updated: 2024/08/14 22:02:03 by moajili          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS 	= -Wall -Wextra -Werror -g3
 
 OBJDIR= .objs
 
-SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/vars.c srcs/parsing/parser.c srcs/parsing/quotes.c \
+SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/vars.c srcs/parsing/utils.c srcs/parsing/parser.c srcs/parsing/lexer_utils.c \
 srcs/builtins/echo.c srcs/builtins/cd/cd.c srcs/builtins/pwd.c srcs/builtins/export.c srcs/builtins/unset.c srcs/builtins/env.c \
 srcs/utils/utils.c srcs/builtins/exit.c srcs/execution/redirect.c srcs/parsing/parsecmd.c \
 srcs/utils/copy_env.c srcs/execution/exec.c srcs/execution/exec_utils.c \

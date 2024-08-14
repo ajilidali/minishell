@@ -6,16 +6,11 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 21:29:42 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 21:58:39 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	is_redirection(char c)
-{
-	return (c == '<' || c == '>');
-}
 
 int	check_ast_for_errors(t_astnode *node)
 {
@@ -31,7 +26,7 @@ int	check_ast_for_errors(t_astnode *node)
 	return (left_error || right_error);
 }
 
-int	type_of_redirect(char *str)
+static int	type_of_redirect(char *str)
 {
 	if (!ft_strcmp(str, ">"))
 		return (FD_OUT);

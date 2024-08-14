@@ -6,7 +6,7 @@
 /*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 21:06:59 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 22:03:32 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,14 +171,15 @@ t_env		*create_empty_env(void);
 
 // Is functions
 int			is_whitespace(char c);
-int			is_operator(char c);
 
 // t_token assigning functions
 t_token		lexer_operator(t_lexer *lexer);
 t_token		lexer_word(t_lexer *lexer);
+t_token		lexer_pipe(t_lexer *lexer);
+t_token		lexer_dollar(t_lexer *lexer);
 t_token		lexer_string(t_lexer *lexer);
 char		*replace_variables(char *in);
-t_token		crt_tkn(t_token_type type, char *value);
+t_token		token_init(t_token_type type, char *value);
 
 // t_lexer functions
 t_token		lexer_next_token(t_lexer *lexer);
@@ -218,6 +219,8 @@ int			setup_redirections(t_astnode *node);
 //utils
 t_env		*give_envp(char **envp, int flag);
 t_env		*find_envp(char *variable, t_env *env);
+int			is_all_spaces(const char *str);
+char		*ext_val(const char *input, size_t start, size_t len);
 
 //void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
