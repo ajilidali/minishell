@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 17:20:35 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 17:57:46 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static void	exec_command(t_astnode *node, t_ms *ms)
 		ft_exit(127);
 	}
 	if (execve(path, node->args, envp) == -1)
-		return (perror("DEDSEC :"), ft_free(path),
+		return (perror("DEDSEC "), ft_free(path),
 			freetab(envp), ft_exit(1));
 	ft_exit(1);
 }
@@ -94,13 +94,13 @@ void	restore_std(t_astnode *node, int status)
 	if (node->fd_in != STDIN_FILENO)
 	{
 		if (dup2(node->save_in, STDIN_FILENO) == -1)
-			return (perror("dedsec :"), ft_exit(1));
+			return (perror("DEDSEC "), ft_exit(1));
 		close(node->fd_in);
 	}
 	if (node->fd_out != STDOUT_FILENO)
 	{
 		if (dup2(node->save_out, STDOUT_FILENO) == -1)
-			return (perror("dedsec :"), ft_exit(1));
+			return (perror("DEDSEC "), ft_exit(1));
 		close(node->fd_out);
 	}
 	give_mini(NULL, 0)->exit_code = status;
