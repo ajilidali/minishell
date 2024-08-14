@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_replace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:46:33 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 10:07:12 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/14 17:18:57 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t	calculate_output_length(const char *in, const char *replacee,
 	if (replacee_len == 0)
 		return (ft_strlen(in));
 	count = 0;
-	while ((tmp = strstr(tmp, replacee)) != NULL)
+	while ((tmp = ft_strstr(tmp, replacee)) != NULL)
 	{
 		count++;
 		tmp += replacee_len;
