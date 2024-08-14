@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 21:34:24 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 21:46:05 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ char	*ext_val(const char *input, size_t start, size_t len)
 	i = 0;
 	j = 0;
 	value = allocate_string(len + 1);
-	// pas protect
+	if (!value)
+		return (NULL);
 	while (i < len)
 	{
 		if (input[start + i] != '\'' && input[start + i] != '\"')
