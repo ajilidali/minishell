@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:21:14 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:51:41 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-Alias	*ft_init_alias(void)
+t_alias	*ft_init_alias(void)
 {
 	size_t	i;
-	Alias	*aliases;
+	t_alias	*aliases;
 
 	i = 0;
-	aliases = (Alias *)ft_malloc(sizeof(Alias) * 1024);
+	aliases = (t_alias *)ft_malloc(sizeof(t_alias) * 1024);
 	if (!aliases)
 	{
 		ft_putendl_fd("Memory allocation error", STDERR_FILENO);

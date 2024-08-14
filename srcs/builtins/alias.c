@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   alias.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:47:01 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:41:19 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:51:41 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	alias_finder(Alias *aliases, char *cmd, int alias_count)
+int	alias_finder(t_alias *aliases, char *cmd, int alias_count)
 {
 	int	i;
 
@@ -84,7 +84,7 @@ void	process_arguments(t_ms *mini, int argc)
 	}
 }
 
-int	print_aliases(Alias *aliases, int alias_count)
+int	print_aliases(t_alias *aliases, int alias_count)
 {
 	int	i;
 

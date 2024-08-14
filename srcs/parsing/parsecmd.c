@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsecmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:38:57 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:56:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	type_of_redirect(char *str)
 	return (FD_HD);
 }
 
-static void	handle_redirection(Parser *parser, t_astnode *node)
+static void	handle_redirection(t_parser *parser, t_astnode *node)
 {
 	if (node->redirections_count >= node->redirections_capacity)
 	{
@@ -69,7 +69,7 @@ static void	handle_redirection(Parser *parser, t_astnode *node)
 	}
 }
 
-static void	handle_argument(Parser *parser, t_astnode *node)
+static void	handle_argument(t_parser *parser, t_astnode *node)
 {
 	if (node->args_count >= node->args_capacity)
 	{
@@ -85,7 +85,7 @@ static void	handle_argument(Parser *parser, t_astnode *node)
 	parser_advance(parser);
 }
 
-t_astnode	*parse_command(Parser *parser)// Memory allocation failure
+t_astnode	*parse_command(t_parser *parser)// Memory allocation failure
 {
 	t_astnode	*node;
 

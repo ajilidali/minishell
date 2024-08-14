@@ -6,24 +6,24 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 17:53:19 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:56:14 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 #include <sys/types.h>
 
-Parser	parser_init(const char *input)
+t_parser	parser_init(const char *input)
 {
-	Parser	parser;
+	t_parser	parser;
 
 	parser.lexer = lexer_init(input);
 	parser.current_token = lexer_next_token(&parser.lexer);
 	return (parser);
 }
 
-// Next  Token
-void	parser_advance(Parser *parser)
+// Next  t_token
+void	parser_advance(t_parser *parser)
 {
 	if (parser->current_token.value)
 		ft_free(parser->current_token.value);
@@ -44,7 +44,7 @@ char	*parse_variable(char *value)
 	return (ft_strdup(cpy));
 }
 
-t_astnode	*parse_pipeline(Parser *parser)
+t_astnode	*parse_pipeline(t_parser *parser)
 {
 	t_astnode	*left;
 	t_astnode	*node;

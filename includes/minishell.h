@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:43:20 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:56:45 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_pidl
 {
 	int				pid;
 	struct s_pidl	*next;
-}					t_pidl;
+}	t_pidl;
 
 //Redirection struct
 typedef struct s_redirection
@@ -66,15 +66,15 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-//Alias Structs
-typedef struct
+//t_alias Structs
+typedef struct s_alias
 {
 	char	*cmd;
 	char	*value;
-} Alias;
+}	t_alias;
 
-//Lexer Structs
-typedef enum
+//t_lexer Structs
+typedef enum s_token_type
 {
 	TOKEN_WORD,
 	TOKEN_EMPTY,
@@ -83,32 +83,32 @@ typedef enum
 	TOKEN_PIPE,
 	TOKEN_OPERATOR,
 	TOKEN_EOF
-} TokenType;
+}	t_token_type;
 
-typedef struct
+typedef struct s_token
 {
-	TokenType	type;
-	char		*value;
-} Token;
+	t_token_type	type;
+	char			*value;
+}	t_token;
 
-typedef struct
+typedef struct s_lexer
 {
 	const char	*input;
 	size_t		pos;
 	size_t		length;
-}	Lexer;
+}	t_lexer;
 
 //Abstract Syntax Tree Structs
-typedef enum
+typedef enum s_astnode_type
 {
 	AST_COMMAND,
 	AST_PIPELINE,
 	AST_ERR
-}	ASTNodeType;
+}	t_astnode_type;
 
 typedef struct s_astnode
 {
-	ASTNodeType			type;
+	t_astnode_type		type;
 	char				**args; // For command nodes
 	int					fd_in;
 	int					fd_out;
@@ -136,20 +136,20 @@ typedef struct s_lst_cmd
 	size_t				args_count;
 }	t_lst_cmd;
 
-// Parser Structs
-typedef struct
+// t_parser Structs
+typedef struct s_parser
 {
-	Lexer	lexer;
-	Token	current_token;
-} Parser;
+	t_lexer	lexer;
+	t_token	current_token;
+}	t_parser;
 
 // Minishell Structs
 typedef struct s_ms
 {
-	Alias		*aliases;
-	Lexer		lexer;
-	Token		token;
-	Parser		parser;
+	t_alias		*aliases;
+	t_lexer		lexer;
+	t_token		token;
+	t_parser	parser;
 	t_astnode	*ast;
 	size_t		alias_count;
 	t_env		*env;
@@ -183,23 +183,23 @@ t_env		*create_empty_env(void);
 int			is_whitespace(char c);
 int			is_operator(char c);
 
-// Token assigning functions
-Token		lexer_operator(Lexer *lexer);
-Token		lexer_word(Lexer *lexer);
-Token		lexer_string(Lexer *lexer);
+// t_token assigning functions
+t_token		lexer_operator(t_lexer *lexer);
+t_token		lexer_word(t_lexer *lexer);
+t_token		lexer_string(t_lexer *lexer);
 char		*replace_variables(char *in);
-Token		crt_tkn(TokenType type, char *value);
+t_token		crt_tkn(t_token_type type, char *value);
 
-// Lexer functions
-Token		lexer_next_token(Lexer *lexer);
-Lexer		lexer_init(const char *input);
-char		lp(Lexer *lexer);
+// t_lexer functions
+t_token		lexer_next_token(t_lexer *lexer);
+t_lexer		lexer_init(const char *input);
+char		lp(t_lexer *lexer);
 
-// AST & Parser functions
-Parser		parser_init(const char *input);
-void		parser_advance(Parser *parser);
-t_astnode	*parse_command(Parser *parser);
-t_astnode	*parse_pipeline(Parser *parser);
+// AST & t_parser functions
+t_parser	parser_init(const char *input);
+void		parser_advance(t_parser *parser);
+t_astnode	*parse_command(t_parser *parser);
+t_astnode	*parse_pipeline(t_parser *parser);
 void		free_ast(t_astnode *node);
 int			check_ast_for_errors(t_astnode *node);
 
@@ -228,7 +228,6 @@ int			setup_redirections(t_astnode *node);
 //utils
 t_env		*give_envp(char **envp, int flag);
 t_env		*find_envp(char *variable, t_env *env);
-int			if_is_local(char *cmd);
 
 //void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
@@ -241,7 +240,7 @@ int			make_redirection(t_astnode *node);
 int			env_add_var(char *var, t_env *env);
 void		close_node_fd(t_astnode *node, int *pipefd);
 t_ms		*give_mini(t_ms *mini_cpy, int copy);
-// int			if_is_local(char *cmd);
+int			if_is_local(char *cmd);
 void		handle_sigint_heredoc(int sig);
 int			monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i);
 void		make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i);

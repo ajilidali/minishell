@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:13:06 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 20:53:52 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,23 @@ int	is_operator(char c)
 	return (c == '&' || c == ';' || c == '<' || c == '>');
 }
 
-char	lp(Lexer *lexer)
+char	lp(t_lexer *lexer)
 {
 	if (lexer->pos >= lexer->length)
 		return ('\0');
 	return (lexer->input[lexer->pos]);
 }
 
-Token	crt_tkn(TokenType type, char *value)
+t_token	crt_tkn(t_token_type type, char *value)
 {
-	Token	token;
+	t_token	token;
 
 	token.type = type;
 	token.value = value;
 	return (token);
 }
 
-Token	lexer_dollar(Lexer *lexer)
+t_token	lexer_dollar(t_lexer *lexer)
 {
 	size_t	start;
 	size_t	length;
@@ -75,7 +75,7 @@ char	*ext_val(const char *input, size_t start, size_t len)
 	return (value);
 }
 
-Token	lexer_word(Lexer *lex)
+t_token	lexer_word(t_lexer *lex)
 {
 	size_t	start;
 	int		in_quotes;
@@ -109,7 +109,7 @@ char	*extract_variable(char *in, size_t *end_pos)
 	size_t	start;
 	size_t	i;
 	char	*variable;
-	
+
 	i = 0;
 	if (!in || char_counter(in, '$') == 0)
 		return (NULL);
@@ -168,7 +168,7 @@ int	is_all_spaces(const char *str)
 	return (1);
 }
 
-Token	lexer_string(Lexer *lexer)
+t_token	lexer_string(t_lexer *lexer)
 {
 	char	quote_type;
 	size_t	start;
@@ -194,7 +194,7 @@ Token	lexer_string(Lexer *lexer)
 	return (crt_tkn(TOKEN_WORD, value));
 }
 
-Token	lexer_operator(Lexer *lexer)
+t_token	lexer_operator(t_lexer *lexer)
 {
 	char	current;
 	char	value[3];
@@ -215,9 +215,9 @@ Token	lexer_operator(Lexer *lexer)
 	return (crt_tkn(TOKEN_OPERATOR, ft_strdup(value)));
 }
 
-Lexer	lexer_init(const char *input)
+t_lexer	lexer_init(const char *input)
 {
-	Lexer	lexer;
+	t_lexer	lexer;
 
 	lexer.input = input;
 	lexer.pos = 0;
@@ -225,7 +225,7 @@ Lexer	lexer_init(const char *input)
 	return (lexer);
 }
 
-Token	lexer_pipe(Lexer *lexer)
+t_token	lexer_pipe(t_lexer *lexer)
 {
 	char	value[2];
 
@@ -235,7 +235,7 @@ Token	lexer_pipe(Lexer *lexer)
 	return (crt_tkn(TOKEN_PIPE, ft_strdup(value)));
 }
 
-Token	lexer_next_token(Lexer *lexer)
+t_token	lexer_next_token(t_lexer *lexer)
 {
 	char	current;
 
