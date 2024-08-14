@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 11:56:39 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/14 12:06:12 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,16 +135,15 @@ char	*replace_variables(char *in)
 	}
 	result = allocate_string((i - start) + 1);
 	ft_strncpy(result, &in[start], i - start);
-	/*if (in[start-1] != '\'' && in[i - start+1] != '\'')
+	if (in[start-1] != '\'' && in[i - start+1] != '\'')
 	{
-			
-	}*/
-	if (!result)
-		return (ft_free(result), NULL);
-	final = ft_replace(in, result, parse_variable(result));
-	if (char_counter(in, '$') != 0)
-		return (replace_variables(final));
-	return (ft_free(in), ft_free(result), final);
+		if (!result)
+			return (ft_free(result), NULL);
+		final = ft_replace(in, result, parse_variable(result));
+		if (char_counter(in, '$') != 0)
+			return (replace_variables(final));
+	}
+	return (ft_free(in), ft_free(result), final);	
 }
 
 int	is_all_spaces(const char *str)
@@ -225,14 +224,11 @@ Lexer	lexer_init(const char *input)
 Token	lexer_pipe(Lexer *lexer)
 {
 	char	value[2];
-	Token	token;
 
 	value[0] = lp(lexer);
 	value[1] = '\0';
 	lexer->pos++;
-	token.type = TOKEN_PIPE;
-	token.value = ft_strdup(value);
-	return (token);
+	return (crt_tkn(TOKEN_PIPE,	ft_strdup(value)));
 }
 
 Token	lexer_next_token(Lexer *lexer)
