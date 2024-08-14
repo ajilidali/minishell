@@ -6,13 +6,13 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 17:26:13 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 18:27:51 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	setup_redirect_in(t_astnode *node, size_t i)
+static int	setup_redirect_out(t_astnode *node, size_t i)
 {
 	if (node->redirections[i].flag == FD_OUT)
 	{
@@ -91,7 +91,7 @@ static int	monitoring_hd(int *pipefd, t_astnode *node, size_t	i)
 	return (0);
 }
 
-static int	setup_redirect_out(t_astnode *node, size_t i)
+static int	setup_redirect_in(t_astnode *node, size_t i)
 {
 	int	pipefd[2];
 
