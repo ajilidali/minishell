@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   vars.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:19:54 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:51:41 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 21:07:27 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-t_alias	*ft_init_alias(void)
-{
-	size_t	i;
-	t_alias	*aliases;
-
-	i = 0;
-	aliases = (t_alias *)ft_malloc(sizeof(t_alias) * 1024);
-	if (!aliases)
-	{
-		ft_putendl_fd("Memory allocation error", STDERR_FILENO);
-		ft_exit(EXIT_FAILURE);
-	}
-	while (i < 1024)
-	{
-		aliases[i].cmd = NULL;
-		aliases[i].value = NULL;
-		i++;
-	}
-	return (aliases);
-}
 
 t_ms	*ft_init_ms(t_ms *mini, char **envp)
 {
@@ -50,7 +29,6 @@ t_ms	*ft_init_ms(t_ms *mini, char **envp)
 	mini->parser.current_token = mini->token;
 	mini->ast = NULL;
 	mini->line = NULL;
-	mini->alias_count = 0;
 	mini->exit_code = 0;
 	give_mini(mini, 1);
 	return (mini);

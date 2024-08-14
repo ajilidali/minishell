@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 20:56:45 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 21:06:59 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,6 @@ typedef struct s_env
 	bool			hide;
 	struct s_env	*next;
 }	t_env;
-
-//t_alias Structs
-typedef struct s_alias
-{
-	char	*cmd;
-	char	*value;
-}	t_alias;
 
 //t_lexer Structs
 typedef enum s_token_type
@@ -146,12 +139,10 @@ typedef struct s_parser
 // Minishell Structs
 typedef struct s_ms
 {
-	t_alias		*aliases;
 	t_lexer		lexer;
 	t_token		token;
 	t_parser	parser;
 	t_astnode	*ast;
-	size_t		alias_count;
 	t_env		*env;
 	char		*line;
 	int			exit_code;
@@ -165,7 +156,6 @@ int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
-int			run_alias(t_ms *mini, t_astnode *node);
 int			run_exit(char **command, t_ms *mini);
 
 // Env functions
