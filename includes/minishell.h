@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 17:52:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 18:21:43 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ int			setup_redirections(t_astnode *node);
 //utils
 t_env		*give_envp(char **envp, int flag);
 t_env		*find_envp(char *variable, t_env *env);
+int			if_is_local(char *cmd);
 
 //void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env);
