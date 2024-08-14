@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 11:19:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 12:39:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,8 @@ void	exec_commands(t_astnode *node, t_ms *ms)
 		setup_signal_handler(2);
 		pid = fork();
 		if (pid == -1)
-			return ;
+			return (ft_putendl_fd("DEDSEC : Fork fail", 3),
+				ft_exit(1));
 		if (pid == 0)
 			exec_command(node, ms);
 		waitpid(pid, &status, 0);

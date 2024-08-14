@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 11:22:23 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/14 12:35:44 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ int	setup_redirections(t_astnode *node)
 	node->save_in = dup(STDIN_FILENO);
 	node->save_out = dup(STDOUT_FILENO);
 	if (node->save_in == -1 || node->save_out == -1)
-		ft_exit(1);
+		return (ft_putendl_fd("DEDSEC : STDIN and STDOUT not dup", 
+			STDERR_FILENO), ft_exit(1), 1);
 	while (i < node->redirections_count)
 	{
 		if (setup_redirect_in(node, i))
