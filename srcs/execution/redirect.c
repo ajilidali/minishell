@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 12:11:26 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/13 20:53:32 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 11:16:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,10 @@ int	setup_redirections(t_astnode *node)
 	i = 0;
 	node->fd_in = STDIN_FILENO;
 	node->fd_out = STDOUT_FILENO;
+	node->save_in = dup(STDIN_FILENO);
+	node->save_out = dup(STDOUT_FILENO);
+	if (node->save_in == -1 || node->save_out == -1)
+		ft_exit(1);
 	while (i < node->redirections_count)
 	{
 		if (setup_redirect_in(node, i))

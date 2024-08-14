@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/13 21:25:24 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 11:19:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ void	exec_commands(t_astnode *node, t_ms *ms)
 		waitpid(pid, &status, 0);
 		if (!WTERMSIG(status))
 			ms->exit_code = WEXITSTATUS(status);
+		restore_std(node, ms->exit_code);
 	}
 	else if (node->type == AST_PIPELINE)
 		exec_pipe(node);
