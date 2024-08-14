@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 11:18:46 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/14 11:54:41 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,10 @@ char	*replace_variables(char *in)
 	}
 	result = allocate_string((i - start) + 1);
 	ft_strncpy(result, &in[start], i - start);
+	/*if (in[start-1] != '\'' && in[i - start+1] != '\'')
+	{
+			
+	}*/
 	if (!result)
 		return (ft_free(result), NULL);
 	final = ft_replace(in, result, parse_variable(result));
@@ -181,7 +185,7 @@ Token	lexer_string(Lexer *lexer)
 		return (print_errors("Quotes must be terminated", ER_SYNTAX_ERROR),
 			crt_tkn(TOKEN_EMPTY, NULL));
 	if (is_all_spaces(value))
-		return (crt_tkn(TOKEN_EMPTY, NULL));
+		return (crt_tkn(TOKEN_WORD, value));
 	else if (quote_type != '\'')
 		return (crt_tkn(TOKEN_WORD, replace_variables(value)));
 	return (crt_tkn(TOKEN_WORD, value));
