@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:23:07 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 19:54:59 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 22:06:44 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void	exec_command_pipe(t_lst_cmd *list, t_ms *ms)
 		ft_exit(127);
 	}
 	if (execve(path, list->args, envp) == -1)
-		return (ft_free(path), freetab(envp), perror("DEDSEC "),
-			check_path(path), ft_exit(1));
+		return (ft_free(path), freetab(envp),
+			check_path(path), perror("DEDSEC "), ft_exit(1));
 	ft_exit(1);
 }
 

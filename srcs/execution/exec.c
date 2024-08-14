@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 14:54:48 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 21:20:41 by moajili          ###   ########.fr       */
+/*   Updated: 2024/08/14 22:09:19 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	exec_command(t_astnode *node, t_ms *ms)
 	}
 	if (execve(path, node->args, envp) == -1)
 		return (ft_free(path),
-			freetab(envp), check_path(path));
+			freetab(envp), check_path(path), perror("DEDSEC "), ft_exit(126));
 	ft_exit(1);
 }
 
