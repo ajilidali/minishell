@@ -6,7 +6,7 @@
 /*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 02:46:33 by moajili           #+#    #+#             */
-/*   Updated: 2024/07/26 22:14:38 by sakaido          ###   ########.fr       */
+/*   Updated: 2024/08/14 10:07:12 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,22 @@ size_t	calculate_output_length(const char *in, const char *replacee,
 		const char *replaced)
 {
 	size_t		replacee_len;
-	size_t		in_len;
 	size_t		replaced_len;
 	size_t		count;
-	const char	*tmp = in;
-	size_t		final_length;
+	const char	*tmp;
 
+	tmp = in;
 	replacee_len = ft_strlen(replacee);
-	in_len = ft_strlen(in);
 	replaced_len = ft_strlen(replaced);
 	if (replacee_len == 0)
-		return (in_len);
+		return (ft_strlen(in));
 	count = 0;
 	while ((tmp = strstr(tmp, replacee)) != NULL)
 	{
 		count++;
 		tmp += replacee_len;
 	}
-	final_length = in_len + count * (replaced_len - replacee_len);
-	return (final_length);
+	return (ft_strlen(in) + count * (replaced_len - replacee_len));
 }
 
 char	*perform_replacement(const char *in, const char *replacee,

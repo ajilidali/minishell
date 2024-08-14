@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_pipe.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/10 05:21:37 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/13 20:35:18 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 11:02:02 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i)
 				node->redirections[i].file,
 				ft_strlen(node->redirections[i].file)))
 			return (close(pipefd[0]), close(pipefd[1]), ft_exit(0));
-		ft_putstr_fd(str, pipefd[1]);
+		ft_putstr_fd(replace_variables(str), pipefd[1]);
 		ft_free(str);
 	}
 }

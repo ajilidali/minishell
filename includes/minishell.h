@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: sakaido <sakaido@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/13 21:29:23 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 10:42:37 by sakaido          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,12 +188,12 @@ Token		lexer_operator(Lexer *lexer);
 Token		lexer_word(Lexer *lexer);
 Token		lexer_string(Lexer *lexer);
 char		*replace_variables(char *input);
-Token		create_token(TokenType type, char *value);
+Token		crt_tkn(TokenType type, char *value);
 
 // Lexer functions
 Token		lexer_next_token(Lexer *lexer);
 Lexer		lexer_init(const char *input);
-char		lexer_peek(Lexer *lexer);
+char		lp(Lexer *lexer);
 
 // AST & Parser functions
 Parser		parser_init(const char *input);

@@ -23,3 +23,6 @@ valeur de retour ctrl c
 ls ""
 env -i add /usr/bin/
 cacher header
+strstr in ft_replace
+Decompress ENV vars in heredoc
+Space issue with quotes
