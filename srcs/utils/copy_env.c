@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   copy_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:39:18 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/15 01:04:05 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 17:53:22 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ t_env	*new_node(char *name_value, bool hide)
 
 	node = ft_malloc(sizeof(t_env));
 	if (!node)
-		return (NULL);
-	if (!name_value)
 		return (NULL);
 	node->name_value = ft_strdup(name_value);
 	if (!node->name_value)
@@ -78,15 +76,15 @@ int	check_pwd(t_env *head)
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (0);
-	tmp = find_envp("PWD", head, false);
+	tmp = find_envp("PWD", head);
 	if (!tmp)
 	{
-		if (!env_add_var("PWD=", head, false))
+		if (!env_add_var("PWD=", head))
 			return (free(pwd), 0);
 	}
-	if (access(env_get_var("PWD", head, false), F_OK) != 0)
+	if (access(env_get_var("PWD", head), F_OK) != 0)
 	{
-		tmp = find_envp("PWD", head, false);
+		tmp = find_envp("PWD", head);
 		if (!tmp)
 			return (free(pwd), 0);
 		tmp->name_value = ft_strjoin("PWD=", pwd);

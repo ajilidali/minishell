@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/15 13:25:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/14 22:03:32 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,6 @@ typedef struct s_env
 	bool			hide;
 	struct s_env	*next;
 }	t_env;
-
-//t_alias Structs
-typedef struct s_alias
-{
-	char	*cmd;
-	char	*value;
-}	t_alias;
 
 //t_lexer Structs
 typedef enum s_token_type
@@ -146,12 +139,10 @@ typedef struct s_parser
 // Minishell Structs
 typedef struct s_ms
 {
-	t_alias		*aliases;
 	t_lexer		lexer;
 	t_token		token;
 	t_parser	parser;
 	t_astnode	*ast;
-	size_t		alias_count;
 	t_env		*env;
 	char		*line;
 	int			exit_code;
@@ -165,7 +156,6 @@ int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
-int			run_alias(t_ms *mini, t_astnode *node);
 int			run_exit(char **command, t_ms *mini);
 
 // Env functions
@@ -173,6 +163,7 @@ void		free_env(t_env *env);
 char		**get_tabenv(t_env *env);
 t_env		*copy_env(char **envp);
 t_env		*new_node(char *name_value, bool hide);
+t_list		*copy_pwd(char *pwd, char *env_pwd);
 t_env		*create_empty_env(void);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while,
@@ -180,14 +171,15 @@ t_env		*create_empty_env(void);
 
 // Is functions
 int			is_whitespace(char c);
-int			is_operator(char c);
 
 // t_token assigning functions
 t_token		lexer_operator(t_lexer *lexer);
 t_token		lexer_word(t_lexer *lexer);
+t_token		lexer_pipe(t_lexer *lexer);
+t_token		lexer_dollar(t_lexer *lexer);
 t_token		lexer_string(t_lexer *lexer);
 char		*replace_variables(char *in);
-t_token		crt_tkn(t_token_type type, char *value);
+t_token		token_init(t_token_type type, char *value);
 
 // t_lexer functions
 t_token		lexer_next_token(t_lexer *lexer);
@@ -226,22 +218,31 @@ int			setup_redirections(t_astnode *node);
 
 //utils
 t_env		*give_envp(char **envp, int flag);
-t_env		*find_envp(char *variable, t_env *env, bool flag);
-char		*env_get_var(char *variable, t_env *env, bool flag);
-void		update_pwd(char *old_pwd, t_env *env);
-int			is_pwd(t_env *env);
-int			is_oldpwd(t_env *env);
+t_env		*find_envp(char *variable, t_env *env);
+int			is_all_spaces(const char *str);
+char		*ext_val(const char *input, size_t start, size_t len);
+
+//void		sigint_handler(void);
+char		*env_get_var(char *variable, t_env *env);
+void		update_pwd(char *old_pwd, char *path, t_env *env);
+char		*get_pwd(char *path, char *old_pwd);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
 int			make_redirection(t_astnode *node);
-int			env_add_var(char *var, t_env *env, bool hide);
+int			env_add_var(char *var, t_env *env);
 void		close_node_fd(t_astnode *node, int *pipefd);
 t_ms		*give_mini(t_ms *mini_cpy, int copy);
 int			if_is_local(char *cmd);
 void		handle_sigint_heredoc(int sig);
 int			monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i);
 void		make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i);
+
+//list for pwd
+t_list		*lnew_node(char *name_value);
+int			add_node(char *content, t_list *list);
+void		delete_last_node(t_list *list);
+void		free_list(t_list *env);
 
 //execution for pipe
 int			copy_ast_in_list(t_astnode *node, t_lst_cmd **head);
