@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:14:13 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 20:53:26 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 13:29:39 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,12 @@ char	**get_tabenv(t_env *env)
 	i = 0;
 	while (env)
 	{
-		tab[i] = ft_strdup(env->name_value);
-		if (!tab[i++])
-			return (freetab(tab), NULL);
+		if (!env->hide)
+		{
+			tab[i] = ft_strdup(env->name_value);
+			if (!tab[i++])
+				return (freetab(tab), NULL);
+		}
 		env = env->next;
 	}
 	return (tab);
