@@ -38,15 +38,15 @@ char	**get_tabenv(t_env *env)
 	if (!tab)
 		return (NULL);
 	i = 0;
-	while (env)
+	while (tmp)
 	{
-		if (!env->hide)
+		if (!tmp->hide)
 		{
-			tab[i] = ft_strdup(env->name_value);
+			tab[i] = ft_strdup(tmp->name_value);
 			if (!tab[i++])
 				return (freetab(tab), NULL);
 		}
-		env = env->next;
+		tmp = tmp->next;
 	}
 	return (tab);
 }
