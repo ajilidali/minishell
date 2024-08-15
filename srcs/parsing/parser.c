@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/25 17:57:19 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/15 00:35:46 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 14:19:58 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-#include <sys/types.h>
-
-t_parser	parser_init(const char *input)
-{
-	t_parser	parser;
-
-	parser.lexer = lexer_init(input);
-	parser.current_token = lexer_next_token(&parser.lexer);
-	return (parser);
-}
 
 // Next  t_token
 void	parser_advance(t_parser *parser)

@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/15 13:25:54 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 14:31:44 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,6 @@ int			run_export(char **command, t_env **env);
 int			run_unset(char **command, t_env **env);
 int			run_pwd(void);
 int			run_env(t_env *env);
-int			run_alias(t_ms *mini, t_astnode *node);
 int			run_exit(char **command, t_ms *mini);
 
 // Env functions
@@ -180,14 +179,15 @@ t_env		*create_empty_env(void);
 
 // Is functions
 int			is_whitespace(char c);
-int			is_operator(char c);
 
 // t_token assigning functions
 t_token		lexer_operator(t_lexer *lexer);
 t_token		lexer_word(t_lexer *lexer);
+t_token		lexer_pipe(t_lexer *lexer);
+t_token		lexer_dollar(t_lexer *lexer);
 t_token		lexer_string(t_lexer *lexer);
 char		*replace_variables(char *in);
-t_token		crt_tkn(t_token_type type, char *value);
+t_token		token_init(t_token_type type, char *value);
 
 // t_lexer functions
 t_token		lexer_next_token(t_lexer *lexer);
@@ -227,10 +227,11 @@ int			setup_redirections(t_astnode *node);
 //utils
 t_env		*give_envp(char **envp, int flag);
 t_env		*find_envp(char *variable, t_env *env, bool flag);
+int			is_all_spaces(const char *str);
+char		*ext_val(const char *input, size_t start, size_t len);
 char		*env_get_var(char *variable, t_env *env, bool flag);
 void		update_pwd(char *old_pwd, t_env *env);
-int			is_pwd(t_env *env);
-int			is_oldpwd(t_env *env);
+char		*get_pwd(char *path, char *old_pwd);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
@@ -242,6 +243,8 @@ int			if_is_local(char *cmd);
 void		handle_sigint_heredoc(int sig);
 int			monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i);
 void		make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i);
+int			is_pwd(t_env *env);
+int			is_oldpwd(t_env *env);
 
 //execution for pipe
 int			copy_ast_in_list(t_astnode *node, t_lst_cmd **head);
