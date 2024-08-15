@@ -66,13 +66,6 @@ typedef struct s_env
 	struct s_env	*next;
 }	t_env;
 
-//t_alias Structs
-typedef struct s_alias
-{
-	char	*cmd;
-	char	*value;
-}	t_alias;
-
 //t_lexer Structs
 typedef enum s_token_type
 {
@@ -146,12 +139,10 @@ typedef struct s_parser
 // Minishell Structs
 typedef struct s_ms
 {
-	t_alias		*aliases;
 	t_lexer		lexer;
 	t_token		token;
 	t_parser	parser;
 	t_astnode	*ast;
-	size_t		alias_count;
 	t_env		*env;
 	char		*line;
 	int			exit_code;

@@ -13,11 +13,11 @@
 NAME	= minishell
 CC 		= @cc
 INCLUDE = -I./includes
-CFLAGS 	= -Wall -Wextra -Werror -g3
+CFLAGS 	= -Wall -Wextra -Werror -Wno-unused-function -g3
 
 OBJDIR= .objs
 
-SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/lexer_utils.c srcs/parsing/utils.c srcs/parsing/vars.c srcs/parsing/parser.c srcs/builtins/alias.c \
+SRCS	= srcs/parsing/main.c srcs/parsing/lexer.c srcs/parsing/lexer_utils.c srcs/parsing/utils.c srcs/parsing/vars.c srcs/parsing/parser.c \
 srcs/builtins/echo.c srcs/builtins/cd/cd.c srcs/builtins/pwd.c srcs/builtins/export.c srcs/builtins/unset.c srcs/builtins/env.c \
 srcs/utils/utils.c srcs/builtins/exit.c srcs/execution/redirect.c srcs/parsing/parsecmd.c \
 srcs/utils/copy_env.c srcs/execution/exec.c srcs/execution/exec_utils.c \
