@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:09:41 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 17:53:11 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 02:09:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	get_back(t_env *env, char *old_pwd)
 {
 	char	*back_path;
 
-	back_path = env_get_var("OLDPWD", env);
+	back_path = env_get_var("OLDPWD", env, false);
 	if (!back_path)
 	{
 		ft_putendl_fd("DEDSEC: cd: OLDPWD not set", STDERR_FILENO);
@@ -44,10 +44,10 @@ int	run_cd(char **command, t_env *env)
 	if (command[1] && command[2])
 		return (ft_putendl_fd("dedsec: cd: too many arguments",
 				STDERR_FILENO), 1);
-	old_pwd = env_get_var("PWD=", env);
+	old_pwd = env_get_var("PWD=", env, false);
 	if (!command[1])
 	{
-		home = env_get_var("HOME", env);
+		home = env_get_var("HOME", env, false);
 		if (!home)
 			return (ft_putendl_fd("DEDSEC: cd: HOME not set", 2), 1);
 		if (chdir(home) == -1)

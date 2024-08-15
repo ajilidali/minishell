@@ -3,29 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:57 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/14 17:54:31 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 01:06:41 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	env_add_var(char *var, t_env *env)
+int	env_add_var(char *var, t_env *env, bool hide)
 {
 	t_env	*last;
 
 	last = env;
 	while (last->next)
 		last = last->next;
-	last->next = new_node(var, false);
+	last->next = new_node(var, hide);
 	if (!last->next)
 		return (0);
 	return (1);
 }
 
-char	*env_get_var(char *variable, t_env *env)
+char	*env_get_var(char *variable, t_env *env, bool flag)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ char	*env_get_var(char *variable, t_env *env)
 	{
 		while (env->name_value[i] && env->name_value[i] != '=')
 			i++;
-		if (ft_strncmp(env->name_value, variable, i) == 0 && !env->hide)
+		if (ft_strncmp(env->name_value, variable, i) == 0 && env->hide == flag)
 			return (env->name_value + (i + 1));
 		env = env->next;
 		i = 0;
@@ -49,10 +49,10 @@ int	change_shlvl(t_env *env)
 	char	*str_lvl;
 	char	*new_lvl;
 
-	str_lvl = env_get_var("SHLVL=", env);
-	node_shlvl = find_envp("SHLVL=", env);
+	str_lvl = env_get_var("SHLVL=", env, false);
+	node_shlvl = find_envp("SHLVL=", env, false);
 	if (!node_shlvl)
-		return ((void)env_add_var("SHLVL=0", env), 1);
+		return ((void)env_add_var("SHLVL=0", env, false), 1);
 	shlvl = ft_atoi(str_lvl) + 1;
 	ft_free(node_shlvl->name_value);
 	new_lvl = ft_itoa(shlvl);
@@ -74,7 +74,9 @@ t_env	*give_envp(char **envp, int flag)
 		env = new_node("header", true);
 		if (!env)
 			return (NULL);
-		env->next = copy_env(envp);
+		if (!env_add_var(ft_strjoin("PWD_HIDE=", getcwd(NULL, 0)), env, true))
+			return (NULL);
+		env->next->next = copy_env(envp);
 		if (!env->next)
 			return (free_env(env), NULL);
 	}

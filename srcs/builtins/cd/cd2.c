@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd2.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:08:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/11 18:47:07 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 02:22:04 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,34 @@ void	add_pwd(t_env *env)
 		env->next = new_node("OLDPWD=", false);
 }
 
+void	update_hide_pwd(char *new_path)
+{
+	t_env	*tmp_env;
+	char	*value;
+
+	tmp_env = find_envp("PWD_HIDE", give_envp(NULL, 0), true);
+	value = ft_strjoin("PWD_HIDE=", new_path);
+	if (!value)
+		return (ft_putendl_fd("DEDSEC : Faill alloc",
+				STDERR_FILENO), ft_exit(1));
+	if (!tmp_env)
+	{
+		if (!env_add_var(value, give_envp(NULL, 0), true))
+			return (ft_putendl_fd("DEDSEC : Faill alloc",
+					STDERR_FILENO), ft_exit(1));
+	}
+	else
+	{
+		ft_free(tmp_env->name_value);
+		tmp_env->name_value = value;
+	}
+}
+
 void	change_pwd(t_env *env, char *new_path, char *old_pwd)
 {
 	t_env	*tmp_env;
 
-	tmp_env = find_envp("PWD", env);
+	tmp_env = find_envp("PWD", env, false);
 	if (tmp_env)
 	{
 		ft_free(tmp_env->name_value);
@@ -62,7 +85,7 @@ void	change_pwd(t_env *env, char *new_path, char *old_pwd)
 		if (!tmp_env->name_value)
 			ft_exit(EXIT_FAILURE);
 	}
-	tmp_env = find_envp("OLDPWD", env);
+	tmp_env = find_envp("OLDPWD", env, false);
 	if (tmp_env)
 	{
 		ft_free(tmp_env->name_value);
@@ -70,6 +93,7 @@ void	change_pwd(t_env *env, char *new_path, char *old_pwd)
 		if (!tmp_env->name_value)
 			ft_exit(EXIT_FAILURE);
 	}
+	update_hide_pwd(new_path);
 	ft_free(new_path);
 }
 

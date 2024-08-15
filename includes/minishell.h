@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/14 22:00:09 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 00:33:52 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,17 +227,17 @@ int			setup_redirections(t_astnode *node);
 
 //utils
 t_env		*give_envp(char **envp, int flag);
-t_env		*find_envp(char *variable, t_env *env);
+t_env		*find_envp(char *variable, t_env *env, bool flag);
 
 //void		sigint_handler(void);
-char		*env_get_var(char *variable, t_env *env);
+char		*env_get_var(char *variable, t_env *env, bool flag);
 void		update_pwd(char *old_pwd, char *path, t_env *env);
 char		*get_pwd(char *path, char *old_pwd);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
 int			make_redirection(t_astnode *node);
-int			env_add_var(char *var, t_env *env);
+int			env_add_var(char *var, t_env *env, bool hide);
 void		close_node_fd(t_astnode *node, int *pipefd);
 t_ms		*give_mini(t_ms *mini_cpy, int copy);
 int			if_is_local(char *cmd);

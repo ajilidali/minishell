@@ -6,7 +6,7 @@
 /*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:00:20 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/12 22:11:13 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 00:25:16 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	verify_export(char *command)
 	return (1);
 }
 
-t_env	*find_envp(char *variable, t_env *env)
+t_env	*find_envp(char *variable, t_env *env, bool flag)
 {
 	int	i;
 	int	j;
@@ -45,7 +45,7 @@ t_env	*find_envp(char *variable, t_env *env)
 		while (env->name_value[j] && env->name_value[j] != '=')
 			j++;
 		if (ft_strncmp(variable, env->name_value, i) == 0 && j == i
-			&& !env->hide)
+			&& env->hide == flag)
 			return (env);
 		env = env->next;
 		j = 0;
@@ -77,7 +77,7 @@ int	add_node_env(char *command, t_env *env)
 	tmp = env;
 	while (tmp->next)
 		tmp = tmp->next;
-	node = find_envp(command, env);
+	node = find_envp(command, env, false);
 	if (!node)
 	{
 		tmp->next = new_node(command, false);
