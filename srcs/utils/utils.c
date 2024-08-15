@@ -6,11 +6,25 @@
 /*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 18:14:13 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/15 14:21:08 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 14:39:00 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
+
+int	get_env_size(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (env)
+	{
+		if (!env->hide)
+			i++;
+		env = env->next;
+	}
+	return (i);
+}
 
 char	**get_tabenv(t_env *env)
 {
@@ -19,12 +33,7 @@ char	**get_tabenv(t_env *env)
 	int		i;
 
 	tmp = env;
-	i = 0;
-	while (tmp)
-	{
-		tmp = tmp->next;
-		i++;
-	}
+	i = get_env_size(env);
 	tab = ft_calloc(sizeof(char *), (i + 1));
 	if (!tab)
 		return (NULL);
