@@ -1,38 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd2.c                                              :+:      :+:    :+:   */
+/*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:08:38 by hclaude           #+#    #+#             */
-/*   Updated: 2024/08/15 02:22:04 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 13:20:27 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
-
-int	is_pwd(t_env *env)
-{
-	while (env)
-	{
-		if (ft_strncmp("PWD=", env->name_value, 4) == 0)
-			return (1);
-		env = env->next;
-	}
-	return (0);
-}
-
-int	is_oldpwd(t_env *env)
-{
-	while (env)
-	{
-		if (ft_strncmp("OLDPWD=", env->name_value, 7) == 0)
-			return (1);
-		env = env->next;
-	}
-	return (0);
-}
 
 void	add_pwd(t_env *env)
 {
@@ -97,17 +75,17 @@ void	change_pwd(t_env *env, char *new_path, char *old_pwd)
 	ft_free(new_path);
 }
 
-void	update_pwd(char *old_pwd, char *path, t_env *env)
+void	update_pwd(char *old_pwd, t_env *env)
 {
 	char	*new_path;
 
 	if (!old_pwd)
 		old_pwd = "";
 	add_pwd(env);
-	new_path = get_pwd(path, old_pwd);
+	new_path = getcwd(NULL, 0);
 	if (!new_path)
-		new_path = getcwd(NULL, 0);
+		new_path = env_get_var("PWD_HIDE=", env, false);
 	if (!new_path)
-		ft_exit(EXIT_FAILURE);
+		new_path = "";
 	change_pwd(env, new_path, old_pwd);
 }

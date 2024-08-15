@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42mulhouse.fr>    +#+  +:+       +#+        */
+/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:50:25 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/15 00:33:52 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/15 13:25:54 by hclaude          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,6 @@ void		free_env(t_env *env);
 char		**get_tabenv(t_env *env);
 t_env		*copy_env(char **envp);
 t_env		*new_node(char *name_value, bool hide);
-t_list		*copy_pwd(char *pwd, char *env_pwd);
 t_env		*create_empty_env(void);
 
 // Idea : make a structure for builtins and then strcmp in vars:44 in a while,
@@ -228,11 +227,10 @@ int			setup_redirections(t_astnode *node);
 //utils
 t_env		*give_envp(char **envp, int flag);
 t_env		*find_envp(char *variable, t_env *env, bool flag);
-
-//void		sigint_handler(void);
 char		*env_get_var(char *variable, t_env *env, bool flag);
-void		update_pwd(char *old_pwd, char *path, t_env *env);
-char		*get_pwd(char *path, char *old_pwd);
+void		update_pwd(char *old_pwd, t_env *env);
+int			is_pwd(t_env *env);
+int			is_oldpwd(t_env *env);
 void		check_path(char *path);
 void		print_errors(char *str, int flag);
 int			change_shlvl(t_env *env);
@@ -244,12 +242,6 @@ int			if_is_local(char *cmd);
 void		handle_sigint_heredoc(int sig);
 int			monitoring_hd_pipe(int *pipefd, t_lst_cmd *node, size_t i);
 void		make_here_doc_pipe(int *pipefd, t_lst_cmd *node, size_t i);
-
-//list for pwd
-t_list		*lnew_node(char *name_value);
-int			add_node(char *content, t_list *list);
-void		delete_last_node(t_list *list);
-void		free_list(t_list *env);
 
 //execution for pipe
 int			copy_ast_in_list(t_astnode *node, t_lst_cmd **head);
