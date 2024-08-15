@@ -55,3 +55,5 @@ dkms.conf
 *.json
 
 minishell
+./.idea
+./.vscode
