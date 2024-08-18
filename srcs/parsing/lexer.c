@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hclaude <hclaude@student.42.fr>            +#+  +:+       +#+        */
+/*   By: moajili <moajili@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 12:20:28 by moajili           #+#    #+#             */
-/*   Updated: 2024/08/15 14:18:45 by hclaude          ###   ########.fr       */
+/*   Updated: 2024/08/18 19:26:34 by moajili          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,12 @@ t_token	lexer_string(t_lexer *lexer)
 	start = lexer->pos;
 	while (lp(lexer) != quote_type && lp(lexer) != '\0')
 		lexer->pos++;
+	if (lp(lexer) == quote_type)
+		lexer->pos++;
 	if (char_counter(lexer->input, quote_type) % 2 == 0)
 	{
 		value = allocate_string(lexer->pos - start + 1);
-		ft_strncpy(value, lexer->input + start, lexer->pos - start);
+		ft_strncpy(value, lexer->input + start, lexer->pos - start -1);
 	}
 	else
 		return (print_errors("Quotes must be terminated", ER_SYNTAX_ERROR),
